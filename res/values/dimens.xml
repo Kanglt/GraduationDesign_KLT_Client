@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="loading_img_width">110dp</dimen>
+    <dimen name="loading_img_height">79dp</dimen>
+    <dimen name="order_img_width">80dp</dimen>
+    <dimen name="order_img_height">58dp</dimen>
+    <dimen name="restaurant_order_myself_img_width">80dp</dimen>
+    <dimen name="restaurant_order_myself_img_height">120dp</dimen>
+    <dimen name="restaurant_remote_myself_img_width">90dp</dimen>
+    <dimen name="restaurant_remote_myself_img_height">150dp</dimen>
+    <dimen name="restaurant_order_people_img_width">58dp</dimen>
+    <dimen name="restaurant_order_people_img_height">58dp</dimen>
+    <dimen name="goods_img_width">32dp</dimen>
+    <dimen name="goods_img_height">32dp</dimen>
+    <dimen name="img_width">22dp</dimen>
+    <dimen name="img_height">22dp</dimen>
+    <dimen name="shopping_cart_img_width">27dp</dimen>
+    <dimen name="shopping_cart_img_height">27dp</dimen>
+    <dimen name="bill_img_width">40dp</dimen>
+    <dimen name="bill_img_height">40dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+</resources>

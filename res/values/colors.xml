@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="red">#FF0000</color>
+    <color name="red_light">#f34c46</color>
+    <color name="green">#00FF00</color>
+    <color name="green_dark">#9CDC6A</color>
+    <color name="blue">#33B5E5</color>
+    <color name="blue_white">#00a6fe</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray_white1">#F2F2F2</color>
+    <color name="black">#000000</color>
+    <color name="black01">#949494</color>
+    <color name="gray">#7c7c7c</color>
+    <color name="gray_white2">#FaFaFa</color>
+    <color name="gray_white">#efefef</color>
+    <color name="gray_light">#887c7c7c</color>
+    <color name="gray_dark">#2e2e2e</color>
+    <color name="yellow">#FFFC00</color>
+    <color name="pink">#FF87EF</color>
+    <color name="orange">#ff6200</color>
+    <color name="list_divider">#D3D3D3</color>
+    <color name="transparent">#00000000</color>
+    <color name="tabtext_select_bg">#0076d6</color>
+    <color name="order_bg_gray">#999999</color>
+    <!-- 烟白色 -->
+    <color name="whitesmoke">#f5f5f5</color>
+    <color name="choose_eara_item_press_color">#f4f4f4</color>
+    <color name="cash_wallet">#ff9500</color>
+    <color name="subsidy_wallet">#ff4d27</color>
+   
+    <color name="order_person_text_color">#f16d69</color>
+    <color name="order_myself">#e4302b</color>
+    <color name="order_people">#bad025</color>
+    <color name="order_for_others">#ff6766</color>
+    <color name="order_transfer">#d371e0</color>
+    <color name="order_remote">#fe9f21</color>
+    <color name="order_my_reservation">#2ed5aa</color>
+    <color name="order_total_reservation">#4aa4fc</color>
+    
+    <color name="pending_order_status">#ffbe40</color>
+    <color name="finish_order_status">#a2b0bb</color>
+    <color name="remove_order_status">#f9909e</color>
+    <color name="have_order_goods_status">#91cdff</color>
+    <color name="finish_order_goods_status">#bad025</color>
+    <color name="overdue_order">#9370db</color>
+    <color name="pay_fail_order">#bc1717</color>
+    <color name="pay_orders">#6b8e23</color>
+    <color name="transparent_background">#90000000</color>
+    
+    
+</resources>
