@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.ResideMenu.ResideMenu;
@@ -22,6 +23,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private ResideMenuItem itemProfile;
     private ResideMenuItem itemCalendar;
     private ResideMenuItem itemSettings;
+    
+    private Button title_bar_left_menu;
+    private Button title_bar_right_menu;
 
     /**
      * Called when the activity is first created.
@@ -30,15 +34,44 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setAbContentView(R.layout.main);
-        mContext = this;
-        setUpMenu();
+        init();
         if( savedInstanceState == null )
             changeFragment(new HomeFragment());
     }
+    @Override
+	public void init() {
+		// TODO Auto-generated method stub
+		super.init();
+		initUtil();
+		initData();
+		initView();
+		initViewData();
+		initEvent();
+		startGame();
+	}
 
-    private void setUpMenu() {
+	@Override
+	public void initUtil() {
+		// TODO Auto-generated method stub
+		super.initUtil();
+		mContext = this;
+	}
 
-        // attach to current activity;
+	@Override
+	public void initData() {
+		// TODO Auto-generated method stub
+		super.initData();
+	}
+
+	@Override
+	public void initView() {
+		// TODO Auto-generated method stub
+		super.initView();
+		
+		title_bar_left_menu=(Button) findViewById(R.id.title_bar_left_menu);
+		title_bar_right_menu=(Button) findViewById(R.id.title_bar_right_menu);
+		
+		// attach to current activity;
         resideMenu = new ResideMenu(this);
         resideMenu.setUse3D(true);
         resideMenu.setBackground(R.drawable.menu_background);
@@ -53,32 +86,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         itemCalendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
 
-        itemHome.setOnClickListener(this);
-        itemProfile.setOnClickListener(this);
-        itemCalendar.setOnClickListener(this);
-        itemSettings.setOnClickListener(this);
+        
+	}
 
-        resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
+	@Override
+	public void initViewData() {
+		// TODO Auto-generated method stub
+		super.initViewData();
+		
+		resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemCalendar, ResideMenu.DIRECTION_RIGHT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
+	}
 
-        // You can disable a direction by setting ->
-        // resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+	@Override
+	public void initEvent() {
+		// TODO Auto-generated method stub
+		super.initEvent();
+		 itemHome.setOnClickListener(this);
+	     itemProfile.setOnClickListener(this);
+	     itemCalendar.setOnClickListener(this);
+	     itemSettings.setOnClickListener(this);
+	     title_bar_left_menu.setOnClickListener(this);
+	     title_bar_right_menu.setOnClickListener(this);
+	}
 
-        findViewById(R.id.title_bar_left_menu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
-            }
-        });
-        findViewById(R.id.title_bar_right_menu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resideMenu.openMenu(ResideMenu.DIRECTION_RIGHT);
-            }
-        });
-    }
+	@Override
+	public void startGame() {
+		// TODO Auto-generated method stub
+		super.startGame();
+	}
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -90,15 +129,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         if (view == itemHome){
             changeFragment(new HomeFragment());
+            resideMenu.closeMenu();
         }else if (view == itemProfile){
             changeFragment(new ProfileFragment());
+            resideMenu.closeMenu();
         }else if (view == itemCalendar){
             changeFragment(new CalendarFragment());
+            resideMenu.closeMenu();
         }else if (view == itemSettings){
             changeFragment(new SettingsFragment());
+            resideMenu.closeMenu();
+        }else if(view==title_bar_left_menu){
+        	 resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+        }else if(view==title_bar_right_menu){
+        	 resideMenu.openMenu(ResideMenu.DIRECTION_RIGHT);
         }
 
-        resideMenu.closeMenu();
+        
     }
 
     private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
