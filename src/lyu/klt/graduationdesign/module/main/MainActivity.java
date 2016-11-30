@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import lyu.klt.frame.ab.util.AbToastUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.ResideMenu.ResideMenu;
 import lyu.klt.graduationdesign.module.ResideMenu.ResideMenuItem;
@@ -16,9 +17,12 @@ import com.lyu.graduationdesign_klt.R;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
-
-    private ResideMenu resideMenu;
-    private MainActivity mContext;
+    private static final String TAG = MainActivity.class
+			.getSimpleName();
+	private Activity context;
+	
+	
+	private ResideMenu resideMenu;
     private ResideMenuItem itemHome;
     private ResideMenuItem itemProfile;
     private ResideMenuItem itemCalendar;
@@ -54,7 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 	public void initUtil() {
 		// TODO Auto-generated method stub
 		super.initUtil();
-		mContext = this;
+		context = this;
 	}
 
 	@Override
@@ -151,12 +155,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
         @Override
         public void openMenu() {
-            Toast.makeText(mContext, "Menu is opened!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Menu is opened!", Toast.LENGTH_SHORT).show();
+        	AbToastUtil.showToast(context, "Menu is opened!");
         }
 
         @Override
         public void closeMenu() {
-            Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Menu is closed!", Toast.LENGTH_SHORT).show();
+        	AbToastUtil.showToast(context, "Menu is closed!");
         }
     };
 
