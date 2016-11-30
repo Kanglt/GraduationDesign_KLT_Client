@@ -8,10 +8,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 import lyu.klt.graduationdesign.base.BaseActivity;
+import lyu.klt.graduationdesign.module.ResideMenu.ResideMenu;
+import lyu.klt.graduationdesign.module.ResideMenu.ResideMenuItem;
 
 import com.lyu.graduationdesign_klt.R;
-import com.special.ResideMenu.ResideMenu;
-import com.special.ResideMenu.ResideMenuItem;
+
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
