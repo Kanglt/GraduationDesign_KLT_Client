@@ -6,6 +6,8 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import lyu.klt.frame.ab.util.AbToastUtil;
@@ -24,12 +26,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 	
 	private ResideMenu resideMenu;
     private ResideMenuItem itemHome;
-    private ResideMenuItem itemProfile;
-    private ResideMenuItem itemCalendar;
+    private ResideMenuItem item2;
+    private ResideMenuItem item3;
+    private ResideMenuItem item4;
+    private ResideMenuItem item5;
     private ResideMenuItem itemSettings;
     
     private Button title_bar_left_menu;
     private Button title_bar_right_menu;
+    
+    Window window; 
 
     /**
      * Called when the activity is first created.
@@ -37,6 +43,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+         * 隐藏虚拟键盘
+         */
+//        window = getWindow();  
+//        WindowManager.LayoutParams params = window.getAttributes();  
+//        params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;  
+//        window.setAttributes(params); 
         setAbContentView(R.layout.main);
         init();
         if( savedInstanceState == null )
@@ -86,8 +99,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         // create menu items;
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
-        itemProfile  = new ResideMenuItem(this, R.drawable.icon_profile,  "Profile");
-        itemCalendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
+        item2  = new ResideMenuItem(this, R.drawable.icon_profile,  "item2");
+        item3 = new ResideMenuItem(this, R.drawable.icon_profile, "item3");
+        item4 = new ResideMenuItem(this, R.drawable.icon_profile, "item4");
+        item5 = new ResideMenuItem(this, R.drawable.icon_profile, "item5");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
 
         
@@ -99,8 +114,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 		super.initViewData();
 		
 		resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemCalendar, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(item2, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(item3, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(item4, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(item5, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
 	}
 
@@ -109,8 +126,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 		// TODO Auto-generated method stub
 		super.initEvent();
 		 itemHome.setOnClickListener(this);
-	     itemProfile.setOnClickListener(this);
-	     itemCalendar.setOnClickListener(this);
+		 item2.setOnClickListener(this);
+		 item3.setOnClickListener(this);
+		 item4.setOnClickListener(this);
+		 item5.setOnClickListener(this);
 	     itemSettings.setOnClickListener(this);
 	     title_bar_left_menu.setOnClickListener(this);
 	     title_bar_right_menu.setOnClickListener(this);
@@ -134,11 +153,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         if (view == itemHome){
             changeFragment(new HomeFragment());
             resideMenu.closeMenu();
-        }else if (view == itemProfile){
-            changeFragment(new ProfileFragment());
+        }else if (view == item2){
+            changeFragment(new FargmentActivity());
             resideMenu.closeMenu();
-        }else if (view == itemCalendar){
-            changeFragment(new CalendarFragment());
+        }else if (view == item3){
+            changeFragment(new FargmentActivity2());
+            resideMenu.closeMenu();
+        }else if (view == item4){
+            changeFragment(new FargmentActivity3());
+            resideMenu.closeMenu();
+        }else if (view == item5){
+            changeFragment(new FargmentActivity4());
             resideMenu.closeMenu();
         }else if (view == itemSettings){
             changeFragment(new SettingsFragment());
@@ -156,13 +181,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void openMenu() {
 //            Toast.makeText(context, "Menu is opened!", Toast.LENGTH_SHORT).show();
-        	AbToastUtil.showToast(context, "Menu is opened!");
+        	//AbToastUtil.showToast(context, "Menu is opened!");
         }
 
         @Override
         public void closeMenu() {
 //            Toast.makeText(context, "Menu is closed!", Toast.LENGTH_SHORT).show();
-        	AbToastUtil.showToast(context, "Menu is closed!");
+        	//AbToastUtil.showToast(context, "Menu is closed!");
         }
     };
 

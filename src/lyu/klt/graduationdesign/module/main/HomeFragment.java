@@ -2,7 +2,9 @@ package lyu.klt.graduationdesign.module.main;
 
 import com.lyu.graduationdesign_klt.R;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import lyu.klt.graduationdesign.module.ResideMenu.ResideMenu;
  * Mail: specialcyci@gmail.com
  */
 public class HomeFragment extends Fragment {
+	public Activity context;
 
     private View parentView;
     private ResideMenu resideMenu;
@@ -24,6 +27,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.home, container, false);
+        context=this.getActivity();
         setUpViews();
         return parentView;
     }
@@ -35,7 +39,9 @@ public class HomeFragment extends Fragment {
         parentView.findViewById(R.id.btn_open_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+//                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+            	Intent intent=new Intent(context,MainActivityTest.class);
+            	startActivity(intent);
             }
         });
 

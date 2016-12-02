@@ -28,25 +28,12 @@
     <color name="choose_eara_item_press_color">#f4f4f4</color>
     <color name="cash_wallet">#ff9500</color>
     <color name="subsidy_wallet">#ff4d27</color>
-   
-    <color name="order_person_text_color">#f16d69</color>
-    <color name="order_myself">#e4302b</color>
-    <color name="order_people">#bad025</color>
-    <color name="order_for_others">#ff6766</color>
-    <color name="order_transfer">#d371e0</color>
-    <color name="order_remote">#fe9f21</color>
-    <color name="order_my_reservation">#2ed5aa</color>
-    <color name="order_total_reservation">#4aa4fc</color>
     
-    <color name="pending_order_status">#ffbe40</color>
-    <color name="finish_order_status">#a2b0bb</color>
-    <color name="remove_order_status">#f9909e</color>
-    <color name="have_order_goods_status">#91cdff</color>
-    <color name="finish_order_goods_status">#bad025</color>
-    <color name="overdue_order">#9370db</color>
-    <color name="pay_fail_order">#bc1717</color>
-    <color name="pay_orders">#6b8e23</color>
-    <color name="transparent_background">#90000000</color>
+    <color name="dark">#FF222222</color>
+    <color name="light">#FFEEEEEE</color>
+   
+    <color name="title_bar">#e4302b</color>
+   
     
     
 </resources>

@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import lyu.klt.graduationdesign.util.WindowUtil;
 
 /**
  * User: special
@@ -163,16 +164,20 @@ public class ResideMenu extends FrameLayout {
                 viewActivity.getPaddingTop() + insets.top,
                 viewActivity.getPaddingRight() + insets.right,
                 bottomPadding);
-        insets.left = insets.top = insets.right = insets.bottom = 0;
+       insets.left = insets.top = insets.right = insets.bottom = 0;
+        
         return true;
     }
 
     private int getNavigationBarHeight() {
         Resources resources = getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            return resources.getDimensionPixelSize(resourceId);
-        }
+        /**
+         * 下面的判断在有虚拟按键时会返回两倍的高度
+         */
+//        if (resourceId > 0) {
+//            return resources.getDimensionPixelSize(resourceId);
+//        }
         return 0;
     }
 
@@ -679,7 +684,13 @@ public class ResideMenu extends FrameLayout {
     }
 
     public int getScreenWidth() {
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//    	int screenWidth = activity.getWindowManager().getDefaultDisplay().getWidth();
+//    	int screenHeight = activity.getWindowManager().getDefaultDisplay().getHeight();
+//    	DisplayMetrics dm = new DisplayMetrics();  
+//    	dm = getResources().getDisplayMetrics();
+       // activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+    	//displayMetrics=WindowUtil.getHasVirtualKey(activity,displayMetrics);
+    	activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
     }
 

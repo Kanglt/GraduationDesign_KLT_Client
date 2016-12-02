@@ -5,9 +5,10 @@ import java.util.List;
 import org.json.JSONObject;
 
 import com.lyu.graduationdesign_klt.R;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,8 +27,10 @@ import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.po.UserPo;
 import lyu.klt.graduationdesign.moudle.api.TestAPI;
+import lyu.klt.graduationdesign.moudle.login.LoginActivity;
 import lyu.klt.graduationdesign.util.DataUtils;
 
+@SuppressLint("NewApi")
 public class FargmentActivity extends Fragment {
 	private static final String TAG = FargmentActivity.class
 			.getSimpleName();
@@ -88,9 +91,11 @@ public class FargmentActivity extends Fragment {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			Intent intent=new Intent();
 			switch (v.getId()) {
 			case R.id.btn_test:
-				TestAPI.testForMobile(context, "Kanglt", abStringHttpResponseListener);
+				intent.setClass(context, LoginActivity.class);
+				startActivity(intent);
 				break;
 			default:
 				break;

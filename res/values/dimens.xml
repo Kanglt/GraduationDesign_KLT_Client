@@ -23,5 +23,7 @@
     <dimen name="bill_img_height">40dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    
+    <dimen name="base_padding">16dp</dimen>
 
 </resources>
