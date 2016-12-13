@@ -15,5 +15,25 @@
     <string name="str_tab3">tab3</string>
     <string name="str_tab4">tab4</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_registered">RegisteredActivity</string>
+    <string name="str_login">LOGIN IN</string>
+    <string name="str_registered">Registered</string>
+    <string name="str_forgotPassword">Forgot password?</string>
+    <string name="str_newAnAccount">New an account?</string>
+    <string name="str_registeredAccount">账号 :</string>
+    <string name="str_rememberPassword">记住密码</string>
+    <string name="str_registeredPassword">密码 :</string>
+    <string name="str_registeredConfirmPassword">确认密码:</string>
+    <string name="str_registeredPasswordPrompt">密码由6~16位数字、英文字母组成</string>
+    <string name="str_registeredAccountPrompt">请输入手机号码！</string>
+    
+    <string name="str_phone_type_erroe">手机号码格式错误！</string>
+    <string name="str_email_type_erroe">邮箱地址格式错误！</string>
+    <string name="str_account_type_erroe">账号格式错误！</string>
+    <string name="str_data_type_erroe">数据格式错误,确认是否输入错误！</string>
+    <string name="str_data_is_empty">该数据不能为空！</string>
+    <string name="str_password_is_different">两次输入密码不一致！</string>
+     
+     
 
 </resources>

@@ -14,6 +14,7 @@ import lyu.klt.frame.ab.util.AbToastUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.ResideMenu.ResideMenu;
 import lyu.klt.graduationdesign.module.ResideMenu.ResideMenuItem;
+import lyu.klt.graduationdesign.moudle.client.MyApplication;
 
 import com.lyu.graduationdesign_klt.R;
 
@@ -72,6 +73,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 		// TODO Auto-generated method stub
 		super.initUtil();
 		context = this;
+		MyApplication.getInstance().addActivity(this);
 	}
 
 	@Override

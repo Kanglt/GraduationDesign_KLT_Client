@@ -71,4 +71,6 @@ public class FormatValidation {
 		String str = "^[1-9][0-9]{5}$";
 		return Pattern.compile(str).matcher(zipString).matches();
 	}
+	
+
 }

@@ -26,8 +26,8 @@ import lyu.klt.frame.util.GsonUtils;
 import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.po.UserPo;
+import lyu.klt.graduationdesign.moudle.activiy.LoginActivity;
 import lyu.klt.graduationdesign.moudle.api.TestAPI;
-import lyu.klt.graduationdesign.moudle.login.LoginActivity;
 import lyu.klt.graduationdesign.util.DataUtils;
 
 @SuppressLint("NewApi")

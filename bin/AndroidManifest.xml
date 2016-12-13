@@ -36,8 +36,12 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="lyu.klt.graduationdesign.moudle.login.LoginActivity"
+            android:name="lyu.klt.graduationdesign.moudle.activiy.LoginActivity"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name="lyu.klt.graduationdesign.moudle.activiy.RegisteredActivity"
+            android:label="@string/title_activity_registered" >
         </activity>
     </application>
 

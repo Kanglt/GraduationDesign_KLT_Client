@@ -18,7 +18,7 @@ public class MyApplication extends Application {
 	private static MyApplication mInstance = null;
 
 	private List<Activity> mActivityList = new LinkedList<Activity>();
-	//购物车商品
+	
 	
 	
 	@Override
