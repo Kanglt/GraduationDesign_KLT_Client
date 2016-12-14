@@ -10,10 +10,9 @@
     <string name="title_section3">Section 3</string>
     <string name="action_settings">Settings</string>
     <string name="title_bar_text">龙岩学院</string>
-    <string name="str_tab1">tab1</string>
-    <string name="str_tab2">tab2</string>
+    <string name="str_diet">饮食</string>
+    <string name="str_training">训练</string>
     <string name="str_tab3">tab3</string>
-    <string name="str_tab4">tab4</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_registered">RegisteredActivity</string>
     <string name="str_login">LOGIN IN</string>
@@ -26,14 +25,12 @@
     <string name="str_registeredConfirmPassword">确认密码:</string>
     <string name="str_registeredPasswordPrompt">密码由6~16位数字、英文字母组成</string>
     <string name="str_registeredAccountPrompt">请输入手机号码！</string>
-    
     <string name="str_phone_type_erroe">手机号码格式错误！</string>
     <string name="str_email_type_erroe">邮箱地址格式错误！</string>
     <string name="str_account_type_erroe">账号格式错误！</string>
     <string name="str_data_type_erroe">数据格式错误,确认是否输入错误！</string>
     <string name="str_data_is_empty">该数据不能为空！</string>
     <string name="str_password_is_different">两次输入密码不一致！</string>
-     
-     
+    <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
 
 </resources>

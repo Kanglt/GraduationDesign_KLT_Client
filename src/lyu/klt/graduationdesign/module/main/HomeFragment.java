@@ -40,8 +40,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 //                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
-            	Intent intent=new Intent(context,MainActivityTest.class);
-            	startActivity(intent);
+            	
             }
         });
 

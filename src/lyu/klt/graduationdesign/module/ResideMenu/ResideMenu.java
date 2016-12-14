@@ -114,20 +114,20 @@ public class ResideMenu extends FrameLayout {
             layoutLeftMenu = (LinearLayout) scrollViewLeftMenu.findViewById(R.id.layout_left_menu);
         }
 
-        if (customRightMenuId >= 0) {
-            scrollViewRightMenu = inflater.inflate(customRightMenuId, this, false);
-        } else {
-            scrollViewRightMenu = inflater.inflate(
-                    R.layout.residemenu_custom_right_scrollview, this, false);
-            layoutRightMenu = (LinearLayout) scrollViewRightMenu.findViewById(R.id.layout_right_menu);
-        }
+//        if (customRightMenuId >= 0) {
+//            scrollViewRightMenu = inflater.inflate(customRightMenuId, this, false);
+//        } else {
+//            scrollViewRightMenu = inflater.inflate(
+//                    R.layout.residemenu_custom_right_scrollview, this, false);
+//            layoutRightMenu = (LinearLayout) scrollViewRightMenu.findViewById(R.id.layout_right_menu);
+//        }
 
         imageViewShadow = (ImageView) findViewById(R.id.iv_shadow);
         imageViewBackground = (ImageView) findViewById(R.id.iv_background);
 
         RelativeLayout menuHolder = (RelativeLayout) findViewById(R.id.sv_menu_holder);
         menuHolder.addView(scrollViewLeftMenu);
-        menuHolder.addView(scrollViewRightMenu);
+      //menuHolder.addView(scrollViewRightMenu);
     }
 
     /**
@@ -575,7 +575,8 @@ public class ResideMenu extends FrameLayout {
 
     private void setScaleDirectionByRawX(float currentRawX) {
         if (currentRawX < lastRawX)
-            setScaleDirection(DIRECTION_RIGHT);
+            //setScaleDirection(DIRECTION_RIGHT);
+        	;
         else
             setScaleDirection(DIRECTION_LEFT);
     }

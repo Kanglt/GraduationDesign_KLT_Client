@@ -11,13 +11,14 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import lyu.klt.graduationdesign.module.main.FargmentActivity;
-import lyu.klt.graduationdesign.module.main.FargmentActivity2;
-import lyu.klt.graduationdesign.module.main.FargmentActivity3;
+import lyu.klt.graduationdesign.module.main.RecommendedFargmentActivity;
+import lyu.klt.graduationdesign.module.main.TrainingFargmentActivity;
+import lyu.klt.graduationdesign.module.main.DietFargmentActivity;
 import lyu.klt.graduationdesign.module.main.FargmentActivity4;
 import lyu.klt.graduationdesign.module.po.UserPo;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
@@ -32,84 +33,44 @@ import lyu.klt.graduationdesign.moudle.client.MyApplication;
 public class FargmentTabUtil {
 	
 	/**
-	 * 用于展示消息的Fragment
+	 * 用于展示训练的Fragment
 	 */
-	private FargmentActivity FargmentActivity;
+	private TrainingFargmentActivity trainingFargmentActivity;
 
 	/**
-	 * 用于展示联系人的Fragment
+	 * 用于展示饮食的Fragment
 	 */
-	private FargmentActivity2 FargmentActivity2;
+	private DietFargmentActivity dietFargmentActivity;
+
 
 	/**
-	 * 用于展示动态的Fragment
+	 * 训练界面布局
 	 */
-	private FargmentActivity3 FargmentActivity3;
+	private View layout_training;
 
 	/**
-	 * 用于展示设置的Fragment
+	 * 饮食界面布局
 	 */
-	private FargmentActivity4 FargmentActivity4;
+	private View layout_diet;
+
+	
+	/**
+	 * 在Tab布局上显示训练标题的控件
+	 */
+	private TextView tv_training;
 
 	/**
-	 * 消息界面布局
+	 * 在Tab布局上显示饮食标题的控件
 	 */
-	private View messageLayout;
+	private TextView tv_diet;
+	
+	private ImageView img_training_divider;
+	private ImageView img_diet_divider;
+	
 
-	/**
-	 * 联系人界面布局
-	 */
-	private View contactsLayout;
+	private View view;
 
-	/**
-	 * 动态界面布局
-	 */
-	private View newsLayout;
-
-	/**
-	 * 设置界面布局
-	 */
-	private View settingLayout;
-
-	/**
-	 * 在Tab布局上显示消息图标的控件
-	 */
-	private ImageView messageImage;
-
-	/**
-	 * 在Tab布局上显示联系人图标的控件
-	 */
-	private ImageView contactsImage;
-
-	/**
-	 * 在Tab布局上显示动态图标的控件
-	 */
-	private ImageView newsImage;
-
-	/**
-	 * 在Tab布局上显示设置图标的控件
-	 */
-	private ImageView settingImage;
-
-	/**
-	 * 在Tab布局上显示消息标题的控件
-	 */
-	private TextView messageText;
-
-	/**
-	 * 在Tab布局上显示联系人标题的控件
-	 */
-	private TextView contactsText;
-
-	/**
-	 * 在Tab布局上显示动态标题的控件
-	 */
-	private TextView newsText;
-
-	/**
-	 * 在Tab布局上显示设置标题的控件
-	 */
-	private TextView settingText;
+	
 
 	/**
 	 * 用于对Fragment进行管理
@@ -118,8 +79,11 @@ public class FargmentTabUtil {
 	
 	private Activity context;
 	
-	public FargmentTabUtil(Activity context){
+	public FargmentTabUtil(Activity context,View view){
 		this.context=context;
+//		LayoutInflater inflater = LayoutInflater.from(context);  
+//		view = inflater.inflate(R.layout.fargment_recommended_layout, null);
+		this.view=view;
 		fragmentManager = context.getFragmentManager();
 		init();
 		// 第一次启动时选中第0个tab
@@ -147,38 +111,29 @@ public class FargmentTabUtil {
 
 
 	public void initView() {
-		messageLayout = context.findViewById(R.id.message_layout);
-		contactsLayout = context.findViewById(R.id.contacts_layout);
-		newsLayout = context.findViewById(R.id.news_layout);
-		settingLayout = context.findViewById(R.id.setting_layout);
-		messageImage = (ImageView) context.findViewById(R.id.message_image);
-		contactsImage = (ImageView) context.findViewById(R.id.contacts_image);
-		newsImage = (ImageView) context.findViewById(R.id.news_image);
-		settingImage = (ImageView) context.findViewById(R.id.setting_image);
-		messageText = (TextView) context.findViewById(R.id.message_text);
-		contactsText = (TextView) context.findViewById(R.id.contacts_text);
-		newsText = (TextView) context.findViewById(R.id.news_text);
-		settingText = (TextView) context.findViewById(R.id.setting_text);
-		
+		layout_training = view.findViewById(R.id.layout_training);
+		layout_diet = view.findViewById(R.id.layout_diet);
+		tv_training = (TextView) view.findViewById(R.id.tv_training);
+		tv_diet = (TextView) view.findViewById(R.id.tv_diet);
+		img_training_divider =(ImageView) view.findViewById(R.id.img_training_divider);
+		img_diet_divider = (ImageView) view.findViewById(R.id.img_diet_divider);
 		
 	}
 
 
 	public void initViewData() {
-		ImageViewUtils.setImageViewWidth_div(context, messageImage,14);
-		ImageViewUtils.setImageViewWidth_div(context, contactsImage,14);
-		ImageViewUtils.setImageViewWidth_div(context, newsImage,14);
-		ImageViewUtils.setImageViewWidth_div(context, settingImage,14);
+//		ImageViewUtils.setImageViewWidth_div(context, messageImage,14);
+//		ImageViewUtils.setImageViewWidth_div(context, contactsImage,14);
+//		ImageViewUtils.setImageViewWidth_div(context, newsImage,14);
+//		ImageViewUtils.setImageViewWidth_div(context, settingImage,14);
 		
 		
 	}
 
 
 	public void initEvent() {
-		messageLayout.setOnClickListener(onClickListener);
-		contactsLayout.setOnClickListener(onClickListener);
-		newsLayout.setOnClickListener(onClickListener);
-		settingLayout.setOnClickListener(onClickListener);
+		layout_training.setOnClickListener(onClickListener);
+		layout_diet.setOnClickListener(onClickListener);
 	}
 
 	
@@ -203,56 +158,31 @@ public class FargmentTabUtil {
 		switch (index) {
 		case 0:
 			// 当点击了消息tab时，改变控件的图片和文字颜色
-			messageImage.setImageResource(R.drawable.main_my_press);
-			messageText.setTextColor(Color.WHITE);
-			if (FargmentActivity == null) {
+			tv_training.setTextColor(Color.parseColor("#F2F2F2"));
+			img_training_divider.setVisibility(View.VISIBLE);
+			if (trainingFargmentActivity == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
-				FargmentActivity = new FargmentActivity();
-				transaction.add(R.id.content, FargmentActivity);
+				trainingFargmentActivity = new TrainingFargmentActivity();
+				transaction.add(R.id.fargment_recommended, trainingFargmentActivity);
 			} else {
 				// 如果MessageFragment不为空，则直接将它显示出来
-				transaction.show(FargmentActivity);
+				transaction.show(trainingFargmentActivity);
 			}
 			break;
 		case 1:
 			// 当点击了联系人tab时，改变控件的图片和文字颜色
-			contactsImage.setImageResource(R.drawable.main_shop_press);
-			contactsText.setTextColor(Color.WHITE);
-			if (FargmentActivity2 == null) {
+			
+			tv_diet.setTextColor(Color.parseColor("#F2F2F2"));
+			img_diet_divider.setVisibility(View.VISIBLE);
+			if (dietFargmentActivity == null) {
 				// 如果ContactsFragment为空，则创建一个并添加到界面上
-				FargmentActivity2 = new FargmentActivity2();
-				transaction.add(R.id.content, FargmentActivity2);
+				dietFargmentActivity = new DietFargmentActivity();
+				transaction.add(R.id.fargment_recommended, dietFargmentActivity);
 			} else {
 				// 如果ContactsFragment不为空，则直接将它显示出来
-				transaction.show(FargmentActivity2);
+				transaction.show(dietFargmentActivity);
 			}
 			break;
-		case 2:
-			// 当点击了动态tab时，改变控件的图片和文字颜色
-			newsImage.setImageResource(R.drawable.main_order_press);
-			newsText.setTextColor(Color.WHITE);
-			if (FargmentActivity3 == null) {
-				// 如果NewsFragment为空，则创建一个并添加到界面上
-				FargmentActivity3 = new FargmentActivity3();
-				transaction.add(R.id.content, FargmentActivity3);
-			} else {
-				// 如果NewsFragment不为空，则直接将它显示出来
-				transaction.show(FargmentActivity3);
-			}
-			break;
-		case 3:
-			// 当点击了设置tab时，改变控件的图片和文字颜色
-						settingImage.setImageResource(R.drawable.main_news_press);
-						settingText.setTextColor(Color.WHITE);
-						if (FargmentActivity4 == null) {
-							// 如果SettingFragment为空，则创建一个并添加到界面上
-							FargmentActivity4 = new FargmentActivity4();
-							transaction.add(R.id.content, FargmentActivity4);
-						} else {
-							// 如果SettingFragment不为空，则直接将它显示出来
-							transaction.show(FargmentActivity4);
-						}
-						break;
 		default:
 			break;
 		}
@@ -262,15 +192,15 @@ public class FargmentTabUtil {
 	/**
 	 * 清除掉所有的选中状态。
 	 */
-	private void clearSelection() {
-		messageImage.setImageResource(R.drawable.main_my_unpress);
-		messageText.setTextColor(Color.parseColor("#82858b"));
-		contactsImage.setImageResource(R.drawable.main_shop_unpress);
-		contactsText.setTextColor(Color.parseColor("#82858b"));
-		newsImage.setImageResource(R.drawable.main_order_unpress);
-		newsText.setTextColor(Color.parseColor("#82858b"));
-		settingImage.setImageResource(R.drawable.main_news_unpress);
-		settingText.setTextColor(Color.parseColor("#82858b"));
+	private void clearSelection() {	
+		tv_training.setTextColor(Color.parseColor("#887c7c7c"));
+		tv_diet.setTextColor(Color.parseColor("#887c7c7c"));
+		img_diet_divider.setVisibility(View.GONE);
+		img_training_divider.setVisibility(View.GONE);
+//		newsImage.setImageResource(R.drawable.main_order_unpress);
+//		newsText.setTextColor(Color.parseColor("#82858b"));
+//		settingImage.setImageResource(R.drawable.main_news_unpress);
+//		settingText.setTextColor(Color.parseColor("#82858b"));
 	}
 
 	/**
@@ -280,18 +210,13 @@ public class FargmentTabUtil {
 	 *            用于对Fragment执行操作的事务
 	 */
 	private void hideFragments(FragmentTransaction transaction) {
-		if (FargmentActivity != null) {
-			transaction.hide(FargmentActivity);
+		if (trainingFargmentActivity != null) {
+			transaction.hide(trainingFargmentActivity);
 		}
-		if (FargmentActivity2 != null) {
-			transaction.hide(FargmentActivity2);
+		if (dietFargmentActivity != null) {
+			transaction.hide(dietFargmentActivity);
 		}
-		if (FargmentActivity3 != null) {
-			transaction.hide(FargmentActivity3);
-		}
-		if (FargmentActivity4 != null) {
-			transaction.hide(FargmentActivity4);
-		}
+		
 	}
 	
 	private OnClickListener onClickListener = new OnClickListener(){
@@ -300,26 +225,15 @@ public class FargmentTabUtil {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
-//			case R.id.btn_test:
-//				TestAPI.testForMobile(context, "Kanglt", abStringHttpResponseListener);
-//				break;
-			case R.id.message_layout:
+			case R.id.layout_training:
 				// 当点击了消息tab时，选中第1个tab
 				setTabSelection(0);
 				break;
-			case R.id.contacts_layout:
+			case R.id.layout_diet:
 				// 当点击了联系人tab时，选中第2个tab
 				setTabSelection(1);
 				break;
-			case R.id.news_layout:
-				// 当点击了动态tab时，选中第3个tab
-				setTabSelection(2);
-				break;
-			case R.id.setting_layout:
-				// 当点击了设置tab时，选中第4个tab
-				setTabSelection(3);
-				break;
-
+		
 			default:
 				break;
 			}

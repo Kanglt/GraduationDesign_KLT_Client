@@ -19,5 +19,7 @@ encoding="utf-8"?>
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />
     </declare-styleable>
+    
+    
 
 </resources>

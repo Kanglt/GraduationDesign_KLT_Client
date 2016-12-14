@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="21"
+        android:minSdkVersion="17"
         android:targetSdkVersion="24" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -42,6 +42,10 @@
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activiy.RegisteredActivity"
             android:label="@string/title_activity_registered" >
+        </activity>
+        <activity
+            android:name="lyu.klt.graduationdesign.moudle.activiy.ForgotPasswordActivity"
+            android:label="@string/title_activity_forgot_password" >
         </activity>
     </application>
 
