@@ -25,7 +25,14 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
-
+/**
+ * 
+* @ClassName: SlidingTabStrip 
+* @Description: TODO(与Fargment组合使用的导航栏的属性) 
+* @author 康良涛 
+* @date 2016年12月15日 上午8:40:31 
+*
+ */
 class SlidingTabStrip extends LinearLayout {
 
 	//选项卡底部长线的默认厚度

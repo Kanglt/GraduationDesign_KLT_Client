@@ -1,0 +1,405 @@
+package lyu.klt.graduationdesign.module.farment;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.lyu.graduationdesign_klt.R;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.app.Fragment;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.view.GestureDetector;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ViewFlipper;
+import lyu.klt.frame.ab.util.AbSharedUtil;
+import lyu.klt.frame.ab.view.pullview.AbPullToRefreshView;
+import lyu.klt.frame.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
+import lyu.klt.graduationdesign.module.adapter.DietListAdapter;
+import lyu.klt.graduationdesign.module.adapter.TrainingListAdapter;
+import lyu.klt.graduationdesign.moudle.activity.MainActivity;
+import lyu.klt.graduationdesign.moudle.client.Constant;
+import lyu.klt.graduationdesign.moudle.client.MyApplication;
+import lyu.klt.graduationdesign.moudle.client.UrlConstant;
+import lyu.klt.graduationdesign.util.ImageLoaderUtil;
+import lyu.klt.graduationdesign.util.ViewUtil;
+import android.view.ViewGroup;
+import android.view.GestureDetector.OnGestureListener;
+
+/**
+ * 
+ * @ClassName: DietFargmentActivity
+ * @Description: TODO(推荐模块下的子模块（饮食）的Fargment)
+ * @author 康良涛
+ * @date 2016年12月15日 上午8:44:24
+ *
+ */
+public class DietFargmentActivity extends Fragment implements OnGestureListener, MainActivity.MyTouchListener {
+	private static final String TAG = DietFargmentActivity.class.getSimpleName();
+	private Activity context;
+
+	// 主要用于消除预加载
+	protected boolean isVisible;
+	// 标志位，View已经初始化完成。
+	private boolean isPrepared;
+	// 标志位，数据已经加载过了。
+	private boolean isLoaded;
+
+	public SwipeRefreshLayout swipe_refresh_widget;
+	public int lastVisibleItem;
+	public ViewFlipper viewfilpper_diet_top;
+	public ListView listView_diet;
+
+	private GestureDetector detector; // 手势检测
+
+	// 动画效果
+	private Animation leftInAnimation;
+	private Animation leftOutAnimation;
+	private Animation rightInAnimation;
+	private Animation rightOutAnimation;
+
+	// private HorizontalListView hListView;
+	// private HorizontalListViewAdapter hListViewAdapter;
+	
+	
+	Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			swipe_refresh_widget.setRefreshing(false);
+			
+		}
+
+	};
+
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		// View view = inflater.inflate(R.layout.message_layout,
+		// container, false);
+		View view = inflater.inflate(R.layout.fargment_diet_layout, null);
+		this.init(view);
+		return view;
+	}
+
+	@Override
+	public void onAttach(Context context) {
+		// TODO Auto-generated method stub
+		super.onAttach(context);
+		this.context = (Activity) context;
+	}
+
+	public void init(View view) {
+		this.initUtil();
+		this.initData();
+		this.initView(view);
+		this.initViewData();
+		this.initEvent();
+		this.startGame();
+	}
+
+	public void initUtil() {
+		// context = this.getActivity();
+		// 将myTouchListener注册到分发列表
+		((MainActivity) context).registerMyTouchListener(this);
+	}
+
+	public void initData() {
+
+	}
+
+	public void initView(View view) {
+		
+		viewfilpper_diet_top = (ViewFlipper) view.findViewById(R.id.viewfilpper_diet_top);
+		detector = new GestureDetector(this);
+		listView_diet = (ListView) view.findViewById(R.id.listView_diet);
+		swipe_refresh_widget = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_widget);
+
+	}
+
+	public void initViewData() {
+		isPrepared = true;
+
+		
+		// mPulltorefreshview.getFooterView()
+		// .setFooterProgressBarDrawable(this.getResources().getDrawable(R.drawable.progress_circular));
+
+		doLoadCarouse();// 加载 轮播图
+
+		listView_diet.setFocusable(false);
+		listView_diet.setAdapter(new DietListAdapter(context, listdata()));
+		listView_diet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+			}
+		});
+		ViewUtil.setListViewHeightBasedOnChildren(listView_diet);
+
+	}
+
+	public void initEvent() {
+
+		swipe_refresh_widget.setOnRefreshListener(new OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				// TODO Auto-generated method stub
+				swipe_refresh_widget.setRefreshing(true);
+				// 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
+				handler.sendEmptyMessageDelayed(0, 3000);
+			}
+		});
+
+		
+	}
+
+	public void startGame() {
+	}
+
+	private OnClickListener onClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			switch (v.getId()) {
+
+			default:
+				break;
+			}
+		}
+
+	};
+
+
+	/**
+	 * 
+	 * @Title: doIsDownloadCarouse @Description: 操作是否需要下载图片 @param: @param
+	 *         strs @return: void @throws
+	 */
+	private void doLoadCarouse() {
+		String localStr = AbSharedUtil.getString(context, Constant.VIEWFILPPER_DIET_FILEID);
+		if (localStr == null) {
+			return;
+		}
+		viewfilpper_diet_top.removeAllViews();
+		viewfilpper_diet_top.setAutoStart(false);
+		viewfilpper_diet_top.stopFlipping();
+		String strArr[] = localStr.split(",");
+		for (String fileId : strArr) {
+			ImageView imageView1 = new ImageView(context);
+			imageView1.setScaleType(ImageView.ScaleType.FIT_XY);
+			ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_VIEWFILPPERIMAGE_URL + fileId, imageView1,
+					imageLoadingListener);
+			viewfilpper_diet_top.addView(imageView1);
+		}
+
+		viewfilpper_diet_top.setAutoStart(true);
+		viewfilpper_diet_top.startFlipping();
+
+		// 动画效果
+		leftInAnimation = AnimationUtils.loadAnimation(context, R.anim.left_in);
+		leftOutAnimation = AnimationUtils.loadAnimation(context, R.anim.left_out);
+		rightInAnimation = AnimationUtils.loadAnimation(context, R.anim.right_in);
+		rightOutAnimation = AnimationUtils.loadAnimation(context, R.anim.right_out);
+
+	}
+
+	ImageLoadingListener imageLoadingListener = new ImageLoadingListener() {
+
+		@Override
+		public void onLoadingStarted(String arg0, View arg1) {
+			// TODO Auto-generated method stub
+			Log.e("TrainingFargmentActivity", "onLoadingStarted");
+		}
+
+		@Override
+		public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+			// TODO Auto-generated method stub
+			Log.e("TrainingFargmentActivity", "onLoadingFailed");
+			// viewfilpper_training_top.removeAllViews();
+			// ImageView imageView1 = new ImageView(context);
+			// imageView1.setScaleType(ImageView.ScaleType.FIT_XY);
+			// imageView1.setImageResource(R.drawable.image_loading);
+			// viewfilpper_training_top.addView(imageView1);
+		}
+
+		@Override
+		public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+			// TODO Auto-generated method stub
+			Log.e("TrainingFargmentActivity", "onLoadingComplete");
+		}
+
+		@Override
+		public void onLoadingCancelled(String arg0, View arg1) {
+			// TODO Auto-generated method stub
+			Log.e("TrainingFargmentActivity", "onLoadingCancelled");
+		}
+	};
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.view.GestureDetector.OnGestureListener#onDown(android.view.
+	 * MotionEvent)
+	 */
+	@Override
+	public boolean onDown(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * android.view.GestureDetector.OnGestureListener#onShowPress(android.view.
+	 * MotionEvent)
+	 */
+	@Override
+	public void onShowPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * android.view.GestureDetector.OnGestureListener#onSingleTapUp(android.view
+	 * .MotionEvent)
+	 */
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * android.view.GestureDetector.OnGestureListener#onScroll(android.view.
+	 * MotionEvent, android.view.MotionEvent, float, float)
+	 */
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * android.view.GestureDetector.OnGestureListener#onLongPress(android.view.
+	 * MotionEvent)
+	 */
+	@Override
+	public void onLongPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.view.GestureDetector.OnGestureListener#onFling(android.view.
+	 * MotionEvent, android.view.MotionEvent, float, float)
+	 */
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		// TODO Auto-generated method stub
+		// Log.i(TAG, "e1=" + e1.getX() + " e2=" + e2.getX() + " e1-e2=" +
+		// (e1.getX() - e2.getX()));
+		//
+
+		if (e1 != null && e2 != null) {
+
+			if (e1.getX() - e2.getX() > 120) {
+				viewfilpper_diet_top.setInAnimation(leftInAnimation);
+				viewfilpper_diet_top.setOutAnimation(leftOutAnimation);
+				viewfilpper_diet_top.showNext();// 向右滑动
+				return true;
+			} else if (e1.getX() - e2.getY() < -120) {
+				viewfilpper_diet_top.setInAnimation(rightInAnimation);
+				viewfilpper_diet_top.setOutAnimation(rightOutAnimation);
+				viewfilpper_diet_top.showPrevious();// 向左滑动
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see lyu.klt.graduationdesign.module.main.MainActivity.MyTouchListener#
+	 * onTouchEvent(android.view.MotionEvent)
+	 */
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+		if (ViewUtil.inRangeOfView(viewfilpper_diet_top, event)) {
+//			AbSharedUtil.putString(context, Constant.RESIDEMENU_TOUCHEVENT_TYPE, "true");
+//			MyApplication.resideMenu.dispatchTouchEvent(event);
+			MyApplication.recommended_vp.onInterceptTouchEvent(event);
+			MyApplication.main_vp.onInterceptTouchEvent(event);
+			return this.detector.onTouchEvent(event); // touch事件交给手势处理。
+		}
+		if (ViewUtil.inRangeOfView(MyApplication.rv_diet_fargment, event)) {
+//			AbSharedUtil.putString(context, Constant.RESIDEMENU_TOUCHEVENT_TYPE, "true");
+//			MyApplication.resideMenu.dispatchTouchEvent(event);
+			return MyApplication.rv_diet_fargment.dispatchTouchEvent(event);
+		}
+
+		AbSharedUtil.putString(context, Constant.RESIDEMENU_TOUCHEVENT_TYPE, "false");
+		return false;
+	}
+
+	public List<HashMap<String, Object>> listdata() {
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("list_text", "测试数据1");
+		list.add(hm);
+		
+		hm = new HashMap<String, Object>();
+		hm.put("list_text", "测试数据2");
+		list.add(hm);
+
+		hm = new HashMap<String, Object>();
+		hm.put("list_text", "测试数据3");
+		list.add(hm);
+		hm = new HashMap<String, Object>();
+		hm.put("list_text", "测试数据4");
+		list.add(hm);
+		hm = new HashMap<String, Object>();
+		hm.put("list_text", "测试数据5");
+		list.add(hm);
+		hm = new HashMap<String, Object>();
+		hm.put("list_text", "测试数据6");
+		list.add(hm);
+		return list;
+	}
+
+}

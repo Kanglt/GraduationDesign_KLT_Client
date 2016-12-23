@@ -1,0 +1,307 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/title_bar_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        layout="@layout/activity_title_bar" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#ebebeb" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_widget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ScrollView
+            android:id="@+id/sv_fitness"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:id="@+id/tv_fitness_tatol_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="fill_parent"
+                            android:gravity="start|center"
+                            android:text="总共训练"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" >
+
+                        <ImageView
+                            android:id="@+id/iv_fitness_tatol_next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/work_thenextitem" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/tv_fitness_total_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="6666"
+                        android:textSize="45sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toEndOf="@+id/tv_fitness_total_time"
+                        android:gravity="center"
+                        android:text="分钟" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="20sp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:id="@+id/tv_fitness_total_finish"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginBottom="10sp"
+                            android:gravity="center"
+                            android:text="完成"
+                            android:textColor="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/tv_fitness_total_finish_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/tv_fitness_total_finish"
+                            android:gravity="center|bottom"
+                            android:singleLine="true"
+                            android:text="28"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_fitness_times"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_toEndOf="@+id/tv_fitness_total_finish_num"
+                            android:gravity="center"
+                            android:text="次" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:id="@+id/tv_fitness_cumulative_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="10sp"
+                            android:gravity="center"
+                            android:text="累计"
+                            android:textColor="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/tv_fitness_cumulative_day_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_below="@+id/tv_fitness_cumulative_day"
+                            android:layout_centerInParent="true"
+                            android:gravity="center|bottom"
+                            android:singleLine="true"
+                            android:text="21"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_fitness_days"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_toEndOf="@+id/tv_fitness_cumulative_day_num"
+                            android:gravity="center"
+                            android:text="天" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:id="@+id/tv_fitness_total_consumption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginBottom="10sp"
+                            android:gravity="center"
+                            android:text="消耗"
+                            android:textColor="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/tv_fitness_total_consumption_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_toStartOf="@+id/tv_fitness_total_consumption_calories"
+                            android:gravity="center|bottom"
+                            android:singleLine="true"
+                            android:text="2198"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_fitness_total_consumption_calories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_below="@+id/tv_fitness_total_consumption"
+                            android:gravity="center|bottom"
+                            android:text="千卡" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#ebebeb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/tv_fitness_my_trianing_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="fill_parent"
+                                android:gravity="start|center"
+                                android:text="我的训练"
+                                android:textSize="18sp" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/tv_fitness_my_trianing_add"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:gravity="end|center"
+                                android:text="添加训练"
+                                android:textColor="@color/gray"
+                                android:textSize="18sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/listView_fitness"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+                    </ListView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10sp"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/tv_fitness_my_trianing_sub2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="start|center"
+                                android:text="删除训练"
+                                android:textColor="@color/gray"
+                                android:textSize="18sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="#ebebeb" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

@@ -1,7 +1,5 @@
 package lyu.klt.graduationdesign.view;
 
-import android.support.v4.app.Fragment;
-
 /**
  * Created by moon.zhong on 2015/3/9.
  */

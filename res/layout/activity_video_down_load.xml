@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        layout="@layout/activity_title_bar" />
+    
+     <ProgressBar 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/downProgress"
+        android:layout_below="@+id/title_bar_layout"
+        style="?android:attr/progressBarStyleHorizontal"/>
+
+     <Button
+         android:id="@+id/btn_exitDownload"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentRight="true"
+         android:layout_below="@+id/downProgress"
+         android:text="取消下载" />
+
+</RelativeLayout>

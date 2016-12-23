@@ -36,6 +36,14 @@ public class AbHttpUtil {
 	private static AbHttpUtil mAbHttpUtil = null;
 	
 	
+	public AbHttpClient getmClient() {
+		return mClient;
+	}
+
+	public void setmClient(AbHttpClient mClient) {
+		this.mClient = mClient;
+	}
+
 	/**
 	 * 描述：获取实例.
 	 *

@@ -20,6 +20,7 @@ encoding="utf-8"?>
         <attr name="border_color" format="color" />
     </declare-styleable>
     
-    
+    <!-- Default color of foreground imagery. -->
+    <attr name="colorForeground" format="color" />
 
 </resources>

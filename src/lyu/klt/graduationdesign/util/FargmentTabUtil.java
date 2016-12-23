@@ -16,11 +16,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import lyu.klt.graduationdesign.module.main.RecommendedFargmentActivity;
-import lyu.klt.graduationdesign.module.main.TrainingFargmentActivity;
-import lyu.klt.graduationdesign.module.main.DietFargmentActivity;
-import lyu.klt.graduationdesign.module.main.FargmentActivity4;
-import lyu.klt.graduationdesign.module.po.UserPo;
+import lyu.klt.graduationdesign.module.bean.UserPo;
+import lyu.klt.graduationdesign.module.farment.DietFargmentActivity;
+import lyu.klt.graduationdesign.module.farment.FitnessFargmentActivity;
+import lyu.klt.graduationdesign.module.farment.RecommendedFargmentActivity;
+import lyu.klt.graduationdesign.module.farment.TrainingFargmentActivity;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 
 /** 
@@ -111,12 +111,12 @@ public class FargmentTabUtil {
 
 
 	public void initView() {
-		layout_training = view.findViewById(R.id.layout_training);
-		layout_diet = view.findViewById(R.id.layout_diet);
-		tv_training = (TextView) view.findViewById(R.id.tv_training);
-		tv_diet = (TextView) view.findViewById(R.id.tv_diet);
-		img_training_divider =(ImageView) view.findViewById(R.id.img_training_divider);
-		img_diet_divider = (ImageView) view.findViewById(R.id.img_diet_divider);
+//		layout_training = view.findViewById(R.id.layout_training);
+//		layout_diet = view.findViewById(R.id.layout_diet);
+//		tv_training = (TextView) view.findViewById(R.id.tv_training);
+//		tv_diet = (TextView) view.findViewById(R.id.tv_diet);
+//		img_training_divider =(ImageView) view.findViewById(R.id.img_training_divider);
+//		img_diet_divider = (ImageView) view.findViewById(R.id.img_diet_divider);
 		
 	}
 
@@ -163,10 +163,10 @@ public class FargmentTabUtil {
 			if (trainingFargmentActivity == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
 				trainingFargmentActivity = new TrainingFargmentActivity();
-				transaction.add(R.id.fargment_recommended, trainingFargmentActivity);
+				//transaction.add(R.id.fargment_recommended, trainingFargmentActivity);
 			} else {
 				// 如果MessageFragment不为空，则直接将它显示出来
-				transaction.show(trainingFargmentActivity);
+				//transaction.show(trainingFargmentActivity);
 			}
 			break;
 		case 1:
@@ -177,7 +177,7 @@ public class FargmentTabUtil {
 			if (dietFargmentActivity == null) {
 				// 如果ContactsFragment为空，则创建一个并添加到界面上
 				dietFargmentActivity = new DietFargmentActivity();
-				transaction.add(R.id.fargment_recommended, dietFargmentActivity);
+				//transaction.add(R.id.fargment_recommended, dietFargmentActivity);
 			} else {
 				// 如果ContactsFragment不为空，则直接将它显示出来
 				transaction.show(dietFargmentActivity);
@@ -225,14 +225,14 @@ public class FargmentTabUtil {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
-			case R.id.layout_training:
-				// 当点击了消息tab时，选中第1个tab
-				setTabSelection(0);
-				break;
-			case R.id.layout_diet:
-				// 当点击了联系人tab时，选中第2个tab
-				setTabSelection(1);
-				break;
+//			case R.id.layout_training:
+//				// 当点击了消息tab时，选中第1个tab
+//				setTabSelection(0);
+//				break;
+//			case R.id.layout_diet:
+//				// 当点击了联系人tab时，选中第2个tab
+//				setTabSelection(1);
+//				break;
 		
 			default:
 				break;

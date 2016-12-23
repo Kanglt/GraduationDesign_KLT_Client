@@ -10,6 +10,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/layout_top"
+            android:background="@color/gray"
             >
 
         <ImageView
@@ -60,5 +61,7 @@
             android:orientation="vertical"
             android:id="@+id/main_fragment">
     </FrameLayout>
+    
+   
 
 </LinearLayout>

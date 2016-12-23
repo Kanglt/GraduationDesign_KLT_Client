@@ -20,7 +20,7 @@ public class KangSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
     	//db.execSQL("DROP TABLE loginData");
-        db.execSQL("create TABLE loginData(userName TEXT PRIMARY KEY NOT NULL,userPassword TEXT NOT NULL)");
+        db.execSQL("create TABLE loginData(userId TEXT PRIMARY KEY NOT NULL,userPassword TEXT NOT NULL)");
 
     }
 

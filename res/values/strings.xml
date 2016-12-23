@@ -22,6 +22,8 @@
     <string name="str_registeredAccount">账号 :</string>
     <string name="str_rememberPassword">记住密码</string>
     <string name="str_registeredPassword">密码 :</string>
+    <string name="str_nowPassword">原密码 :</string>
+    <string name="str_newPassword">新密码 :</string>
     <string name="str_registeredConfirmPassword">确认密码:</string>
     <string name="str_registeredPasswordPrompt">密码由6~16位数字、英文字母组成</string>
     <string name="str_registeredAccountPrompt">请输入手机号码！</string>
@@ -31,6 +33,19 @@
     <string name="str_data_type_erroe">数据格式错误,确认是否输入错误！</string>
     <string name="str_data_is_empty">该数据不能为空！</string>
     <string name="str_password_is_different">两次输入密码不一致！</string>
+    <string name="str_password_is_error">原密码错误！</string>
     <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
+    <string name="title_activity_main_activity2">MainActivity2</string>
+    <string name="str_test_textview">初中的化学老师很搞笑，记得有一次要期中考试了，他给我们划了几个反应方程式，然后说“这几个方程式，考试一定有，要是没有，你就拿砖头砸我家玻璃！”
+说完喝了口水继续说道“砸完，看我怎么收拾你！”</string>
+    <string name="title_activity_infomation">InfomationActivity</string>
+    <string name="title_activity_launcher">LauncherActivity</string>
+    <string name="date_choose_text">日期选择</string>
+    <string name="ok_btn_text">确定</string>
+    <string name="message_prompt_text">修改资料</string>
+    <string name="cancel_btn_text">取消</string>
+    <string name="title_activity_edit_password">EditPasswordActivity</string>
+    <string name="title_activity_video_display">VideoDisplayActivity</string>
+    <string name="title_activity_video_down_load">VideoDownLoadActivity</string>
 
 </resources>

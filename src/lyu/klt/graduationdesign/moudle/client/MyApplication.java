@@ -6,7 +6,13 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Application;
+import android.graphics.Bitmap;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import lyu.klt.graduationdesign.module.ResideMenu.ResideMenu;
 
 
 
@@ -18,6 +24,15 @@ public class MyApplication extends Application {
 	private static MyApplication mInstance = null;
 
 	private List<Activity> mActivityList = new LinkedList<Activity>();
+	
+	public static ResideMenu resideMenu;
+	public static RecyclerView rv_training_fargment;
+	public static RecyclerView rv_diet_fargment;
+	public static ViewPager recommended_vp;
+	public static ViewPager main_vp;
+	public static List<ImageView> imageViewList;
+	public static List<Bitmap> bitmapPress;
+	public static List<Bitmap> bitmapUnPress;
 	
 	
 	
@@ -37,7 +52,7 @@ public class MyApplication extends Application {
 		mActivityList.add(activity);
 	}
 
-	// 添加Activity到容器中
+	// 从容器中删除Activity
 	public void removeActivity(Activity activity) {
 		mActivityList.remove(activity);
 	}
