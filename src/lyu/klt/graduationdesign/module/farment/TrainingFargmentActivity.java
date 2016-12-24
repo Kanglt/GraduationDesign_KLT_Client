@@ -21,6 +21,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -53,8 +54,11 @@ import lyu.klt.graduationdesign.module.adapter.TrainingRecyclerAdapter;
 import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
 import lyu.klt.graduationdesign.module.bean.UserPo;
+import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.TrainingListAdapter;
+import lyu.klt.graduationdesign.module.adapter.TrainingListRecyclerAdapter;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
+import lyu.klt.graduationdesign.moudle.activity.TestActivity;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.TrainingDataPAI;
 import lyu.klt.graduationdesign.moudle.client.Constant;
@@ -88,7 +92,10 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 
 	public SwipeRefreshLayout swipe_refresh_widget;
 	public ViewFlipper viewfilpper_training_top;
-	public ListView listView_training;
+	private RecyclerView rv_training;
+	private TrainingListRecyclerAdapter mAdapter;
+	private MyLinearLayoutManger mLayoutManager;
+	private List<String> mDatas;
 
 	private GestureDetector detector; // 手势检测
 
@@ -153,7 +160,7 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 	public void initView(View view) {
 		swipe_refresh_widget = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_widget);
 		viewfilpper_training_top = (ViewFlipper) view.findViewById(R.id.viewfilpper_training_top);
-		listView_training = (ListView) view.findViewById(R.id.listView_training);
+		rv_training = (RecyclerView) view.findViewById(R.id.rv_training);
 
 	}
 
@@ -163,16 +170,21 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 		doLoadCarouse();// 加载 轮播图
 
 		trainingDataListPo = new ArrayList<TrainingDataListPo>();
-		trainingListAdapter = new TrainingListAdapter(context, trainingDataListPo);
-		listView_training.setFocusable(false);
-		listView_training.setAdapter(trainingListAdapter);
-		listView_training.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		initRVData();
+		MyRecyclerAdapter recycleAdapter;
+		recycleAdapter = new MyRecyclerAdapter(context, mDatas);
+		LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+		// 设置布局管理器
+		rv_training.setLayoutManager(layoutManager);
+		// 设置为垂直布局，这也是默认的
+		layoutManager.setOrientation(OrientationHelper.VERTICAL);
+		// 设置Adapter
+		rv_training.setAdapter(recycleAdapter);
 
-			}
-		});
-		//ViewUtil.setListViewHeightBasedOnChildren(listView_training);
+		rv_training.setItemAnimator(new DefaultItemAnimator());
+		// 每项周围的空隙是5，那么项与项之间的间隔就是5+5=10。
+		SpacesItemDecoration decoration = new SpacesItemDecoration(5);
+		rv_training.addItemDecoration(decoration);
 
 	}
 
@@ -386,16 +398,16 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 			MyApplication.main_vp.onInterceptTouchEvent(event);
 			return this.detector.onTouchEvent(event); // touch事件交给手势处理。
 		}
-		if (ViewUtil.inRangeOfView(MyApplication.rv_training_fargment, event)) {
-			// AbSharedUtil.putString(context,
-			// Constant.RESIDEMENU_TOUCHEVENT_TYPE, "true");
-			// MyApplication.resideMenu.dispatchTouchEvent(event);
-			// listView_training.onInterceptTouchEvent(event);
-			return MyApplication.rv_training_fargment.dispatchTouchEvent(event);
-		}
 
 		AbSharedUtil.putString(context, Constant.RESIDEMENU_TOUCHEVENT_TYPE, "false");
 		return false;
+	}
+	
+	private void initRVData() {
+        mDatas = new ArrayList<String>();
+        for ( int i=0; i < 1; i++) {
+             mDatas.add( "item"+i);
+       }
 	}
 	//
 	// public List<HashMap<String, Object>> listdata() {
@@ -446,11 +458,12 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 					trainingDataListPo = gson.fromJson(jsonObject.getString("list"),
 							new TypeToken<List<TrainingDataListPo>>() {
 							}.getType());
-					trainingListAdapter = new TrainingListAdapter(context, trainingDataListPo);
+					mLayoutManager = new MyLinearLayoutManger(context, LinearLayout.VERTICAL, false);
+					rv_training.setLayoutManager(mLayoutManager);
+					mAdapter = new TrainingListRecyclerAdapter(context, 2,trainingDataListPo);
 					
-					listView_training.setAdapter(trainingListAdapter);
-					trainingListAdapter.notifyDataSetChanged();
-					ViewUtil.setListViewHeightBasedOnChildren(listView_training);
+					rv_training.setAdapter(mAdapter);
+					mAdapter.notifyDataSetChanged();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

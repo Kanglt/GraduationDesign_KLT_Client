@@ -15,6 +15,7 @@ public class TrainingDataListPo {
 	
 	public List<TrainingDataPo> trianingList;
 
+
 	public List<TrainingDataPo> getTrianingList() {
 		return trianingList;
 	}

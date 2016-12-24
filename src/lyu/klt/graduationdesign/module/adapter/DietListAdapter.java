@@ -35,7 +35,7 @@ public class DietListAdapter extends BaseAdapter{
 	private List<HashMap<String, Object>> mList;
 	
 	private RecyclerView rv_diet_fargment;
-	private DietRecyclerAdapter mAdapter;
+	private DietListRecyclerAdapter mAdapter;
 	private MyLinearLayoutManger mLayoutManager;
 	private String[] yearArray = { "鼠年", "牛年", "虎年", "兔年", "龙年", "蛇年", "马年", "羊年", "猴年", "鸡年", "狗年", "猪年" };
 
@@ -108,7 +108,7 @@ public class DietListAdapter extends BaseAdapter{
 			mLayoutManager = new MyLinearLayoutManger(mContext,LinearLayout.HORIZONTAL,false);
 			rv_diet_fargment.setLayoutManager(mLayoutManager);
 	
-			mAdapter = new DietRecyclerAdapter(mContext, 2, yearArray);
+		//	mAdapter = new DietListRecyclerAdapter(mContext, 2, yearArray);
 			rv_diet_fargment.setAdapter(mAdapter);
 			rv_diet_fargment.setItemAnimator(new DefaultItemAnimator());
 			// 每项周围的空隙是5，那么项与项之间的间隔就是5+5=10。

@@ -34,5 +34,6 @@ public class UrlConstant {
 	public static String UPDATEUSERPHOTO_URL=URL_BASE+"userPhotoUpdate";
 	//获取推荐模块下训练模块的数据
 	public static String TRAININGDATA_URL=URL_BASE+"DataWebServiceMobile.service?getTrainingData";
-		
+	//获取饮食信息
+	public static String DIETDATA_URL=URL_BASE+"DataWebServiceMobile.service?queryDietData";	
 }

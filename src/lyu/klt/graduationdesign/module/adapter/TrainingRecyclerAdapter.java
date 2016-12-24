@@ -11,11 +11,13 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import lyu.klt.frame.ab.util.AbToastUtil;
 import lyu.klt.frame.util.FileUtils;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
 import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
@@ -31,13 +33,12 @@ import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
  * @date 2016年12月16日 下午10:01:51
  *
  */
-public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
-		implements OnItemClickListener, OnItemLongClickListener {
+public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
 	private final static String TAG = "RecyclerAdapter";
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private int mType;
-	private List<TrainingDataPo> trainingDataList;;
+	private List<TrainingDataPo> trainingDataList;
 
 	public TrainingRecyclerAdapter(Context context, int type, List<TrainingDataPo> trainingDataList) {
 		mContext = context;
@@ -71,16 +72,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 			// params.height=500;
 			holder.ll_item.setLayoutParams(params);
 		} 
-//		else { // 表示是瀑布流网格布局
-//			params.height = (int) Math.round(300 * Math.random());
-//			if (params.height < 60) {
-//				params.height = 60;
-//			}
-//			// 很奇怪，setLayoutParams对瀑布流网格不起作用，只能用setHeight
-//			holder.tv_title.setHeight(params.height);
-//		}
-		
-		
+	
 		holder.tv_category.setText(trainingDataList.get(position).getCategory());
 		holder.tv_participation.setText(trainingDataList.get(position).getParticipation()+"人收藏");
 		holder.tv_trainingLevel.setText(trainingDataList.get(position).getTrainingLevel());
@@ -98,17 +90,17 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 					intent.putExtra("fileName", fileName[fileName.length-1]);
 					mContext.startActivity(intent);
 				}
+				AbToastUtil.showToast(mContext, trainingDataList.get(position).getCategory());
 			}
 		});
-//		holder.ll_item.setOnLongClickListener(new OnLongClickListener() {
-//			@Override
-//			public boolean onLongClick(View v) {
-//				if (mOnItemLongClickListener != null) {
-//					mOnItemLongClickListener.onItemLongClick(v, position);
-//				}
-//				return true;
-//			}
-//		});
+		holder.ll_item.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				AbToastUtil.showToast(mContext, trainingDataList.get(position).getCategory());
+				return true;
+			}
+		});
+		
 	}
 
 	@Override
@@ -156,17 +148,6 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 		this.mOnItemLongClickListener = listener;
 	}
 
-	@Override
-	public void onItemClick(View view, int position) {
-		String desc = String.format("您点击了第%d项，内容是%s", position + 1, trainingDataList.get(position));
-		Toast.makeText(mContext, desc, Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onItemLongClick(View view, int position) {
-		String desc = String.format("您长按了第%d项，内容是%s", position + 1, trainingDataList.get(position));
-		Toast.makeText(mContext, desc, Toast.LENGTH_SHORT).show();
-	}
 
 	
 }

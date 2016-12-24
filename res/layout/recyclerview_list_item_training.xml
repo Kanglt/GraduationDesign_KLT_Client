@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/bag7"
-    android:weightSum="4" >
+    android:weightSum="4"
+     >
 
     <LinearLayout
         android:layout_width="match_parent"

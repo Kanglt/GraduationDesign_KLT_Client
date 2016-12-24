@@ -56,6 +56,7 @@ import lyu.klt.graduationdesign.moudle.activity.EditPasswordActivity;
 import lyu.klt.graduationdesign.moudle.activity.InfomationActivity;
 import lyu.klt.graduationdesign.moudle.activity.LoginActivity;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
+import lyu.klt.graduationdesign.moudle.activity.TestActivity;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.UserAPI;
@@ -238,12 +239,8 @@ public class PersonalFargmentActivity extends Fragment {
 				startActivity(intent);
 				break;
 			case R.id.ll_training_data:
-				if(!FileUtils.isFileExist("videos/videoTest.mp4")){
-					VideoDownLoadDialog.showVideoDownLoadDialog(context, "videoTest.mp4");
-				}else{
-					intent.setClass(context, VideoDisplayActivity.class);
+					intent.setClass(context, TestActivity.class);
 					startActivity(intent);
-				}
 				
 				break;
 			default:
