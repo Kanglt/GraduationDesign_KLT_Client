@@ -19,6 +19,7 @@ public class UrlConstant {
 	public final static String FILE_SERVICE_DOWNLOAD_USERPHOTO_URL = URL_BASE + "image/user_photo/";
 	public final static String FILE_SERVICE_DOWNLOAD_DIETIMAGE_URL = URL_BASE + "image/dietImage/";
 	public final static String FILE_SERVICE_DOWNLOAD_VIDEO_URL = URL_BASE + "videos/";
+	public final static String FILE_SERVICE_DOWNLOAD_MUSIC_URL = URL_BASE + "musics/";
 	public final static String FILE_SERVICE_DOWNLOAD_TRAININGIMAGE_URL = URL_BASE + "image/trainingImage/";
 
 	public static String TESTURL = URL_BASE + "TestMobile.service?getTestListForMobile";
@@ -42,4 +43,9 @@ public class UrlConstant {
 	public static String DIETDATA_DIETDETAILE_STEP_URL = URL_BASE + "DataWebServiceMobile.service?getDietDetaile_step";
 	//获取对应就餐类型与就餐时间的视频数据
 	public static String DIETDATA_WITH_DINNERTIME_DIETTYPE_URL = URL_BASE + "DataWebServiceMobile.service?getDietData_with_dinneTime_dietType";
+	//获取对应音乐类型音乐数据
+	public static String MUSICDATA_WITH_MUSICTYPE_URL = URL_BASE + "DataWebServiceMobile.service?getMusicData_with_musicType";
+	
+	
+	
 }

@@ -27,8 +27,10 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import lyu.klt.graduationdesign.module.Receiver.DownLoadCompleteReceiver;
+import lyu.klt.graduationdesign.module.Receiver.VideoDownLoadCompleteReceiver;
+import lyu.klt.graduationdesign.module.Receiver.MusicDownLoadCompleteReceiver;
 import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 
@@ -36,6 +38,7 @@ public class FileUtils {
 
 	public static String SDPATH = Environment.getExternalStorageDirectory() + "/focus/";// formats
 	public static String VIDEOSSAVEPATH = "focus/videos";
+	public static String MUSICSSAVEPATH = "focus/musics";
 
 	private final static String[][] MIME_MapTable = {
 			// {后缀名， MIME类型}
@@ -334,12 +337,12 @@ public class FileUtils {
 	public static void downloadVideo(Context context, String url, String savePath, String videoName,
 			ProgressBar progressBar) {
 		FileUtils.progressBar = progressBar;
-		DownLoadCompleteReceiver receiver;
+		VideoDownLoadCompleteReceiver receiver;
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 		filter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED);
-		filter.addAction(DownLoadCompleteReceiver.ACTION);
-		receiver = new DownLoadCompleteReceiver();
+		filter.addAction(VideoDownLoadCompleteReceiver.ACTION);
+		receiver = new VideoDownLoadCompleteReceiver();
 		context.registerReceiver(receiver, filter);
 
 		downManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
@@ -385,7 +388,74 @@ public class FileUtils {
 					//VideoDownLoadDialog.videoDownLoadDialog.dismiss();
 				}
 			}
-		}, 0, 2, TimeUnit.SECONDS);
+		}, 0, 1, TimeUnit.SECONDS);
+
+	}
+	
+	
+	/**
+	 * 
+	 * @Title: downloadVideo @author 康良涛 @Description: TODO(下载视频) @param @param
+	 * url @param @param savePath @return void @throws
+	 */
+
+	public static ImageView imageview;
+	public static void downloadVideo(Context context, String url, String savePath, String videoName,
+			ProgressBar progressBar,ImageView imageview) {
+		FileUtils.progressBar = progressBar;
+		FileUtils.imageview=imageview;
+		MusicDownLoadCompleteReceiver receiver;
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+		filter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED);
+		filter.addAction(VideoDownLoadCompleteReceiver.ACTION);
+		receiver = new MusicDownLoadCompleteReceiver();
+		context.registerReceiver(receiver, filter);
+
+		downManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+		DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+		// 设置在什么网络情况下进行下载
+		request.setAllowedNetworkTypes(Request.NETWORK_WIFI);
+		// 设置通知栏标题
+		request.setNotificationVisibility(Request.VISIBILITY_VISIBLE);
+		request.setTitle("下载");
+		request.setDescription("文件正在下载");
+		request.setAllowedOverRoaming(false);
+		/**
+		 * setDestinationInExternalPublicDir方法 
+		 * 这个方法也是用来“制定”一个路径的，这个路径的特性类似于getExternalStoragePublicDirectory(String))
+		 * getExternalStoragePublicDirectory(String)) 这个方法的返回值
+		 * 是一个文件夹，这个文件夹是被创建在你的SD卡根目录的（mnt/sdcard/） 这个文件夹中的内容其他程序都是可以访问的（没有访问控制）
+		 * 当你的应用程序卸载的时候，这个文件夹中的内容将不会丢失。
+		 */
+		// 设置文件存放目录
+		request.setDestinationInExternalPublicDir(savePath, videoName);
+		// 开启下载任务
+		idPro = downManager.enqueue(request);
+
+		ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+		ses.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				// queryTaskByIdandUpdateView(idPro);
+				DownloadManager.Query query = new DownloadManager.Query();
+				query.setFilterById(idPro);
+				Cursor cursor = downManager.query(query);
+				String size = "0";
+				String sizeTotal = "0";
+				if (cursor.moveToNext()) {
+					size = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+					sizeTotal = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+				}
+				cursor.close();
+				FileUtils.progressBar.setMax(Integer.valueOf(sizeTotal));
+				FileUtils.progressBar.setProgress(Integer.valueOf(size));
+				//ses.shutdown();
+				if(Integer.valueOf(size)>=Integer.valueOf(sizeTotal)){
+					//VideoDownLoadDialog.videoDownLoadDialog.dismiss();
+				}
+			}
+		}, 0, 1, TimeUnit.SECONDS);
 
 	}
 

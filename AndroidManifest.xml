@@ -25,6 +25,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <service
+            android:name="lyu.klt.graduationdesign.moudle.service.MusicPlayerService"
+            android:exported="true" >
+        </service>
 
         <!-- 欢迎页 -->
         <activity
@@ -65,7 +69,7 @@
             android:name="lyu.klt.graduationdesign.moudle.activity.EditPasswordActivity"
             android:label="@string/title_activity_edit_password" >
         </activity>
-         <activity
+        <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.TestActivity"
             android:label="@string/title_activity_edit_password" >
         </activity>
@@ -93,15 +97,15 @@
             android:name="lyu.klt.graduationdesign.moudle.activity.DietInfomation"
             android:label="@string/title_activity_video_display" >
         </activity>
-         <activity
+        <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.DinneTimeActivity"
             android:label="@string/title_activity_video_display" >
         </activity>
-          <activity
+        <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.MusicSelectActivity"
             android:label="@string/title_activity_video_display" >
         </activity>
-          <activity
+        <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.MusicListActivity"
             android:label="@string/title_activity_video_display" >
         </activity>

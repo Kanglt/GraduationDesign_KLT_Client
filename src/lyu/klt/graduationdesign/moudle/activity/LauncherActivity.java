@@ -152,6 +152,9 @@ public class LauncherActivity extends Activity {
 			if(!FileUtils.fileIsExists(FileUtils.SDPATH+"localImgageLoader")){
 				FileUtils.createSDDir("localImgageLoader");
 			}
+			if(!FileUtils.fileIsExists(FileUtils.SDPATH+"musics")){
+				FileUtils.createSDDir("musics");
+			}
 						
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

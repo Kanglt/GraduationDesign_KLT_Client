@@ -117,6 +117,9 @@ public class MusicSelectActivity extends BaseActivity {
 		
 		title_bar_left_img.setOnClickListener(onClickListener);
 		rl_music_energy.setOnClickListener(onClickListener);
+		rl_music_aerobic.setOnClickListener(onClickListener);
+		rl_music_relax.setOnClickListener(onClickListener);
+		rl_music_yoga.setOnClickListener(onClickListener);
 	}
 
 	@Override
@@ -135,8 +138,24 @@ public class MusicSelectActivity extends BaseActivity {
 			case R.id.title_bar_left_img:
 				finish();
 				break;
+			case R.id.rl_music_aerobic:
+				intent.setClass(context, MusicListActivity.class);
+				intent.putExtra("musicType", "aerobic");
+				startActivity(intent);
+				break;
+			case R.id.rl_music_relax:
+				intent.setClass(context, MusicListActivity.class);
+				intent.putExtra("musicType", "Relax");
+				startActivity(intent);
+				break;
 			case R.id.rl_music_energy:
 				intent.setClass(context, MusicListActivity.class);
+				intent.putExtra("musicType", "Energy");
+				startActivity(intent);
+				break;
+			case R.id.rl_music_yoga:
+				intent.setClass(context, MusicListActivity.class);
+				intent.putExtra("musicType", "Yoga");
 				startActivity(intent);
 				break;
 			default:
