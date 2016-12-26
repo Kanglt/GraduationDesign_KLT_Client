@@ -5,11 +5,15 @@ package lyu.klt.graduationdesign.module.adapter;
 import java.util.List;
 
 import com.lyu.graduationdesign_klt.R;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +32,10 @@ import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
 import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
 import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.moudle.activity.DietInfomation;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
+import lyu.klt.graduationdesign.moudle.client.UrlConstant;
+import lyu.klt.graduationdesign.util.ImageLoaderUtil;
 /**
  * 
 * @ClassName: DietRecyclerAdapter 
@@ -79,11 +86,21 @@ public class DietRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>  {
 		
 			holder.tv_dietName.setText(dietDataList.get(position).getDietName());
 			holder.tv_calories.setText(dietDataList.get(position).getCalories());
-			//holder.iv_dinneImage
+			
+			String strArr[] = dietDataList.get(position).getDinneImage().split("/");
+			String fileId=strArr[strArr.length-1];
+			ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_DIETIMAGE_URL + fileId, holder.iv_dinneImage,
+					imageLoadingListener);
+			
 			// 列表项的点击事件需要自己实现
 			holder.ll_item.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					
+					Intent intent=new Intent();
+					intent.setClass(mContext, DietInfomation.class);
+					intent.putExtra("dietDataPo", dietDataList.get(position));
+					mContext.startActivity(intent);
 					
 				}
 			});
@@ -123,7 +140,7 @@ public class DietRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>  {
 				
 				tv_dietName=(TextView) v.findViewById(R.id.tv_dietName);
 				tv_calories=(TextView) v.findViewById(R.id.tv_calories);
-			//	iv_dinneImage=(ImageView) v.findViewById(R.id.iv_dinneImage);
+				iv_dinneImage=(ImageView) v.findViewById(R.id.iv_dinneImage);
 				
 			}
 
@@ -142,6 +159,34 @@ public class DietRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>  {
 		}
 
 
+		
+		ImageLoadingListener imageLoadingListener = new ImageLoadingListener() {
+
+			@Override
+			public void onLoadingStarted(String arg0, View arg1) {
+				// TODO Auto-generated method stub
+				Log.e("DietRecyclerAdapter", "onLoadingStarted");
+			}
+
+			@Override
+			public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+				// TODO Auto-generated method stub
+				Log.e("DietRecyclerAdapter", "onLoadingFailed");
+
+			}
+
+			@Override
+			public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+				// TODO Auto-generated method stub
+				Log.e("DietRecyclerAdapter", "onLoadingComplete");
+			}
+
+			@Override
+			public void onLoadingCancelled(String arg0, View arg1) {
+				// TODO Auto-generated method stub
+				Log.e("DietRecyclerAdapter", "onLoadingCancelled");
+			}
+		};
 
 	}
 

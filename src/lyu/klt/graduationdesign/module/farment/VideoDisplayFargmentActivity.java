@@ -1,5 +1,8 @@
 package lyu.klt.graduationdesign.module.farment;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import com.lyu.graduationdesign_klt.R;
 
 import android.app.Activity;
@@ -13,7 +16,8 @@ import android.app.Fragment;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.view.LayoutInflater;
@@ -28,6 +32,8 @@ import android.view.WindowManager;
 import android.view.SurfaceHolder.Callback;
 
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -53,36 +59,84 @@ public class VideoDisplayFargmentActivity extends Fragment {
 
 	// 主要用于消除预加载
 	protected boolean isVisible;
-	// 标志位，View已经初始化完成。
-	private boolean isPrepared;
-	// 标志位，数据已经加载过了。
-	private boolean isLoaded;
 	// 标志位，数据重新加载。
 	private boolean isLoadedDate;
 
-	private Button btn_videoPlay; // 用于开始和暂停的按钮
+	public static ImageView btn_videoPlay; // 用于开始和暂停的按钮
 	private SurfaceView mSurfaceView; // 绘图容器对象，用于把视频显示在屏幕上
 	private String url; // 视频播放地址
 	private static MediaPlayer mediaPlayer; // 播放器控件
 	private int postSize; // 保存义播视频大小
-	private SeekBar seekbar; // 进度条控件
-	private boolean flag = true; // 用于判断视频是否在播放中
-	private RelativeLayout rl_bottom,rl_top;
+	private static SeekBar seekbar; // 进度条控件
+	private static boolean flag = true; // 用于判断视频是否在播放中
+	private RelativeLayout rl_bottom, rl_top;
 	private boolean display; // 用于是否显示其他按钮
 	private Button btn_back; // 返回按钮
 	private View pbView; // ProgressBar
 	private upDateSeekBar update; // 更新进度条用
+	private int totalSize;
 	
-	private TextView tv_fullscreen;
-	
-	private static boolean islLandscape=false;//是否横屏
-	
-	private static String fileName; 
+	private InputStream in;
+	public static Bitmap video_puaseBitmap;
+	public static Bitmap video_startBitmap;
+	public static Bitmap btn_fullscreenBitmap;
+	public static Bitmap btn_exitfullscreenBitmap;
 
-	public VideoDisplayFargmentActivity(String fileName){
-		this.fileName=fileName;
+	private static ImageView tv_fullscreen;
+
+	private static boolean islLandscape = false;// 是否横屏
+
+	private static String fileName;
+
+	private Message msg;
+
+	/**
+	 * 更新进度条
+	 */
+	public Handler mHandler = new Handler() {
+		public void handleMessage(Message msg) {
+
+
+			if (mediaPlayer == null) {
+				flag = false;
+			} else if (mediaPlayer.isPlaying()) {
+				flag = true;
+				int position = mediaPlayer.getCurrentPosition();
+				int mMax = mediaPlayer.getDuration();
+				int sMax = seekbar.getMax();
+				seekbar.setProgress(position * sMax / mMax);
+			} else {
+				return;
+			}
+		};
+	};
+
+	public static Handler mHandler2 = new Handler() {
+		public void handleMessage(Message msg) {
+
+			if (msg.obj != null) {
+				if (msg.obj.equals("video_start")) {
+					mediaPlayer.start();
+					return;
+				}
+				if (msg.obj.equals("video_pause")) {
+					mediaPlayer.pause();
+					return;
+				}
+				if(msg.obj.equals("click_tv_fullscreen")){
+					islLandscape=true;
+					tv_fullscreen.performClick();
+				}
+
+			}
+		}
+
+	};
+
+	public VideoDisplayFargmentActivity(String fileName) {
+		this.fileName = fileName;
+		msg = new Message();
 	}
-	
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -91,19 +145,6 @@ public class VideoDisplayFargmentActivity extends Fragment {
 		return view;
 	}
 
-	public static Handler handler=new Handler(){
-
-		@Override
-		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
-			super.handleMessage(msg);
-			if(msg.obj.equals("startVideo")){
-				mediaPlayer.start();
-			}
-		}
-		
-	};
-	
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
@@ -126,12 +167,12 @@ public class VideoDisplayFargmentActivity extends Fragment {
 		context.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // 全屏
 		context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); // 应用运行时，保持屏幕高亮，不锁屏
-		
+
 	}
 
 	public void initData() {
-		url = Environment.getExternalStorageDirectory() + "/focus/videos/"+fileName; // 视频播放地址
-		
+		url = Environment.getExternalStorageDirectory() + "/focus/videos/" + fileName; // 视频播放地址
+
 	}
 
 	public void initView(View view) {
@@ -139,7 +180,7 @@ public class VideoDisplayFargmentActivity extends Fragment {
 		update = new upDateSeekBar(); // 创建更新进度条对象
 		btn_back = (Button) view.findViewById(R.id.btn_back); // 返回按钮
 		seekbar = (SeekBar) view.findViewById(R.id.seekbar); // 进度条
-		btn_videoPlay = (Button) view.findViewById(R.id.btn_videoPlay);
+		btn_videoPlay = (ImageView) view.findViewById(R.id.btn_videoPlay);
 		btn_videoPlay.setEnabled(false); // 刚进来，设置其不可点击
 		mSurfaceView = (SurfaceView) view.findViewById(R.id.mSurfaceView);
 		mSurfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS); // 不缓冲
@@ -148,13 +189,27 @@ public class VideoDisplayFargmentActivity extends Fragment {
 		rl_bottom = (RelativeLayout) view.findViewById(R.id.rl_bottom);
 		rl_top = (RelativeLayout) view.findViewById(R.id.rl_top);
 		pbView = view.findViewById(R.id.pb);
-		tv_fullscreen=(TextView) view.findViewById(R.id.tv_fullscreen);
+		tv_fullscreen = (ImageView) view.findViewById(R.id.tv_fullscreen);
 
+		
 	}
 
 	public void initViewData() {
-		isPrepared = true;
 		
+		in = context.getResources().openRawResource(R.drawable.btn_video_puase);
+		video_puaseBitmap = BitmapFactory.decodeStream(in);
+		in = context.getResources().openRawResource(R.drawable.btn_video_start);
+		video_startBitmap = BitmapFactory.decodeStream(in);
+		in = context.getResources().openRawResource(R.drawable.btn_fullscreen);
+		btn_fullscreenBitmap= BitmapFactory.decodeStream(in);
+		in = context.getResources().openRawResource(R.drawable.btn_exitfullscreen);
+		btn_exitfullscreenBitmap= BitmapFactory.decodeStream(in);
+		try {
+			in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		rl_bottom.getBackground().setAlpha(50);
 		rl_top.getBackground().setAlpha(50);
 
@@ -167,8 +222,7 @@ public class VideoDisplayFargmentActivity extends Fragment {
 		btn_videoPlay.setOnClickListener(onClickListener);
 		mSurfaceView.setOnClickListener(onClickListener);
 		btn_back.setOnClickListener(onClickListener);
-		
-		
+
 	}
 
 	public void startGame() {
@@ -182,30 +236,35 @@ public class VideoDisplayFargmentActivity extends Fragment {
 			Intent intent = new Intent();
 			switch (v.getId()) {
 			case R.id.tv_fullscreen:
-				//设置成横屏
-				if(!islLandscape){
-					context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-					tv_fullscreen.setBackgroundResource(R.drawable.btn_exitfullscreen);
-					islLandscape=true;
-				}else{
-					context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-					tv_fullscreen.setBackgroundResource(R.drawable.btn_exitfullscreen);
-					islLandscape=false;
-				}
 				
+				if (islLandscape) {
+					context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
+					tv_fullscreen.setImageBitmap(btn_fullscreenBitmap);
+					islLandscape = false;
+					
+				} else {
+					context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//横屏
+					tv_fullscreen.setImageBitmap(btn_exitfullscreenBitmap);
+					islLandscape = true;
+				}
+
 				break;
 			case R.id.btn_videoPlay:
 				if (mediaPlayer.isPlaying()) {
-					btn_videoPlay.setBackgroundResource(R.drawable.btn_video_start);
+					btn_videoPlay.setImageBitmap(video_startBitmap);
 					mediaPlayer.pause();
 					postSize = mediaPlayer.getCurrentPosition();
+					VideoDisplayActivity.myCountDownTimer.pause();
+					VideoDisplayActivity.iv_start.setImageBitmap(VideoDisplayActivity.video_startBitmap);
 				} else {
 					if (flag == false) {
 						flag = true;
 						new Thread(update).start();
 					}
 					mediaPlayer.start();
-					btn_videoPlay.setBackgroundResource(R.drawable.btn_video_puase);
+					btn_videoPlay.setImageBitmap(video_puaseBitmap);
+					VideoDisplayActivity.myCountDownTimer.resume();
+					VideoDisplayActivity.iv_start.setImageBitmap(VideoDisplayActivity.video_puaseBitmap);
 
 				}
 				break;
@@ -234,18 +293,27 @@ public class VideoDisplayFargmentActivity extends Fragment {
 				}
 				break;
 			case R.id.btn_back:
-				//设置成竖屏
-				context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-				tv_fullscreen.setBackgroundResource(R.drawable.btn_exitfullscreen);
-				islLandscape=false;
+				if(islLandscape){
+					// 设置成竖屏
+					context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+					tv_fullscreen.setBackgroundResource(R.drawable.btn_exitfullscreen);
+					islLandscape = false;
+				}else{
+					VideoDisplayActivity.flag=true;
+					VideoDisplayActivity.theBottom=3;
+					context.finish();
+				}
+				
+				
+				
 				/**
-				 *停止播放
+				 * 停止播放
 				 */
-//				if (mediaPlayer.isPlaying()) {
-//				mediaPlayer.stop();
-//				mediaPlayer.release();
-//			}
-//			mediaPlayer = null;
+				// if (mediaPlayer.isPlaying()) {
+				// mediaPlayer.stop();
+				// mediaPlayer.release();
+				// }
+				// mediaPlayer = null;
 
 				break;
 			default:
@@ -254,6 +322,8 @@ public class VideoDisplayFargmentActivity extends Fragment {
 		}
 
 	};
+	
+	
 
 	class PlayMovie extends Thread { // 播放视频的线程
 
@@ -301,7 +371,11 @@ public class VideoDisplayFargmentActivity extends Fragment {
 			btn_videoPlay.setEnabled(true);
 			display = false;
 			if (mediaPlayer != null) {
-				mediaPlayer.start(); // 开始播放视频
+				msg.obj = "video_stanby";
+				totalSize=mediaPlayer.getDuration();
+				msg.arg1=totalSize;
+				VideoDisplayActivity.handler.sendMessage(msg);
+				// mediaPlayer.start(); // 开始播放视频
 			} else {
 				return;
 			}
@@ -391,25 +465,6 @@ public class VideoDisplayFargmentActivity extends Fragment {
 			}
 		});
 	}
-
-	/**
-	 * 更新进度条
-	 */
-	Handler mHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			if (mediaPlayer == null) {
-				flag = false;
-			} else if (mediaPlayer.isPlaying()) {
-				flag = true;
-				int position = mediaPlayer.getCurrentPosition();
-				int mMax = mediaPlayer.getDuration();
-				int sMax = seekbar.getMax();
-				seekbar.setProgress(position * sMax / mMax);
-			} else {
-				return;
-			}
-		};
-	};
 
 	class upDateSeekBar implements Runnable {
 

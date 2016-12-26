@@ -1,7 +1,6 @@
 package lyu.klt.graduationdesign.module.farment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -11,6 +10,10 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,43 +24,34 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.app.Fragment;
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
 import lyu.klt.frame.ab.util.AbLogUtil;
 import lyu.klt.frame.ab.util.AbSharedUtil;
 import lyu.klt.frame.ab.util.AbToastUtil;
-import lyu.klt.frame.ab.view.pullview.AbPullToRefreshView;
-import lyu.klt.frame.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import lyu.klt.frame.google.gson.Gson;
 import lyu.klt.frame.google.gson.reflect.TypeToken;
 import lyu.klt.frame.util.GsonUtils;
 import lyu.klt.frame.util.StringUtil;
-import lyu.klt.graduationdesign.module.adapter.DietListAdapter;
 import lyu.klt.graduationdesign.module.adapter.DietListRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
-import lyu.klt.graduationdesign.module.adapter.TrainingListAdapter;
-import lyu.klt.graduationdesign.module.adapter.TrainingListRecyclerAdapter;
 import lyu.klt.graduationdesign.module.bean.DietDataListPo;
-import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
+import lyu.klt.graduationdesign.moudle.activity.DinneTimeActivity;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.DietDataPAI;
-import lyu.klt.graduationdesign.moudle.api.TrainingDataPAI;
 import lyu.klt.graduationdesign.moudle.client.Constant;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 import lyu.klt.graduationdesign.moudle.client.UrlConstant;
@@ -66,8 +60,6 @@ import lyu.klt.graduationdesign.util.ImageLoaderUtil;
 import lyu.klt.graduationdesign.util.ViewUtil;
 import lyu.klt.graduationdesign.view.MyLinearLayoutManger;
 import lyu.klt.graduationdesign.view.SpacesItemDecoration;
-import android.view.ViewGroup;
-import android.view.GestureDetector.OnGestureListener;
 
 /**
  * 
@@ -96,8 +88,7 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 	private MyLinearLayoutManger mLayoutManager;
 	private List<String> mDatas;
 	private List<DietDataListPo> dietDataListPo;
-	
-	
+
 	private GestureDetector detector; // 手势检测
 
 	// 动画效果
@@ -108,8 +99,9 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 
 	// private HorizontalListView hListView;
 	// private HorizontalListViewAdapter hListViewAdapter;
-	
-	
+
+	private View rl_diet_snacks, rl_diet_dinner, rl_diet_lunch, rl_diet_breakfast;
+
 	Handler handler = new Handler() {
 
 		@Override
@@ -117,7 +109,7 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			swipe_refresh_widget.setRefreshing(false);
-			
+
 		}
 
 	};
@@ -157,18 +149,22 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 	}
 
 	public void initView(View view) {
-		
+
 		viewfilpper_diet_top = (ViewFlipper) view.findViewById(R.id.viewfilpper_diet_top);
 		detector = new GestureDetector(this);
 		rv_diet = (RecyclerView) view.findViewById(R.id.rv_diet);
 		swipe_refresh_widget = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_widget);
+
+		rl_diet_snacks = (RelativeLayout) view.findViewById(R.id.rl_diet_snacks);
+		rl_diet_dinner = (RelativeLayout) view.findViewById(R.id.rl_diet_dinner);
+		rl_diet_lunch = (RelativeLayout) view.findViewById(R.id.rl_diet_lunch);
+		rl_diet_breakfast = (RelativeLayout) view.findViewById(R.id.rl_diet_breakfast);
 
 	}
 
 	public void initViewData() {
 		isPrepared = true;
 
-		
 		// mPulltorefreshview.getFooterView()
 		// .setFooterProgressBarDrawable(this.getResources().getDrawable(R.drawable.progress_circular));
 
@@ -206,11 +202,15 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 			}
 		});
 
-		
+		rl_diet_snacks.setOnClickListener(onClickListener);
+		rl_diet_dinner.setOnClickListener(onClickListener);
+		rl_diet_lunch.setOnClickListener(onClickListener);
+		rl_diet_breakfast.setOnClickListener(onClickListener);
+
 	}
 
 	public void startGame() {
-		
+
 		DietDataPAI.getDietData(context, dietDataStringHttpResponseListener);
 	}
 
@@ -219,8 +219,28 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			Intent intent = new Intent();
 			switch (v.getId()) {
-
+			case R.id.rl_diet_snacks:
+				intent.setClass(context, DinneTimeActivity.class);
+				intent.putExtra("dinneTime", "加餐");
+				startActivity(intent);
+				break;
+			case R.id.rl_diet_dinner:
+				intent.setClass(context, DinneTimeActivity.class);
+				intent.putExtra("dinneTime", "晚餐");
+				startActivity(intent);
+				break;
+			case R.id.rl_diet_lunch:
+				intent.setClass(context, DinneTimeActivity.class);
+				intent.putExtra("dinneTime", "午餐");
+				startActivity(intent);
+				break;
+			case R.id.rl_diet_breakfast:
+				intent.setClass(context, DinneTimeActivity.class);
+				intent.putExtra("dinneTime", "早餐");
+				startActivity(intent);
+				break;
 			default:
 				break;
 			}
@@ -228,12 +248,11 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 
 	};
 
-	
 	private void initRVData() {
-        mDatas = new ArrayList<String>();
-        for ( int i=0; i < 1; i++) {
-             mDatas.add( "item"+i);
-       }
+		mDatas = new ArrayList<String>();
+		for (int i = 0; i < 1; i++) {
+			mDatas.add("item" + i);
+		}
 	}
 
 	/**
@@ -406,8 +425,9 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
 		if (ViewUtil.inRangeOfView(viewfilpper_diet_top, event)) {
-//			AbSharedUtil.putString(context, Constant.RESIDEMENU_TOUCHEVENT_TYPE, "true");
-//			MyApplication.resideMenu.dispatchTouchEvent(event);
+			// AbSharedUtil.putString(context,
+			// Constant.RESIDEMENU_TOUCHEVENT_TYPE, "true");
+			// MyApplication.resideMenu.dispatchTouchEvent(event);
 			MyApplication.recommended_vp.onInterceptTouchEvent(event);
 			MyApplication.main_vp.onInterceptTouchEvent(event);
 			return this.detector.onTouchEvent(event); // touch事件交给手势处理。
@@ -442,13 +462,12 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 					// UserPo userPo=new UserPo();
 					Gson gson = GsonUtils.getGson();
 
-					dietDataListPo = gson.fromJson(jsonObject.getString("list"),
-							new TypeToken<List<DietDataListPo>>() {
-							}.getType());
+					dietDataListPo = gson.fromJson(jsonObject.getString("list"), new TypeToken<List<DietDataListPo>>() {
+					}.getType());
 					mLayoutManager = new MyLinearLayoutManger(context, LinearLayout.VERTICAL, false);
 					rv_diet.setLayoutManager(mLayoutManager);
-					mAdapter = new DietListRecyclerAdapter(context, 1,dietDataListPo);
-					
+					mAdapter = new DietListRecyclerAdapter(context, 1, dietDataListPo);
+
 					rv_diet.setAdapter(mAdapter);
 					mAdapter.notifyDataSetChanged();
 				} catch (Exception e) {

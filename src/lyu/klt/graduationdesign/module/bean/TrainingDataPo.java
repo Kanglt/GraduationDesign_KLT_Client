@@ -2,6 +2,8 @@
 */
 package lyu.klt.graduationdesign.module.bean;
 
+import java.io.Serializable;
+
 /** 
 * @ClassName: TrainingDataPo 
 * @Description: TODO(训练数据) 
@@ -9,7 +11,7 @@ package lyu.klt.graduationdesign.module.bean;
 * @date 2016年12月23日 下午2:35:01 
 *  
 */
-public class TrainingDataPo {
+public class TrainingDataPo implements Serializable{
 	
 	public String titleName;
 	public String category;
@@ -17,6 +19,29 @@ public class TrainingDataPo {
 	public String trainingLevel;
 	public String trainingTime;
 	public String trainingVideo;
+	public String trainingImage;
+	public int trainingId;
+	public String trainingCalories;
+	
+	
+	public String getTrainingCalories() {
+		return trainingCalories;
+	}
+	public void setTrainingCalories(String trainingCalories) {
+		this.trainingCalories = trainingCalories;
+	}
+	public int getTrainingId() {
+		return trainingId;
+	}
+	public void setTrainingId(int trainingId) {
+		this.trainingId = trainingId;
+	}
+	public String getTrainingImage() {
+		return trainingImage;
+	}
+	public void setTrainingImage(String trainingImage) {
+		this.trainingImage = trainingImage;
+	}
 	public String getTitleName() {
 		return titleName;
 	}

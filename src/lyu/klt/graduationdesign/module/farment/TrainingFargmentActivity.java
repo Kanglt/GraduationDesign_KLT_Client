@@ -1,7 +1,6 @@
 package lyu.klt.graduationdesign.module.farment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -11,19 +10,19 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -34,31 +33,24 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
 import lyu.klt.frame.ab.util.AbLogUtil;
 import lyu.klt.frame.ab.util.AbSharedUtil;
 import lyu.klt.frame.ab.util.AbToastUtil;
-import lyu.klt.frame.ab.view.pullview.AbPullToRefreshView;
-import lyu.klt.frame.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
 import lyu.klt.frame.google.gson.Gson;
 import lyu.klt.frame.google.gson.reflect.TypeToken;
 import lyu.klt.frame.util.GsonUtils;
 import lyu.klt.frame.util.StringUtil;
-import lyu.klt.graduationdesign.module.adapter.TrainingRecyclerAdapter;
-import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
-import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
-import lyu.klt.graduationdesign.module.bean.UserPo;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.TrainingListAdapter;
 import lyu.klt.graduationdesign.module.adapter.TrainingListRecyclerAdapter;
+import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
-import lyu.klt.graduationdesign.moudle.activity.TestActivity;
+import lyu.klt.graduationdesign.moudle.activity.MusicSelectActivity;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.TrainingDataPAI;
 import lyu.klt.graduationdesign.moudle.client.Constant;
@@ -68,7 +60,6 @@ import lyu.klt.graduationdesign.util.DataUtils;
 import lyu.klt.graduationdesign.util.ImageLoaderUtil;
 import lyu.klt.graduationdesign.util.ViewUtil;
 import lyu.klt.graduationdesign.view.MyLinearLayoutManger;
-import lyu.klt.graduationdesign.view.MyStaggeredGridLayoutManager;
 import lyu.klt.graduationdesign.view.SpacesItemDecoration;
 
 /**
@@ -110,6 +101,8 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 
 	List<TrainingDataListPo> trainingDataListPo;
 	private TrainingListAdapter trainingListAdapter;
+	
+	private View rl_trainingMusic;
 
 	Handler handler = new Handler() {
 
@@ -161,6 +154,8 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 		swipe_refresh_widget = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_widget);
 		viewfilpper_training_top = (ViewFlipper) view.findViewById(R.id.viewfilpper_training_top);
 		rv_training = (RecyclerView) view.findViewById(R.id.rv_training);
+		
+		rl_trainingMusic=(RelativeLayout)view.findViewById(R.id.rl_trainingMusic);
 
 	}
 
@@ -200,6 +195,9 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 				handler.sendEmptyMessageDelayed(0, 3000);
 			}
 		});
+		
+		
+		rl_trainingMusic.setOnClickListener(onClickListener);
 	}
 
 	public void startGame() {
@@ -212,8 +210,12 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			Intent intent=new Intent();
 			switch (v.getId()) {
-
+			case R.id.rl_trainingMusic:
+				intent.setClass(context, MusicSelectActivity.class);
+				startActivity(intent);
+				break;
 			default:
 				break;
 			}

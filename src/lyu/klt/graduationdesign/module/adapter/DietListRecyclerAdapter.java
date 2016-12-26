@@ -97,6 +97,7 @@ public class DietListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 		mLayoutManager = new MyLinearLayoutManger(mContext, LinearLayout.HORIZONTAL, false);
 		holder.rv_diet_fargment.setLayoutManager(mLayoutManager);
 
+	
 		mAdapter = new DietRecyclerAdapter(mContext, 1, DietDataPo.getDietDataPoList());
 		holder.rv_diet_fargment.setAdapter(mAdapter);
 		holder.rv_diet_fargment.setItemAnimator(new DefaultItemAnimator());

@@ -89,6 +89,22 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_video_display" >
         </activity>
+        <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.DietInfomation"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+         <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.DinneTimeActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+          <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.MusicSelectActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+          <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.MusicListActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
     </application>
 
 </manifest>

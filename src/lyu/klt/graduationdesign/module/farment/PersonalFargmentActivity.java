@@ -48,10 +48,10 @@ import lyu.klt.frame.google.gson.reflect.TypeToken;
 import lyu.klt.frame.util.FileUtils;
 import lyu.klt.frame.util.GsonUtils;
 import lyu.klt.frame.util.StringUtil;
-import lyu.klt.graduationdesign.module.adapter.DietListAdapter;
 import lyu.klt.graduationdesign.module.adapter.FitnessListAdapter;
 import lyu.klt.graduationdesign.module.bean.UserPo;
 import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.moudle.activity.DietInfomation;
 import lyu.klt.graduationdesign.moudle.activity.EditPasswordActivity;
 import lyu.klt.graduationdesign.moudle.activity.InfomationActivity;
 import lyu.klt.graduationdesign.moudle.activity.LoginActivity;
@@ -239,7 +239,8 @@ public class PersonalFargmentActivity extends Fragment {
 				startActivity(intent);
 				break;
 			case R.id.ll_training_data:
-					intent.setClass(context, TestActivity.class);
+					intent.setClass(context, DietInfomation.class);
+					intent.putExtra("dietName", "香葱鸡蛋糙米饼");
 					startActivity(intent);
 				
 				break;

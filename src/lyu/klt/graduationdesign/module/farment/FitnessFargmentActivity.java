@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import lyu.klt.frame.ab.util.AbSharedUtil;
-import lyu.klt.graduationdesign.module.adapter.DietListAdapter;
 import lyu.klt.graduationdesign.module.adapter.FitnessListAdapter;
 import lyu.klt.graduationdesign.moudle.client.Constant;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;

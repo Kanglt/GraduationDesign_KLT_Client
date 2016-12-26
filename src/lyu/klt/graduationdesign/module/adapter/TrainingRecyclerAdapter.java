@@ -3,20 +3,24 @@ package lyu.klt.graduationdesign.module.adapter;
 import java.util.List;
 
 import com.lyu.graduationdesign_klt.R;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import lyu.klt.frame.ab.util.AbToastUtil;
 import lyu.klt.frame.util.FileUtils;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
@@ -24,6 +28,8 @@ import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
 import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
+import lyu.klt.graduationdesign.moudle.client.UrlConstant;
+import lyu.klt.graduationdesign.util.ImageLoaderUtil;
 
 /**
  * 
@@ -56,7 +62,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
 	public ViewHolder onCreateViewHolder(ViewGroup vg, int viewType) {
 		View v = null;
 		ViewHolder holder = null;
-		v = mInflater.inflate(R.layout.recyclerview_list_item_training, vg, false);
+		v = mInflater.inflate(R.layout.listview_list_item_fitness, vg, false);
 		holder = new TitleHolder(v);
 		return holder;
 	}
@@ -73,10 +79,16 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
 			holder.ll_item.setLayoutParams(params);
 		} 
 	
+		
+		String strArr[] = trainingDataList.get(position).getTrainingImage().split("/");
+		String fileId=strArr[strArr.length-1];
+		ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_TRAININGIMAGE_URL + fileId, holder.iv_trainingImage,
+				imageLoadingListener);
+		
+		
 		holder.tv_category.setText(trainingDataList.get(position).getCategory());
-		holder.tv_participation.setText(trainingDataList.get(position).getParticipation()+"人收藏");
-		holder.tv_trainingLevel.setText(trainingDataList.get(position).getTrainingLevel());
-		holder.tv_trainingTime.setText(trainingDataList.get(position).getTrainingTime()+"分钟");
+		holder.tv_num.setText(trainingDataList.get(position).getParticipation()+"人收藏");
+		holder.tv_levelAndTime.setText(trainingDataList.get(position).getTrainingLevel()+" • "+trainingDataList.get(position).getTrainingTime()+"分钟");
 		// 列表项的点击事件需要自己实现
 		holder.ll_item.setOnClickListener(new OnClickListener() {
 			@Override
@@ -87,7 +99,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
 					VideoDownLoadDialog.showVideoDownLoadDialog(mContext, fileName[fileName.length-1]);
 				}else{
 					intent.setClass(mContext, VideoDisplayActivity.class);
-					intent.putExtra("fileName", fileName[fileName.length-1]);
+					intent.putExtra("trainingDataPo", trainingDataList.get(position));
 					mContext.startActivity(intent);
 				}
 				AbToastUtil.showToast(mContext, trainingDataList.get(position).getCategory());
@@ -119,18 +131,18 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
 		public View ll_item;
 		//public TextView tv_title;
 		public TextView tv_category;
-		public TextView tv_participation;
-		public TextView tv_trainingLevel;
-		public TextView tv_trainingTime;
+		public TextView tv_levelAndTime;
+		public TextView tv_num;
+		public ImageView iv_trainingImage;
 	
 
 		public TitleHolder(View v) {
 			super(v);
 			ll_item = (LinearLayout) v.findViewById(R.id.ll_item);
 			tv_category=(TextView) v.findViewById(R.id.tv_category);
-			tv_participation=(TextView) v.findViewById(R.id.tv_participation);
-			tv_trainingLevel=(TextView) v.findViewById(R.id.tv_trainingLevel);
-			tv_trainingTime=(TextView) v.findViewById(R.id.tv_trainingTime);
+			tv_levelAndTime=(TextView) v.findViewById(R.id.tv_levelAndTime);
+			tv_num=(TextView) v.findViewById(R.id.tv_num);
+			iv_trainingImage=(ImageView) v.findViewById(R.id.iv_trainingImage);
 			
 		}
 
@@ -149,5 +161,33 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
 	}
 
 
+	
+	ImageLoadingListener imageLoadingListener = new ImageLoadingListener() {
+
+		@Override
+		public void onLoadingStarted(String arg0, View arg1) {
+			// TODO Auto-generated method stub
+			Log.e("StepRecyclerAdapter", "onLoadingStarted");
+		}
+
+		@Override
+		public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+			// TODO Auto-generated method stub
+			Log.e("StepRecyclerAdapter", "onLoadingFailed");
+
+		}
+
+		@Override
+		public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
+			// TODO Auto-generated method stub
+			Log.e("StepRecyclerAdapter", "onLoadingComplete");
+		}
+
+		@Override
+		public void onLoadingCancelled(String arg0, View arg1) {
+			// TODO Auto-generated method stub
+			Log.e("StepRecyclerAdapter", "onLoadingCancelled");
+		}
+	};
 	
 }

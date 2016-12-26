@@ -44,14 +44,14 @@
         android:focusable="true"
         android:gravity="top" >
 
-        <Button
+        <ImageView
             android:id="@+id/btn_videoPlay"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
-            android:background="@drawable/btn_video_puase"
+            android:src="@drawable/btn_video_puase"
             android:paddingStart="5dp" />
 
         <SeekBar
@@ -66,14 +66,14 @@
             android:progressDrawable="@drawable/player_setting_bright_progressbar"
             android:thumb="@drawable/player_settings_bright_thumb" />
         
-        <Button
+        <ImageView
             android:id="@+id/tv_fullscreen"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/btn_fullscreen" />
+            android:src="@drawable/btn_fullscreen" />
     </RelativeLayout>
 
 </FrameLayout>

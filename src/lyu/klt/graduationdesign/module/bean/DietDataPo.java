@@ -2,6 +2,8 @@
 */
 package lyu.klt.graduationdesign.module.bean;
 
+import java.io.Serializable;
+
 /** 
 * @ClassName: DietDataPo 
 * @Description: TODO(这里用一句话描述这个类的作用) 
@@ -9,7 +11,7 @@ package lyu.klt.graduationdesign.module.bean;
 * @date 2016年12月24日 下午10:49:01 
 *  
 */
-public class DietDataPo {
+public class DietDataPo implements Serializable{
 	
 	private String titleName;
 	private String dinneTime;
@@ -21,6 +23,22 @@ public class DietDataPo {
 	private String protein;
 	private String fat;
 	private String dinneImage;
+	private String dietType;
+	private int dietId;
+	
+	
+	public int getDietId() {
+		return dietId;
+	}
+	public void setDietId(int dietId) {
+		this.dietId = dietId;
+	}
+	public String getDietType() {
+		return dietType;
+	}
+	public void setDietType(String dietType) {
+		this.dietType = dietType;
+	}
 	public String getDinneImage() {
 		return dinneImage;
 	}
