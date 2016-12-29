@@ -77,7 +77,7 @@ public class InfomationActivity extends BaseActivity {
 			ll_information_user_birthday, ll_information_user_phone_numble, ll_information_user_email;
 
 	private TextView tv_information_user_id, tv_information_user_name, tv_information_user_sex,
-			tv_information_user_birthday, tv_information_user_phone_numble, tv_information_user_email;
+			tv_information_user_birthday, tv_information_user_phone_numble, tv_information_user_email,tv_information_user_age;
 
 	private ImageView iv_information_user_picture;
 
@@ -92,6 +92,8 @@ public class InfomationActivity extends BaseActivity {
 	private Dialog dialog;
 	private String[] photoNameArray;
 	private String photoName;
+	
+	private String userAge;
 	
 	private static String nowTime=DateUtil.getStringTime(DateUtil.FORMAT_TYPE2);
 
@@ -155,6 +157,7 @@ public class InfomationActivity extends BaseActivity {
 		tv_information_user_birthday = (TextView) findViewById(R.id.tv_information_user_birthday);
 		tv_information_user_phone_numble = (TextView) findViewById(R.id.tv_information_user_phone_numble);
 		tv_information_user_email = (TextView) findViewById(R.id.tv_information_user_email);
+		tv_information_user_age= (TextView) findViewById(R.id.tv_information_user_age);
 
 		iv_information_user_picture = (ImageView) findViewById(R.id.iv_information_user_picture);
 
@@ -179,6 +182,7 @@ public class InfomationActivity extends BaseActivity {
 			tv_information_user_birthday.setText(userPo.getUserBirthday().toString());
 			tv_information_user_phone_numble.setText(userPo.getUserPhoneNumble());
 			tv_information_user_email.setText(userPo.getUserEmail());
+			tv_information_user_age.setText(userPo.getUserAge());
 		}
 
 	}
@@ -235,7 +239,7 @@ public class InfomationActivity extends BaseActivity {
 				UserAPI.updateUserInformationForMobile(context, tv_information_user_id.getText().toString(),
 						tv_information_user_name.getText().toString(),
 						AbSharedUtil.getString(context, Constant.LAST_LOGINID_PASSWORD),
-						tv_information_user_birthday.getText().toString(),
+						tv_information_user_birthday.getText().toString(),tv_information_user_age.getText().toString(),
 						tv_information_user_phone_numble.getText().toString(),
 						tv_information_user_sex.getText().toString(), tv_information_user_email.getText().toString(),
 						userPo.getUserId() + "_head"+nowTime+".jpg", updateUserInformationStringHttpResponseListener);
@@ -334,6 +338,8 @@ public class InfomationActivity extends BaseActivity {
 				// Minute = "" + time_text.getCurrentMinute();
 				// }
 				text.setText(years + "-" + MonthOfYear + "-" + DayOfMonth);
+				userAge=DateUtil.remainDateToStringYear(years + "-" + MonthOfYear + "-" + DayOfMonth, DateUtil.getDateEN1());
+				tv_information_user_age.setText(userAge);
 				calendar.set(years, date_text.getMonth(), day, time_text.getCurrentHour(), time_text.getCurrentMinute(),
 						0);
 				hideDialog(DateTimedialog);

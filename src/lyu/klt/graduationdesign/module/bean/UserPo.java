@@ -21,10 +21,16 @@ public class UserPo implements Serializable{
 	private String userSex;
 	private String userEmail;
 	private String userPhoto;
-	
+	private String userAge;
 	
 	
 
+	public String getUserAge() {
+		return userAge;
+	}
+	public void setUserAge(String userAge) {
+		this.userAge = userAge;
+	}
 	public String getUserPhoto() {
 		return userPhoto;
 	}

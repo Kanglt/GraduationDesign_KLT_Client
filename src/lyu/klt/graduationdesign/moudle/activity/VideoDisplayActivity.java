@@ -11,11 +11,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.json.JSONObject;
+
 import com.lyu.graduationdesign_klt.R;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -27,21 +31,31 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
+import lyu.klt.frame.ab.util.AbLogUtil;
 import lyu.klt.frame.ab.util.AbSharedUtil;
 import lyu.klt.frame.ab.util.AbToastUtil;
+import lyu.klt.frame.util.DateUtil;
 import lyu.klt.frame.util.FileUtils;
+import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
 import lyu.klt.graduationdesign.module.farment.VideoDisplayFargmentActivity;
+import lyu.klt.graduationdesign.moudle.api.ApiHandler;
+import lyu.klt.graduationdesign.moudle.api.TrainingDataPAI;
 import lyu.klt.graduationdesign.moudle.client.Constant;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
+import lyu.klt.graduationdesign.util.DataUtils;
 import lyu.klt.graduationdesign.util.MyCountDownTimer;
 
 /**
@@ -56,7 +70,7 @@ public class VideoDisplayActivity extends BaseActivity {
 	private static final String TAG = VideoDisplayActivity.class.getSimpleName();
 	private static Activity context;
 
-	private TrainingDataPo trainingDataPo;
+	private static TrainingDataPo trainingDataPo;
 	private String[] fileNameStr;
 
 	private static FrameLayout frameLayout;
@@ -90,6 +104,8 @@ public class VideoDisplayActivity extends BaseActivity {
 	private static boolean islLandscape = false;// 是否横屏
 
 	public static MyCountDownTimer myCountDownTimer;
+	
+
 
 	public static Handler handler = new Handler() {
 
@@ -101,7 +117,7 @@ public class VideoDisplayActivity extends BaseActivity {
 				startTimer.start();
 				totalSize = msg.arg1;
 				totalSizeCountDownTimer = totalSize;
-				myCountDownTimer = new MyCountDownTimer(totalSize, 1000);
+				myCountDownTimer = new MyCountDownTimer(context,totalSize, 1000,trainingDataPo);
 				format = new SimpleDateFormat("mm:ss");
 				date = format.format(new Date(totalSize));
 				tv_countdown.setText(date);
@@ -349,5 +365,18 @@ public class VideoDisplayActivity extends BaseActivity {
 
 		}
 	};
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+//		Message msg=new Message();
+//		msg.obj="video_release";
+//		VideoDisplayFargmentActivity.mHandler2.sendMessage(msg);
+		myCountDownTimer.cancel();
+		startTimer.cancel();
+	}
+	
+	
 
 }

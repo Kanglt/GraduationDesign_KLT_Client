@@ -18,6 +18,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name="lyu.klt.graduationdesign.moudle.client.MyApplication"
@@ -107,6 +112,38 @@
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.MusicListActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+        <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.AddTrainingActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+        <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.DeleteUserTrainingActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+        <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.TotalTrainingActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+        <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.RecommendedTrainingActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+        <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.HeartRateDetectionActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+          <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.HealthDetectionActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+         <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.BMIActivity"
+            android:label="@string/title_activity_video_display" >
+        </activity>
+         <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.BodyFatRateActivity"
             android:label="@string/title_activity_video_display" >
         </activity>
     </application>

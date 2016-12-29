@@ -53,6 +53,8 @@ import lyu.klt.graduationdesign.module.bean.UserPo;
 import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
 import lyu.klt.graduationdesign.moudle.activity.DietInfomation;
 import lyu.klt.graduationdesign.moudle.activity.EditPasswordActivity;
+import lyu.klt.graduationdesign.moudle.activity.HealthDetectionActivity;
+import lyu.klt.graduationdesign.moudle.activity.HeartRateDetectionActivity;
 import lyu.klt.graduationdesign.moudle.activity.InfomationActivity;
 import lyu.klt.graduationdesign.moudle.activity.LoginActivity;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
@@ -117,7 +119,7 @@ public class PersonalFargmentActivity extends Fragment {
 	private String photoName;	
 	
 	
-	private View ll_training_data;
+	private View ll_training_data,rl_healthDetection;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// View view = inflater.inflate(R.layout.message_layout,
@@ -188,7 +190,7 @@ public class PersonalFargmentActivity extends Fragment {
 		user_picture=(ImageView) view.findViewById(R.id.user_picture);
 		
 		ll_training_data=(LinearLayout)view.findViewById(R.id.ll_training_data);
-
+		rl_healthDetection=(RelativeLayout)view.findViewById(R.id.rl_healthDetection);
 	}
 
 	public void initViewData() {
@@ -207,6 +209,7 @@ public class PersonalFargmentActivity extends Fragment {
 		btn_personal_exit.setOnClickListener(onClickListener);
 		tv_user_password.setOnClickListener(onClickListener);
 		ll_training_data.setOnClickListener(onClickListener);
+		rl_healthDetection.setOnClickListener(onClickListener);
 	}
 
 	public void startGame() {
@@ -239,10 +242,12 @@ public class PersonalFargmentActivity extends Fragment {
 				startActivity(intent);
 				break;
 			case R.id.ll_training_data:
-					intent.setClass(context, DietInfomation.class);
-					intent.putExtra("dietName", "香葱鸡蛋糙米饼");
-					startActivity(intent);
+					
 				
+				break;
+			case R.id.rl_healthDetection:
+				intent.setClass(context, HealthDetectionActivity.class);
+				startActivity(intent);
 				break;
 			default:
 				break;

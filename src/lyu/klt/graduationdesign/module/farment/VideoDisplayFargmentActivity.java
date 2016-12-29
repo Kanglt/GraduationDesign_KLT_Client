@@ -2,10 +2,14 @@ package lyu.klt.graduationdesign.module.farment;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+
+import org.json.JSONObject;
 
 import com.lyu.graduationdesign_klt.R;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -13,7 +17,7 @@ import android.os.Message;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.util.Log;
 import android.app.Fragment;
-
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -32,6 +36,7 @@ import android.view.WindowManager;
 import android.view.SurfaceHolder.Callback;
 
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,10 +44,25 @@ import android.widget.RelativeLayout;
 
 import android.widget.SeekBar;
 import android.widget.TextView;
+import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
+import lyu.klt.frame.ab.util.AbLogUtil;
+import lyu.klt.frame.ab.util.AbSharedUtil;
+import lyu.klt.frame.ab.util.AbToastUtil;
+import lyu.klt.frame.google.gson.Gson;
+import lyu.klt.frame.google.gson.reflect.TypeToken;
+import lyu.klt.frame.util.DateUtil;
 import lyu.klt.frame.util.FileUtils;
+import lyu.klt.frame.util.GsonUtils;
+import lyu.klt.frame.util.StringUtil;
+import lyu.klt.graduationdesign.module.adapter.AddTrainingRecyclerAdapter;
+import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
 import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
+import lyu.klt.graduationdesign.moudle.api.ApiHandler;
+import lyu.klt.graduationdesign.moudle.api.TrainingDataPAI;
+import lyu.klt.graduationdesign.moudle.client.Constant;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
+import lyu.klt.graduationdesign.util.DataUtils;
 import lyu.klt.graduationdesign.util.DialogUtils;
 
 /**
@@ -75,7 +95,7 @@ public class VideoDisplayFargmentActivity extends Fragment {
 	private View pbView; // ProgressBar
 	private upDateSeekBar update; // 更新进度条用
 	private int totalSize;
-	
+
 	private InputStream in;
 	public static Bitmap video_puaseBitmap;
 	public static Bitmap video_startBitmap;
@@ -90,12 +110,13 @@ public class VideoDisplayFargmentActivity extends Fragment {
 
 	private Message msg;
 
+
+
 	/**
 	 * 更新进度条
 	 */
 	public Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
-
 
 			if (mediaPlayer == null) {
 				flag = false;
@@ -116,16 +137,21 @@ public class VideoDisplayFargmentActivity extends Fragment {
 
 			if (msg.obj != null) {
 				if (msg.obj.equals("video_start")) {
-					mediaPlayer.start();
+					if (mediaPlayer != null) {
+						mediaPlayer.start();
+					}
 					return;
 				}
 				if (msg.obj.equals("video_pause")) {
-					mediaPlayer.pause();
+					if (mediaPlayer != null) {
+						mediaPlayer.pause();
+					}
 					return;
 				}
-				if(msg.obj.equals("click_tv_fullscreen")){
-					islLandscape=true;
+				if (msg.obj.equals("click_tv_fullscreen")) {
+					islLandscape = true;
 					tv_fullscreen.performClick();
+					return;
 				}
 
 			}
@@ -191,19 +217,18 @@ public class VideoDisplayFargmentActivity extends Fragment {
 		pbView = view.findViewById(R.id.pb);
 		tv_fullscreen = (ImageView) view.findViewById(R.id.tv_fullscreen);
 
-		
 	}
 
 	public void initViewData() {
-		
+
 		in = context.getResources().openRawResource(R.drawable.btn_video_puase);
 		video_puaseBitmap = BitmapFactory.decodeStream(in);
 		in = context.getResources().openRawResource(R.drawable.btn_video_start);
 		video_startBitmap = BitmapFactory.decodeStream(in);
 		in = context.getResources().openRawResource(R.drawable.btn_fullscreen);
-		btn_fullscreenBitmap= BitmapFactory.decodeStream(in);
+		btn_fullscreenBitmap = BitmapFactory.decodeStream(in);
 		in = context.getResources().openRawResource(R.drawable.btn_exitfullscreen);
-		btn_exitfullscreenBitmap= BitmapFactory.decodeStream(in);
+		btn_exitfullscreenBitmap = BitmapFactory.decodeStream(in);
 		try {
 			in.close();
 		} catch (IOException e) {
@@ -236,14 +261,14 @@ public class VideoDisplayFargmentActivity extends Fragment {
 			Intent intent = new Intent();
 			switch (v.getId()) {
 			case R.id.tv_fullscreen:
-				
+
 				if (islLandscape) {
-					context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
+					context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 竖屏
 					tv_fullscreen.setImageBitmap(btn_fullscreenBitmap);
 					islLandscape = false;
-					
+
 				} else {
-					context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//横屏
+					context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);// 横屏
 					tv_fullscreen.setImageBitmap(btn_exitfullscreenBitmap);
 					islLandscape = true;
 				}
@@ -293,19 +318,17 @@ public class VideoDisplayFargmentActivity extends Fragment {
 				}
 				break;
 			case R.id.btn_back:
-				if(islLandscape){
+				if (islLandscape) {
 					// 设置成竖屏
 					context.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 					tv_fullscreen.setBackgroundResource(R.drawable.btn_exitfullscreen);
 					islLandscape = false;
-				}else{
-					VideoDisplayActivity.flag=true;
-					VideoDisplayActivity.theBottom=3;
+				} else {
+					VideoDisplayActivity.flag = true;
+					VideoDisplayActivity.theBottom = 3;
 					context.finish();
 				}
-				
-				
-				
+
 				/**
 				 * 停止播放
 				 */
@@ -322,8 +345,6 @@ public class VideoDisplayFargmentActivity extends Fragment {
 		}
 
 	};
-	
-	
 
 	class PlayMovie extends Thread { // 播放视频的线程
 
@@ -372,8 +393,8 @@ public class VideoDisplayFargmentActivity extends Fragment {
 			display = false;
 			if (mediaPlayer != null) {
 				msg.obj = "video_stanby";
-				totalSize=mediaPlayer.getDuration();
-				msg.arg1=totalSize;
+				totalSize = mediaPlayer.getDuration();
+				msg.arg1 = totalSize;
 				VideoDisplayActivity.handler.sendMessage(msg);
 				// mediaPlayer.start(); // 开始播放视频
 			} else {
@@ -487,5 +508,7 @@ public class VideoDisplayFargmentActivity extends Fragment {
 		}
 		System.gc();
 	}
+
+
 
 }

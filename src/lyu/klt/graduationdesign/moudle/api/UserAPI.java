@@ -104,7 +104,7 @@ public class UserAPI {
 	* @throws
 	 */
 	public static void updateUserInformationForMobile(Context context,String userId, String userName, String userPassword,
-			String userBirthday, String userPhoneNumble, String userSex, String userEmail,String userPhoto,
+			String userBirthday,  String userAge,String userPhoneNumble, String userSex, String userEmail,String userPhoto,
 			AbStringHttpResponseListener abStringHttpResponseListener){
 		JSONObject jsonObject = new JSONObject();
 	
@@ -113,10 +113,12 @@ public class UserAPI {
 			jsonObject.put("userName", userName);
 			jsonObject.put("userPassword", userPassword);
 			jsonObject.put("userBirthday", userBirthday);
+			jsonObject.put("userAge", userAge);
 			jsonObject.put("userPhoneNumble", userPhoneNumble);
 			jsonObject.put("userSex", userSex);
 			jsonObject.put("userEmail", userEmail);
 			jsonObject.put("userPhoto", userPhoto);
+			
 			
 			AbHttpUtil mAbHttpUtil = null;
 			String url = UrlConstant.UPDATEUSERINFORMATION_URL;

@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <SurfaceView
+        android:id="@+id/preview"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+		android:background="@color/gray">
+
+        <include
+            android:id="@+id/title_bar_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            layout="@layout/activity_title_bar" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+             >
+
+            <lyu.klt.graduationdesign.view.RingView
+                android:id="@+id/ringView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/tv_nowHeartRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+  				android:layout_centerInParent="true"
+                android:text="当前心率"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/startHeartBeatTest"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:text="开始检测"
+                android:textColor="@android:color/white"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

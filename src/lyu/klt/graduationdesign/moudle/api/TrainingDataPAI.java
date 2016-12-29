@@ -21,6 +21,16 @@ import lyu.klt.graduationdesign.util.DataUtils;
 */
 public class TrainingDataPAI {
 	
+	/**
+	 * 
+	* @Title: getTrainingData 
+	* @author 康良涛 
+	* @Description: TODO(根据标题获取训练数据) 
+	* @param @param context
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
 	public static void getTrainingData(Context context,
 			AbStringHttpResponseListener abStringHttpResponseListener){
 		JSONObject jsonObject = new JSONObject();
@@ -42,5 +52,248 @@ public class TrainingDataPAI {
 		}
 		
 	}
+	
+	/**
+	 * 
+	* @Title: getTotalTraining 
+	* @author 康良涛 
+	* @Description: TODO(获取全部训练) 
+	* @param @param context
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void getTotalTraining(Context context,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			
+			
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.TOTALTRAININGDATA_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
+	
+	
+	/**
+	 * 
+	* @Title: addTraining 
+	* @author 康良涛 
+	* @Description: TODO(添加训练) 
+	* @param @param context
+	* @param @param userId
+	* @param @param category
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void addTraining(Context context,String userId,String category,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			
+			jsonObject.put("userId", userId);
+			jsonObject.put("category", category);
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.ADDTRAININGDATA_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
+	
+	/**
+	 * 
+	* @Title: getUserTrainingData 
+	* @author 康良涛 
+	* @Description: TODO(查询用户已添加训练) 
+	* @param @param context
+	* @param @param userId
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void getUserTrainingData(Context context,String userId,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			
+			jsonObject.put("userId", userId);
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.USERTRAININGDATA_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
+	
+	/**
+	 * 
+	* @Title: deleteUserTraining 
+	* @author 康良涛 
+	* @Description: TODO(删除用户训练) 
+	* @param @param context
+	* @param @param userId
+	* @param @param category
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void deleteUserTraining(Context context,String userId,String category,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			
+			jsonObject.put("userId", userId);
+			jsonObject.put("category", category);
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.DELETETRAININGDATA_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
+	
+	/**
+	 * 
+	* @Title: getUserTrainingTotalRecord 
+	* @author 康良涛 
+	* @Description: TODO(获取用户训练记录) 
+	* @param @param context
+	* @param @param userId
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void getUserTrainingTotalRecord(Context context,String userId,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			
+			jsonObject.put("userId", userId);
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.USERTRAININGRECORD_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
+	
+	
+	/**
+	 * 
+	* @Title: addUserTrainingRecord 
+	* @author 康良涛 
+	* @Description: TODO(添加用户训练记录) 
+	* @param @param context
+	* @param @param userId
+	* @param @param trainingDate
+	* @param @param trainingCalories
+	* @param @param trainingTime
+	* @param @param category
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void addUserTrainingRecord(Context context,String userId,String trainingDate,String trainingCalories,String trainingTime,String category,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			
+			jsonObject.put("userId", userId);
+			jsonObject.put("category", category);
+			jsonObject.put("trainingDate", trainingDate);
+			jsonObject.put("trainingCalories", trainingCalories);
+			jsonObject.put("trainingTime", trainingTime);
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.ADDUSERTRAININGRECORD_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
 
+	
+	/**
+	 * 
+	* @Title: queryRecommendedTraining 
+	* @author 康良涛 
+	* @Description: TODO(获取推荐训练) 
+	* @param @param context
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void getRecommendedTraining(Context context,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+			
+			
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.RECOMMENDEDTRAINING_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
 }

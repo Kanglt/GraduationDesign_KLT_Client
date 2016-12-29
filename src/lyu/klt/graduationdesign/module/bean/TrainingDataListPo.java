@@ -2,6 +2,7 @@
 */
 package lyu.klt.graduationdesign.module.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /** 
@@ -11,7 +12,7 @@ import java.util.List;
 * @date 2016年12月23日 下午3:16:27 
 *  
 */
-public class TrainingDataListPo {
+public class TrainingDataListPo implements Serializable{
 	
 	public List<TrainingDataPo> trianingList;
 

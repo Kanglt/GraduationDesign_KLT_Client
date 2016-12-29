@@ -50,6 +50,7 @@
                     android:orientation="horizontal" >
 
                     <RelativeLayout
+                        android:id="@+id/rl_training_motion_diagram"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -101,6 +102,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/ll_recommendedTraining"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -126,6 +128,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rl_totalTraining"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

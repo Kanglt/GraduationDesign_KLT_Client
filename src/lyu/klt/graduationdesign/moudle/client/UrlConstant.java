@@ -41,11 +41,33 @@ public class UrlConstant {
 			+ "DataWebServiceMobile.service?getDietData_foodMateria";
 	// 获取饮食信息
 	public static String DIETDATA_DIETDETAILE_STEP_URL = URL_BASE + "DataWebServiceMobile.service?getDietDetaile_step";
-	//获取对应就餐类型与就餐时间的视频数据
-	public static String DIETDATA_WITH_DINNERTIME_DIETTYPE_URL = URL_BASE + "DataWebServiceMobile.service?getDietData_with_dinneTime_dietType";
-	//获取对应音乐类型音乐数据
-	public static String MUSICDATA_WITH_MUSICTYPE_URL = URL_BASE + "DataWebServiceMobile.service?getMusicData_with_musicType";
-	
-	
-	
+	// 获取对应就餐类型与就餐时间的视频数据
+	public static String DIETDATA_WITH_DINNERTIME_DIETTYPE_URL = URL_BASE
+			+ "DataWebServiceMobile.service?getDietData_with_dinneTime_dietType";
+	// 获取对应音乐类型音乐数据
+	public static String MUSICDATA_WITH_MUSICTYPE_URL = URL_BASE
+			+ "DataWebServiceMobile.service?getMusicData_with_musicType";
+
+	// 获取全部训练数据
+	public static String TOTALTRAININGDATA_URL = URL_BASE + "DataWebServiceMobile.service?getTotalTraining";
+
+	// 添加用户训练
+	public static String ADDTRAININGDATA_URL = URL_BASE + "DataWebServiceMobile.service?addTraining";
+	// 删除用户训练
+	public static String DELETETRAININGDATA_URL = URL_BASE + "DataWebServiceMobile.service?deleteUserTraining";
+
+	// 获取已添加训练
+	public static String USERTRAININGDATA_URL = URL_BASE + "DataWebServiceMobile.service?queryUserTrainingData";
+	// 获取已添加训练
+	public static String USERTRAININGRECORD_URL = URL_BASE
+			+ "DataWebServiceMobile.service?queryUserTrainingTotalRecord";
+	// 添加训练记录
+	public static String ADDUSERTRAININGRECORD_URL = URL_BASE + "DataWebServiceMobile.service?addUserTrainingRecord";
+	// 推荐训练
+	public static String RECOMMENDEDTRAINING_URL = URL_BASE + "DataWebServiceMobile.service?queryRecommendedTraining";
+
+	// 获取用户身体数据
+	public static String GETUSERBODYDATA_URL = URL_BASE + "DataWebServiceMobile.service?getUserBodyData";
+	// 添加用户身体数据
+	public static String ADDUSERBODYDATA_URL = URL_BASE + "DataWebServiceMobile.service?addUserBodyData";
 }

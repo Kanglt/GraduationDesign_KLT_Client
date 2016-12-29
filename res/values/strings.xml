@@ -47,5 +47,12 @@
     <string name="title_activity_edit_password">EditPasswordActivity</string>
     <string name="title_activity_video_display">VideoDisplayActivity</string>
     <string name="title_activity_video_down_load">VideoDownLoadActivity</string>
+     <string name="str_video_prompt">中途放弃将不会记录在训练历史！</string>
+     
+      <string name="str_data_zero">0</string>
+      <string name="str_weight_unit">斤</string>
+      <string name="str_weight">体重</string>
+       <string name="str_BIM">BIM</string>
+      <string name="str_weight_with_lastTime">比上次</string>
 
 </resources>

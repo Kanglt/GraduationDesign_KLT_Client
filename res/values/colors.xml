@@ -28,12 +28,13 @@
     <color name="choose_eara_item_press_color">#f4f4f4</color>
     <color name="cash_wallet">#ff9500</color>
     <color name="subsidy_wallet">#ff4d27</color>
-    
     <color name="dark">#FF222222</color>
     <color name="light">#FFEEEEEE</color>
-   
     <color name="title_bar">#e4302b</color>
-   
-    
-    
+    <color name="heart_default">#E48674</color>
+    <color name="heart_select">#E48674</color>
+    <color name="translucent">#10000000</color>
+    <color name="rippelColor">#FFFFFF</color>
+    <color name="heartbeat">#EAAD7E</color>
+
 </resources>

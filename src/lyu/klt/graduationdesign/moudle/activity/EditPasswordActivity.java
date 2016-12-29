@@ -122,7 +122,7 @@ public class EditPasswordActivity extends BaseActivity {
 
 				if (dateFormat()) {
 					UserAPI.updateUserInformationForMobile(context, userPo.getUserId(), userPo.getUserName(),
-							edi_newPassword.getText().toString(), userPo.getUserBirthday(), userPo.getUserPhoneNumble(),
+							edi_newPassword.getText().toString(), userPo.getUserBirthday(),userPo.getUserAge(), userPo.getUserPhoneNumble(),
 							userPo.getUserSex(), userPo.getUserEmail(), userPo.getUserId() + "_head.jpg",
 							updateUserPasswordStringHttpResponseListener);
 				}

@@ -266,40 +266,47 @@
                         </RelativeLayout>
                     </LinearLayout>
 
-                    <ListView
-                        android:id="@+id/listView_fitness"
+                   <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_userTraining"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
-                    </ListView>
-
-                    <LinearLayout
+                        android:layout_height="wrap_content" />
+                        
+             <!--             <ListView 
+                        android:id="@+id/list_userTraining"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10sp"
-                            android:layout_weight="1" >
-
-                            <TextView
-                                android:id="@+id/tv_fitness_my_trianing_sub2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:gravity="start|center"
-                                android:text="删除训练"
-                                android:textColor="@color/gray"
-                                android:textSize="18sp" />
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:background="#ebebeb" />
+                            ></ListView>
+                             -->
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_sub_user_training"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10sp"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:id="@+id/tv_fitness_my_trianing_sub2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="start|center"
+                            android:text="删除训练"
+                            android:textColor="@color/gray"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#ebebeb" />
             </LinearLayout>
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>

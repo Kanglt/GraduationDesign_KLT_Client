@@ -102,13 +102,13 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
 					intent.putExtra("trainingDataPo", trainingDataList.get(position));
 					mContext.startActivity(intent);
 				}
-				AbToastUtil.showToast(mContext, trainingDataList.get(position).getCategory());
+				//AbToastUtil.showToast(mContext, trainingDataList.get(position).getCategory());
 			}
 		});
 		holder.ll_item.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
-				AbToastUtil.showToast(mContext, trainingDataList.get(position).getCategory());
+			//	AbToastUtil.showToast(mContext, trainingDataList.get(position).getCategory());
 				return true;
 			}
 		});

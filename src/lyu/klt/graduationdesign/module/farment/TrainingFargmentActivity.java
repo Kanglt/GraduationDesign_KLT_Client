@@ -38,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
+import lyu.klt.frame.ab.util.AbDialogUtil;
 import lyu.klt.frame.ab.util.AbLogUtil;
 import lyu.klt.frame.ab.util.AbSharedUtil;
 import lyu.klt.frame.ab.util.AbToastUtil;
@@ -45,12 +46,15 @@ import lyu.klt.frame.google.gson.Gson;
 import lyu.klt.frame.google.gson.reflect.TypeToken;
 import lyu.klt.frame.util.GsonUtils;
 import lyu.klt.frame.util.StringUtil;
+import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.TrainingListAdapter;
 import lyu.klt.graduationdesign.module.adapter.TrainingListRecyclerAdapter;
 import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
 import lyu.klt.graduationdesign.moudle.activity.MusicSelectActivity;
+import lyu.klt.graduationdesign.moudle.activity.RecommendedTrainingActivity;
+import lyu.klt.graduationdesign.moudle.activity.TotalTrainingActivity;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.TrainingDataPAI;
 import lyu.klt.graduationdesign.moudle.client.Constant;
@@ -102,7 +106,9 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 	List<TrainingDataListPo> trainingDataListPo;
 	private TrainingListAdapter trainingListAdapter;
 	
-	private View rl_trainingMusic;
+	private View rl_trainingMusic,rl_totalTraining,ll_recommendedTraining,rl_training_motion_diagram;
+	
+	public static boolean isRefresh=false;
 
 	Handler handler = new Handler() {
 
@@ -131,6 +137,20 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 		this.context = (Activity) context;
 	}
 
+	
+	
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if(isRefresh){
+			TrainingDataPAI.getTrainingData(context, trainingDataStringHttpResponseListener);
+			isRefresh=false;
+		}
+		
+	}
+
 	public void init(View view) {
 		this.initUtil();
 		this.initData();
@@ -156,6 +176,9 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 		rv_training = (RecyclerView) view.findViewById(R.id.rv_training);
 		
 		rl_trainingMusic=(RelativeLayout)view.findViewById(R.id.rl_trainingMusic);
+		rl_totalTraining=(RelativeLayout)view.findViewById(R.id.rl_totalTraining);
+		ll_recommendedTraining=(RelativeLayout)view.findViewById(R.id.ll_recommendedTraining);
+		rl_training_motion_diagram=(RelativeLayout)view.findViewById(R.id.rl_training_motion_diagram);
 
 	}
 
@@ -198,6 +221,9 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 		
 		
 		rl_trainingMusic.setOnClickListener(onClickListener);
+		rl_totalTraining.setOnClickListener(onClickListener);
+		ll_recommendedTraining.setOnClickListener(onClickListener);
+		rl_training_motion_diagram.setOnClickListener(onClickListener);
 	}
 
 	public void startGame() {
@@ -215,6 +241,17 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 			case R.id.rl_trainingMusic:
 				intent.setClass(context, MusicSelectActivity.class);
 				startActivity(intent);
+				break;
+			case R.id.ll_recommendedTraining:
+				intent.setClass(context, RecommendedTrainingActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.rl_totalTraining:
+				intent.setClass(context, TotalTrainingActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.rl_training_motion_diagram:
+				AbToastUtil.showToast(context, "功能还未开放！");
 				break;
 			default:
 				break;
@@ -411,26 +448,7 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
              mDatas.add( "item"+i);
        }
 	}
-	//
-	// public List<HashMap<String, Object>> listdata() {
-	// List<HashMap<String, Object>> list = new ArrayList<HashMap<String,
-	// Object>>();
-	// HashMap<String, Object> hm = new HashMap<String, Object>();
-	// hm.put("list_text", "测试数据1");
-	// list.add(hm);
-	//
-	// hm = new HashMap<String, Object>();
-	// hm.put("list_text", "测试数据2");
-	// list.add(hm);
-	// hm = new HashMap<String, Object>();
-	// hm.put("list_text", "测试数据3");
-	// list.add(hm);
-	// hm = new HashMap<String, Object>();
-	// hm.put("list_text", "测试数据4");
-	// list.add(hm);
-	//
-	// return list;
-	// }
+
 
 	private AbStringHttpResponseListener trainingDataStringHttpResponseListener = new AbStringHttpResponseListener() {
 
@@ -485,7 +503,7 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 			// TODO Auto-generated method stub
 			AbLogUtil.d(TAG, "onFinish");
 			// 移除进度框
-			// HideProgressDialog();
+			// ((BaseActivity) context).HideProgressDialog();
 
 			// AbDialogUtil.removeDialog(context);
 		}
