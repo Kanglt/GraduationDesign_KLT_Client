@@ -202,125 +202,9 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="#ebebeb" />
+            
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="15sp"
-                    android:layout_weight="1"
-                    android:gravity="center" >
-
-                    <ImageView
-                        android:id="@+id/imageView1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentStart="true"
-                        android:src="@drawable/ic_launcher" />
-
-                    <TextView
-                        android:id="@+id/textView1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/imageView1"
-                        android:gravity="center"
-                        android:text="浏览记录"
-                        android:textSize="10sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="15sp"
-                    android:layout_weight="1"
-                    android:gravity="center" >
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentStart="true"
-                        android:src="@drawable/ic_launcher" />
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/imageView2"
-                        android:gravity="center"
-                        android:text="我的收藏"
-                        android:textSize="10sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="15sp"
-                    android:layout_weight="1"
-                    android:gravity="center" >
-
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentStart="true"
-                        android:src="@drawable/ic_launcher" />
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/imageView3"
-                        android:gravity="center"
-                        android:text="身体数据"
-                        android:textSize="10sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_healthDetection"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="15sp"
-                    android:layout_weight="1"
-                    android:gravity="center" >
-
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentStart="true"
-                        android:src="@drawable/ic_launcher" />
-
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/imageView4"
-                        android:gravity="center"
-                        android:text="健康检测"
-                        android:textSize="10sp" />
-                </RelativeLayout>
-            </LinearLayout>
+            
 
             <ImageView
                 android:layout_width="match_parent"
@@ -328,7 +212,7 @@
                 android:background="#ebebeb" />
 
             <LinearLayout
-                android:id="@+id/ll_training_data"
+                android:id="@+id/ll_healthDetection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp" >
@@ -343,7 +227,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="fill_parent"
                         android:gravity="start|center"
-                        android:text="训练历史" />
+                        android:text="健康检测" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -364,6 +248,43 @@
                 android:layout_height="1dp"
                 android:background="#ebebeb" />
 
+             <LinearLayout
+                android:id="@+id/ll_diet_collection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" >
+
+                <RelativeLayout
+                    
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="start|center"
+                        android:text="饮食收藏" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/work_thenextitem" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ebebeb" />
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

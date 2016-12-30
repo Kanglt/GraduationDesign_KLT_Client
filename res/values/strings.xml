@@ -47,12 +47,19 @@
     <string name="title_activity_edit_password">EditPasswordActivity</string>
     <string name="title_activity_video_display">VideoDisplayActivity</string>
     <string name="title_activity_video_down_load">VideoDownLoadActivity</string>
-     <string name="str_video_prompt">中途放弃将不会记录在训练历史！</string>
-     
-      <string name="str_data_zero">0</string>
-      <string name="str_weight_unit">斤</string>
-      <string name="str_weight">体重</string>
-       <string name="str_BIM">BIM</string>
-      <string name="str_weight_with_lastTime">比上次</string>
+    <string name="str_video_prompt">中途放弃将不会记录在训练历史！</string>
+    <string name="str_data_zero">0</string>
+    <string name="str_weight_unit">KG</string>
+    <string name="str_weight">体重</string>
+    <string name="str_BIM">BIM</string>
+    <string name="str_weight_with_lastTime">比上次</string>
+    <string name="str_BMI_calculate">BMI计算</string>
+    <string name="str_BMI_height">请输入身高(M)</string>
+    <string name="str_BMI_weight">请输入体重(KG)</string>
+    <string name="str_BMI_confirm_calculate">确认计算</string>
+    
+    <string name="str_BFR">BFR</string>
+    <string name="str_BFR_calculate">BFR计算</string>
+    <string name="str_BFR_waist_circumference">请输入腰围(公分)</string>
 
 </resources>

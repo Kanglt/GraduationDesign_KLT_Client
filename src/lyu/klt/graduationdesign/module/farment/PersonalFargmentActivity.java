@@ -119,7 +119,7 @@ public class PersonalFargmentActivity extends Fragment {
 	private String photoName;	
 	
 	
-	private View ll_training_data,rl_healthDetection;
+	private View ll_diet_collection,ll_healthDetection;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// View view = inflater.inflate(R.layout.message_layout,
@@ -189,8 +189,8 @@ public class PersonalFargmentActivity extends Fragment {
 		
 		user_picture=(ImageView) view.findViewById(R.id.user_picture);
 		
-		ll_training_data=(LinearLayout)view.findViewById(R.id.ll_training_data);
-		rl_healthDetection=(RelativeLayout)view.findViewById(R.id.rl_healthDetection);
+		ll_diet_collection=(LinearLayout)view.findViewById(R.id.ll_diet_collection);
+		ll_healthDetection=(LinearLayout)view.findViewById(R.id.ll_healthDetection);
 	}
 
 	public void initViewData() {
@@ -208,8 +208,8 @@ public class PersonalFargmentActivity extends Fragment {
 		user_information.setOnClickListener(onClickListener);
 		btn_personal_exit.setOnClickListener(onClickListener);
 		tv_user_password.setOnClickListener(onClickListener);
-		ll_training_data.setOnClickListener(onClickListener);
-		rl_healthDetection.setOnClickListener(onClickListener);
+		ll_diet_collection.setOnClickListener(onClickListener);
+		ll_healthDetection.setOnClickListener(onClickListener);
 	}
 
 	public void startGame() {
@@ -241,11 +241,11 @@ public class PersonalFargmentActivity extends Fragment {
 				intent.setClass(context, EditPasswordActivity.class);
 				startActivity(intent);
 				break;
-			case R.id.ll_training_data:
+			case R.id.ll_diet_collection:
 					
 				
 				break;
-			case R.id.rl_healthDetection:
+			case R.id.ll_healthDetection:
 				intent.setClass(context, HealthDetectionActivity.class);
 				startActivity(intent);
 				break;
