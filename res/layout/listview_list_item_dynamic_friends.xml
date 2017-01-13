@@ -77,7 +77,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15sp"
+        android:layout_margin="5dp"
         android:orientation="horizontal" >
 
         <RelativeLayout
@@ -86,17 +86,27 @@
             android:layout_weight="1"
             android:gravity="center" >
 
-            <!-- 转发 -->
-
             <TextView
                 android:id="@+id/tv_dynamic_forwarding_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawableStart="@drawable/forwarding"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:gravity="center"
                 android:text="5"
                 android:textColor="@color/gray" />
+
+            <TextView
+                android:id="@+id/tv_personal_dynamic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_dynamic_forwarding_num"
+                android:gravity="center"
+                android:text="转发"
+                android:textColor="@color/gray"
+                android:textSize="10sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -105,18 +115,28 @@
             android:layout_weight="1"
             android:background="@drawable/view_right_devider"
             android:gravity="center" >
-
-            <!-- 评论 -->
 
             <TextView
                 android:id="@+id/tv_dynamic_comments_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawableStart="@drawable/comments"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:gravity="center"
                 android:text="5"
                 android:textColor="@color/gray" />
+
+            <TextView
+                android:id="@+id/tv_personal_focus_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_dynamic_comments_num"
+                android:gravity="center"
+                android:text="评论"
+                android:textColor="@color/gray"
+                android:textSize="10sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -126,17 +146,27 @@
             android:background="@drawable/view_right_devider"
             android:gravity="center" >
 
-            <!-- 点赞 -->
-
             <TextView
                 android:id="@+id/tv_dynamic_thumb_up_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawableStart="@drawable/thumb_up_unpress"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:gravity="center"
                 android:text="5"
                 android:textColor="@color/gray" />
+
+            <TextView
+                android:id="@+id/tv_personal_fans_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_dynamic_thumb_up_num"
+                android:gravity="center"
+                android:text="点赞"
+                android:textColor="@color/gray"
+                android:textSize="10sp" />
         </RelativeLayout>
     </LinearLayout>
 

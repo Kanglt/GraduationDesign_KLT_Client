@@ -246,7 +246,7 @@
                                 android:layout_height="fill_parent"
                                 android:gravity="start|center"
                                 android:text="我的训练"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -262,28 +262,26 @@
                                 android:gravity="end|center"
                                 android:text="添加训练"
                                 android:textColor="@color/gray"
-                                android:textSize="18sp" />
+                                android:textSize="14sp" />
                         </RelativeLayout>
                     </LinearLayout>
 
-                   <android.support.v7.widget.RecyclerView
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#ebebeb" />
+
+                    <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_userTraining"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                        
-             <!--             <ListView 
-                        android:id="@+id/list_userTraining"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                            ></ListView>
-                             -->
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_sub_user_training"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="vertical" >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -299,7 +297,7 @@
                             android:gravity="start|center"
                             android:text="删除训练"
                             android:textColor="@color/gray"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
                     </RelativeLayout>
                 </LinearLayout>
 

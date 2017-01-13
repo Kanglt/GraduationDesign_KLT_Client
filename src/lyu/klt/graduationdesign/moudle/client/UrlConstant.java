@@ -1,5 +1,7 @@
 package lyu.klt.graduationdesign.moudle.client;
 
+import android.net.Uri;
+
 /**
  * @ClassName: UrlConstant
  * @Description: TODO(储存系统URL常数)
@@ -21,6 +23,8 @@ public class UrlConstant {
 	public final static String FILE_SERVICE_DOWNLOAD_VIDEO_URL = URL_BASE + "videos/";
 	public final static String FILE_SERVICE_DOWNLOAD_MUSIC_URL = URL_BASE + "musics/";
 	public final static String FILE_SERVICE_DOWNLOAD_TRAININGIMAGE_URL = URL_BASE + "image/trainingImage/";
+	
+	public static Uri PHOTOURI;
 
 	public static String TESTURL = URL_BASE + "TestMobile.service?getTestListForMobile";
 

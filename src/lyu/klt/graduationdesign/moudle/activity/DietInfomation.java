@@ -28,6 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
 import lyu.klt.frame.ab.util.AbLogUtil;
+import lyu.klt.frame.ab.util.AbSharedUtil;
 import lyu.klt.frame.ab.util.AbToastUtil;
 import lyu.klt.frame.google.gson.Gson;
 import lyu.klt.frame.google.gson.reflect.TypeToken;
@@ -44,6 +45,8 @@ import lyu.klt.graduationdesign.module.bean.DietStepPo;
 import lyu.klt.graduationdesign.module.bean.FoodMateriaPo;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.DietDataPAI;
+import lyu.klt.graduationdesign.moudle.api.UserAPI;
+import lyu.klt.graduationdesign.moudle.client.Constant;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 import lyu.klt.graduationdesign.moudle.client.UrlConstant;
 import lyu.klt.graduationdesign.util.DataUtils;
@@ -160,7 +163,9 @@ public class DietInfomation extends BaseActivity {
 		// titlebar_view.setBackgroundColor(android.graphics.Color.parseColor("#7c7c7c"));
 		title_bar_left_img.setImageDrawable(context.getResources().getDrawable(R.drawable.btn_return3));
 		title_bar_text.setVisibility(View.GONE);
-		// titlebar_right_text.setVisibility(View.VISIBLE);
+		titlebar_right_text.setVisibility(View.VISIBLE);
+		titlebar_right_text.setText("");
+		titlebar_right_text.setBackgroundResource(R.drawable.btn_add);
 
 		tv_dinneTime.setText(dietDataPo.getProductionTime() + "分钟");
 		tv_dietName.setText(dietDataPo.getDietName());
@@ -198,6 +203,7 @@ public class DietInfomation extends BaseActivity {
 		super.initEvent();
 
 		title_bar_left_img.setOnClickListener(onClickListener);
+		titlebar_right_text.setOnClickListener(onClickListener);
 	}
 
 	@Override
@@ -385,6 +391,9 @@ public class DietInfomation extends BaseActivity {
 			switch (v.getId()) {
 			case R.id.title_bar_left_img:
 				finish();
+				break;
+			case R.id.title_bar_right_text:
+				
 				break;
 
 			default:

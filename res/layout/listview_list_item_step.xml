@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="start|center"
-            android:text="鸡蛋放入少许盐打散拌匀鸡蛋放入少许盐打散拌匀鸡蛋放入少许盐打散拌匀鸡蛋放入少许盐打散拌匀鸡蛋放入少许盐打散拌匀" />
+            />
         </RelativeLayout>
     </LinearLayout>
 
@@ -56,7 +56,6 @@
         android:id="@+id/iv_stepImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/dietbag" />
+        android:scaleType="centerCrop"/>
 
 </LinearLayout>

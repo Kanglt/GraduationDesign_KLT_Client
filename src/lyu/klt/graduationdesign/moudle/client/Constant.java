@@ -23,4 +23,6 @@ public class Constant {
 	
 	public static String ISLOADEDDATE="ISLOADEDDATE";
 	public static String ISUPDATEUSERPHOTO="ISUPDATEUSERPHOTO";
+	
+	
 }

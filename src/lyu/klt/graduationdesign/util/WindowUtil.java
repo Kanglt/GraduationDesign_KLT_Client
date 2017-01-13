@@ -5,8 +5,10 @@ package lyu.klt.graduationdesign.util;
 import java.lang.reflect.Method;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.WindowManager;
 
 /** 
 * @ClassName: WindowsUtil 
@@ -47,5 +49,28 @@ public class WindowUtil {
             e.printStackTrace();
         }
         return dm;
+    }
+    
+    
+    /**
+     * 获取屏幕宽度
+     * @param context
+     * @return
+     */
+    public static int getScreenWidth(Context context){
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int screenWidth = wm.getDefaultDisplay().getWidth();//屏幕宽度
+        return screenWidth;
+    }
+    
+    /**
+     * 获取屏幕高度
+     * @param context
+     * @return
+     */
+    public static int getScreenHeight(Context context){
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int screenWidth = wm.getDefaultDisplay().getHeight();//屏幕宽度
+        return screenWidth;
     }
 }

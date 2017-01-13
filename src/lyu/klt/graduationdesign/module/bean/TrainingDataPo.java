@@ -22,8 +22,15 @@ public class TrainingDataPo implements Serializable{
 	public String trainingImage;
 	public int trainingId;
 	public String trainingCalories;
+	public int trainingNum;
 	
 	
+	public int getTrainingNum() {
+		return trainingNum;
+	}
+	public void setTrainingNum(int trainingNum) {
+		this.trainingNum = trainingNum;
+	}
 	public String getTrainingCalories() {
 		return trainingCalories;
 	}

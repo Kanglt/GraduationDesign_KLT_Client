@@ -61,5 +61,7 @@
     <string name="str_BFR">BFR</string>
     <string name="str_BFR_calculate">BFR计算</string>
     <string name="str_BFR_waist_circumference">请输入腰围(公分)</string>
+    
+     <string name="str_release_dynamic_prompt">分享你的健身心得和经验吧</string>
 
 </resources>

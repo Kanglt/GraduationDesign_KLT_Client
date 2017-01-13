@@ -149,8 +149,8 @@ public class LauncherActivity extends Activity {
 			if(!FileUtils.fileIsExists(FileUtils.SDPATH+"image")){
 				FileUtils.createSDDir("image");
 			}
-			if(!FileUtils.fileIsExists(FileUtils.SDPATH+"localImgageLoader")){
-				FileUtils.createSDDir("localImgageLoader");
+			if(!FileUtils.fileIsExists(FileUtils.SDPATH+"photoUri")){
+				FileUtils.createSDDir("photoUri");
 			}
 			if(!FileUtils.fileIsExists(FileUtils.SDPATH+"musics")){
 				FileUtils.createSDDir("musics");

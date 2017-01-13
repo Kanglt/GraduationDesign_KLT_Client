@@ -79,72 +79,76 @@
             android:label="@string/title_activity_edit_password" >
         </activity>
         <activity
-            android:name="com.photoselector.ui.PhotoSelectorActivity"
+            android:name="lyu.klt.frame.photoselector.ui.PhotoSelectorActivity"
             android:label="图片选择" >
             <intent-filter>
                 <action android:name="" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.photoselector.ui.PhotoPreviewActivity"
+            android:name="lyu.klt.frame.photoselector.ui.PhotoPreviewActivity"
             android:label="图片预览" >
         </activity>
         <activity
-            android:name="com.photoselector.ui.PhotoSelectorPreview"
+            android:name="lyu.klt.frame.photoselector.ui.PhotoSelectorPreview"
             android:label="点击图片" >
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_video_display" >
+             >
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.DietInfomation"
-            android:label="@string/title_activity_video_display" >
+          >
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.DinneTimeActivity"
-            android:label="@string/title_activity_video_display" >
+            >
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.MusicSelectActivity"
-            android:label="@string/title_activity_video_display" >
+            >
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.MusicListActivity"
-            android:label="@string/title_activity_video_display" >
+            >
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.AddTrainingActivity"
-            android:label="@string/title_activity_video_display" >
+            >
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.DeleteUserTrainingActivity"
-            android:label="@string/title_activity_video_display" >
+             >
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.TotalTrainingActivity"
-            android:label="@string/title_activity_video_display" >
+             >
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.RecommendedTrainingActivity"
-            android:label="@string/title_activity_video_display" >
+             >
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.HeartRateDetectionActivity"
-            android:label="@string/title_activity_video_display" >
+             >
         </activity>
           <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.HealthDetectionActivity"
-            android:label="@string/title_activity_video_display" >
+             >
         </activity>
          <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.BMIActivity"
-            android:label="@string/title_activity_video_display" >
+            >
         </activity>
          <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.BodyFatRateActivity"
-            android:label="@string/title_activity_video_display" >
+             >
+        </activity>
+        <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.ReleaseDynamicActivity"
+            >
         </activity>
     </application>
 

@@ -2,7 +2,6 @@
     android:id="@+id/ll_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bag7"
     android:orientation="vertical" >
 
     <FrameLayout
@@ -15,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start|center_vertical"
-            android:background="@drawable/bag7"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -46,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="start|bottom"
-            android:paddingBottom="45dp"
+            android:paddingBottom="35dp"
             android:paddingStart="40dp"
             android:singleLine="true"
             android:text="6666人看过"

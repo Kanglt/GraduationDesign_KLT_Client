@@ -63,7 +63,7 @@ public class UserTrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder
 	public ViewHolder onCreateViewHolder(ViewGroup vg, int viewType) {
 		View v = null;
 		ViewHolder holder = null;
-		v = mInflater.inflate(R.layout.listview_list_item_fitness, vg, false);
+		v = mInflater.inflate(R.layout.recycleview_item_fitness, vg, false);
 		holder = new TitleHolder(v);
 		return holder;
 	}
@@ -81,22 +81,24 @@ public class UserTrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder
 		} 
 	
 		
-		String strArr[] = trainingDataPoList.get(position).getTrianingList().get(0).getTrainingImage().split("/");
-		String fileId=strArr[strArr.length-1];
-		ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_TRAININGIMAGE_URL + fileId, holder.iv_trainingImage,
-				imageLoadingListener);
+		final String[] fileName=trainingDataPoList.get(position).getTrianingList().get(0).getTrainingVideo().split("/");
+		final boolean isDownLoad=FileUtils.isFileExist("videos/"+fileName[fileName.length-1]);
+		if(isDownLoad){
+			holder.tv_isDownLoad.setText("已下载");
+		}else{
+			holder.tv_isDownLoad.setText("未下载");
+		}
 		
-		
+		holder.tv_finishNum.setText("完成"+trainingDataPoList.get(position).getTrianingList().get(trainingDataPoList.get(position).getTrianingList().size()-1).getTrainingNum()+"次");
 		holder.tv_category.setText(trainingDataPoList.get(position).getTrianingList().get(0).getCategory());
-		holder.tv_num.setText(trainingDataPoList.get(position).getTrianingList().get(0).getParticipation()+"人收藏");
-		holder.tv_levelAndTime.setText(trainingDataPoList.get(position).getTrianingList().get(0).getTrainingLevel()+" • "+trainingDataPoList.get(position).getTrianingList().get(0).getTrainingTime()+"分钟");
+		holder.tv_levelAndTime.setText(trainingDataPoList.get(position).getTrianingList().get(0).getTrainingTime()+"分钟");
 		// 列表项的点击事件需要自己实现
 		holder.ll_item.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String[] fileName=trainingDataPoList.get(position).getTrianingList().get(0).getTrainingVideo().split("/");
+				
 				Intent intent=new Intent();
-				if(!FileUtils.isFileExist("videos/"+fileName[fileName.length-1])){
+				if(!isDownLoad){
 					VideoDownLoadDialog.showVideoDownLoadDialog(mContext, fileName[fileName.length-1]);
 				}else{
 					intent.setClass(mContext, VideoDisplayActivity.class);
@@ -133,8 +135,8 @@ public class UserTrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder
 		//public TextView tv_title;
 		public TextView tv_category;
 		public TextView tv_levelAndTime;
-		public TextView tv_num;
-		public ImageView iv_trainingImage;
+		public TextView tv_isDownLoad;
+		public TextView tv_finishNum;
 	
 
 		public TitleHolder(View v) {
@@ -142,8 +144,8 @@ public class UserTrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder
 			ll_item = (LinearLayout) v.findViewById(R.id.ll_item);
 			tv_category=(TextView) v.findViewById(R.id.tv_category);
 			tv_levelAndTime=(TextView) v.findViewById(R.id.tv_levelAndTime);
-			tv_num=(TextView) v.findViewById(R.id.tv_num);
-			iv_trainingImage=(ImageView) v.findViewById(R.id.iv_trainingImage);
+			tv_isDownLoad=(TextView) v.findViewById(R.id.tv_isDownLoad);
+			tv_finishNum=(TextView) v.findViewById(R.id.tv_finishNum);
 			
 		}
 
@@ -160,35 +162,5 @@ public class UserTrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder
 	public void setOnItemLongClickListener(OnItemLongClickListener listener) {
 		this.mOnItemLongClickListener = listener;
 	}
-
-
-	
-	ImageLoadingListener imageLoadingListener = new ImageLoadingListener() {
-
-		@Override
-		public void onLoadingStarted(String arg0, View arg1) {
-			// TODO Auto-generated method stub
-			Log.e("StepRecyclerAdapter", "onLoadingStarted");
-		}
-
-		@Override
-		public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
-			// TODO Auto-generated method stub
-			Log.e("StepRecyclerAdapter", "onLoadingFailed");
-
-		}
-
-		@Override
-		public void onLoadingComplete(String arg0, View arg1, Bitmap arg2) {
-			// TODO Auto-generated method stub
-			Log.e("StepRecyclerAdapter", "onLoadingComplete");
-		}
-
-		@Override
-		public void onLoadingCancelled(String arg0, View arg1) {
-			// TODO Auto-generated method stub
-			Log.e("UserTrainingRecyclerAdapter", "onLoadingCancelled");
-		}
-	};
 	
 }
