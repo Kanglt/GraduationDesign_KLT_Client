@@ -3,6 +3,8 @@
 package lyu.klt.graduationdesign.module.bean;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Timer;
 
 /** 
 * @ClassName: TrainingDataPo 
@@ -74,6 +76,7 @@ public class TrainingDataPo implements Serializable{
 	public void setTrainingLevel(String trainingLevel) {
 		this.trainingLevel = trainingLevel;
 	}
+
 	public String getTrainingTime() {
 		return trainingTime;
 	}

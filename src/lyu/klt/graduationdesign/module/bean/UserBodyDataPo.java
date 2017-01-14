@@ -2,6 +2,8 @@
 */
 package lyu.klt.graduationdesign.module.bean;
 
+import java.sql.Timestamp;
+
 /**
  * @ClassName: UserBodyDataPo
  * @Description: TODO(这里用一句话描述这个类的作用)

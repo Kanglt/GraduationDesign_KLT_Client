@@ -23,6 +23,7 @@ public class UrlConstant {
 	public final static String FILE_SERVICE_DOWNLOAD_VIDEO_URL = URL_BASE + "videos/";
 	public final static String FILE_SERVICE_DOWNLOAD_MUSIC_URL = URL_BASE + "musics/";
 	public final static String FILE_SERVICE_DOWNLOAD_TRAININGIMAGE_URL = URL_BASE + "image/trainingImage/";
+	public final static String FILE_SERVICE_DOWNLOAD_DYNAMICIMAGE_URL = URL_BASE + "image/user_dynamic_image/";
 	
 	public static Uri PHOTOURI;
 
@@ -36,6 +37,8 @@ public class UrlConstant {
 	public static String UPDATEUSERINFORMATION_URL = URL_BASE + "UserWebServiceMobile.service?updateUserInformation";
 	// 修改用户头像
 	public static String UPDATEUSERPHOTO_URL = URL_BASE + "userPhotoUpdate";
+	// 上传用户动态中的图片
+	public static String ADDUSERDYNAMICIMAGE_URL = URL_BASE + "userDynamicImageUpload";
 	// 获取推荐模块下训练模块的数据
 	public static String TRAININGDATA_URL = URL_BASE + "DataWebServiceMobile.service?getTrainingData";
 	// 获取饮食信息
@@ -74,4 +77,9 @@ public class UrlConstant {
 	public static String GETUSERBODYDATA_URL = URL_BASE + "DataWebServiceMobile.service?getUserBodyData";
 	// 添加用户身体数据
 	public static String ADDUSERBODYDATA_URL = URL_BASE + "DataWebServiceMobile.service?addUserBodyData";
+	
+	// 用户发布动态
+	public static String ADDUSERDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?addUserDynamic";
+	// 查询用户个人动态
+	public static String QUERYUSERPERSONALDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryUserPersonalDynamic";
 }

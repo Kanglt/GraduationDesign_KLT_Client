@@ -17,10 +17,10 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import lyu.klt.graduationdesign.module.bean.UserPo;
-import lyu.klt.graduationdesign.module.farment.DietFargmentActivity;
-import lyu.klt.graduationdesign.module.farment.FitnessFargmentActivity;
-import lyu.klt.graduationdesign.module.farment.RecommendedFargmentActivity;
-import lyu.klt.graduationdesign.module.farment.TrainingFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.DietFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.FitnessFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.RecommendedFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.TrainingFargmentActivity;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 
 /** 

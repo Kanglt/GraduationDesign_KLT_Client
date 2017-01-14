@@ -50,7 +50,7 @@ import lyu.klt.frame.util.FileUtils;
 import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
-import lyu.klt.graduationdesign.module.farment.VideoDisplayFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.VideoDisplayFargmentActivity;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.TrainingDataPAI;
 import lyu.klt.graduationdesign.moudle.client.Constant;

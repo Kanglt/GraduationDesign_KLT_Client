@@ -19,10 +19,10 @@ import android.widget.TextView;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.adapter.DietDinneTimeFragmentViewPagerAdapter;
 import lyu.klt.graduationdesign.module.adapter.RecommendedFragmentViewPagerAdapter;
-import lyu.klt.graduationdesign.module.farment.DietAddMuscleFargmentActivity;
-import lyu.klt.graduationdesign.module.farment.DietFargmentActivity;
-import lyu.klt.graduationdesign.module.farment.DietReducedFatFargmentActivity;
-import lyu.klt.graduationdesign.module.farment.TrainingFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.DietAddMuscleFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.DietFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.DietReducedFatFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.TrainingFargmentActivity;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 import lyu.klt.graduationdesign.view.SlidingTabLayout;
 

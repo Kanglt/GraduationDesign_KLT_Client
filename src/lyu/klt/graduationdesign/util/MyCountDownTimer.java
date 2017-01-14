@@ -2,6 +2,7 @@
 */
 package lyu.klt.graduationdesign.util;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,7 +28,7 @@ import lyu.klt.frame.util.DateUtil;
 import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
-import lyu.klt.graduationdesign.module.farment.FitnessFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.FitnessFargmentActivity;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.TrainingDataPAI;
@@ -167,7 +168,7 @@ public class MyCountDownTimer extends AdvancedCountdownTimer {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				TrainingDataPAI.addUserTrainingRecord(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID),
-						DateUtil.getDateEN1(), trainingDataPo.getTrainingCalories(), trainingDataPo.getTrainingTime(),
+						Timestamp.valueOf(DateUtil.getDateEN()).toString(), trainingDataPo.getTrainingCalories(), trainingDataPo.getTrainingTime(),
 						trainingDataPo.getCategory(), addUserTrainingRecordStringHttpResponseListener);
 
 			}

@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 import lyu.klt.frame.util.FileUtils;
 import lyu.klt.graduationdesign.module.Receiver.MusicDownLoadCompleteReceiver;
 import lyu.klt.graduationdesign.module.Receiver.VideoDownLoadCompleteReceiver;
-import lyu.klt.graduationdesign.module.farment.VideoDisplayFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.VideoDisplayFargmentActivity;
 import lyu.klt.graduationdesign.moudle.client.UrlConstant;
 
 /**

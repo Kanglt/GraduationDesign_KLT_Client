@@ -53,6 +53,7 @@ import lyu.klt.graduationdesign.moudle.client.UrlConstant;
 import lyu.klt.graduationdesign.util.DataUtils;
 import lyu.klt.graduationdesign.util.DialogUtils;
 import lyu.klt.graduationdesign.util.ImageLoaderUtil;
+import lyu.klt.graduationdesign.util.ImageUntils;
 import lyu.klt.graduationdesign.util.UploadUtil;
 
 public class InfomationActivity extends BaseActivity {
@@ -77,7 +78,8 @@ public class InfomationActivity extends BaseActivity {
 			ll_information_user_birthday, ll_information_user_phone_numble, ll_information_user_email;
 
 	private TextView tv_information_user_id, tv_information_user_name, tv_information_user_sex,
-			tv_information_user_birthday, tv_information_user_phone_numble, tv_information_user_email,tv_information_user_age;
+			tv_information_user_birthday, tv_information_user_phone_numble, tv_information_user_email,
+			tv_information_user_age;
 
 	private ImageView iv_information_user_picture;
 
@@ -92,10 +94,10 @@ public class InfomationActivity extends BaseActivity {
 	private Dialog dialog;
 	private String[] photoNameArray;
 	private String photoName;
-	
+
 	private String userAge;
-	
-	private static String nowTime=DateUtil.getStringTime(DateUtil.FORMAT_TYPE2);
+
+	private static String nowTime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +109,7 @@ public class InfomationActivity extends BaseActivity {
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		
+
 		initUtil();
 		initData();
 		initView();
@@ -157,7 +159,7 @@ public class InfomationActivity extends BaseActivity {
 		tv_information_user_birthday = (TextView) findViewById(R.id.tv_information_user_birthday);
 		tv_information_user_phone_numble = (TextView) findViewById(R.id.tv_information_user_phone_numble);
 		tv_information_user_email = (TextView) findViewById(R.id.tv_information_user_email);
-		tv_information_user_age= (TextView) findViewById(R.id.tv_information_user_age);
+		tv_information_user_age = (TextView) findViewById(R.id.tv_information_user_age);
 
 		iv_information_user_picture = (ImageView) findViewById(R.id.iv_information_user_picture);
 
@@ -167,8 +169,6 @@ public class InfomationActivity extends BaseActivity {
 	public void initViewData() {
 		// TODO Auto-generated method stub
 		super.initViewData();
-
-		
 
 		title_bar_left_img.setImageDrawable(context.getResources().getDrawable(R.drawable.btn_return2));
 		title_bar_text.setText("修改个人资料");
@@ -236,13 +236,15 @@ public class InfomationActivity extends BaseActivity {
 				initUpdateUserInfoDialog(tv_information_user_email);
 				break;
 			case R.id.title_bar_right_text:
+				nowTime = DateUtil.getStringTime(DateUtil.FORMAT_TYPE2);
 				UserAPI.updateUserInformationForMobile(context, tv_information_user_id.getText().toString(),
 						tv_information_user_name.getText().toString(),
 						AbSharedUtil.getString(context, Constant.LAST_LOGINID_PASSWORD),
-						tv_information_user_birthday.getText().toString(),tv_information_user_age.getText().toString(),
+						tv_information_user_birthday.getText().toString(), tv_information_user_age.getText().toString(),
 						tv_information_user_phone_numble.getText().toString(),
 						tv_information_user_sex.getText().toString(), tv_information_user_email.getText().toString(),
-						userPo.getUserId() + "_head"+nowTime+".jpg", updateUserInformationStringHttpResponseListener);
+						userPo.getUserId() + "_head" + nowTime + ".jpg",
+						updateUserInformationStringHttpResponseListener);
 				break;
 			case R.id.iv_information_user_picture:
 				CommonUtils.launchActivityForResult(context, PhotoSelectorActivity.class, 0, 1);
@@ -268,19 +270,20 @@ public class InfomationActivity extends BaseActivity {
 					// sb.append(photo.getOriginalPath() + "\r\n");
 					// InputStream in;
 					// in=context.getResources().openRawResource(R.drawable.recommended_unpress);
-					FileInputStream in = null;
-					try {
-						in = new FileInputStream(photo.getOriginalPath());
-						myBitmap = BitmapFactory.decodeStream(in);
-						iv_information_user_picture.setImageBitmap(myBitmap);
-						in.close();
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					// FileInputStream in = null;
+					// try {
+					// in = new FileInputStream(photo.getOriginalPath());
+					// myBitmap = BitmapFactory.decodeStream(in);
+					myBitmap = ImageUntils.getSmallBitmap(photo.getOriginalPath());
+					iv_information_user_picture.setImageBitmap(myBitmap);
+					// in.close();
+					// } catch (FileNotFoundException e) {
+					// // TODO Auto-generated catch block
+					// e.printStackTrace();
+					// } catch (IOException e) {
+					// // TODO Auto-generated catch block
+					// e.printStackTrace();
+					// }
 
 				}
 
@@ -338,7 +341,8 @@ public class InfomationActivity extends BaseActivity {
 				// Minute = "" + time_text.getCurrentMinute();
 				// }
 				text.setText(years + "-" + MonthOfYear + "-" + DayOfMonth);
-				userAge=DateUtil.remainDateToStringYear(years + "-" + MonthOfYear + "-" + DayOfMonth, DateUtil.getDateEN1());
+				userAge = DateUtil.remainDateToStringYear(years + "-" + MonthOfYear + "-" + DayOfMonth,
+						DateUtil.getDateEN1());
 				tv_information_user_age.setText(userAge);
 				calendar.set(years, date_text.getMonth(), day, time_text.getCurrentHour(), time_text.getCurrentMinute(),
 						0);
@@ -374,7 +378,8 @@ public class InfomationActivity extends BaseActivity {
 						return;
 					}
 
-					FileUtils.saveBitmap(myBitmap, "image/" + tv_information_user_id.getText().toString() + "_head"+nowTime);
+					FileUtils.saveBitmap(myBitmap,
+							"image/" + tv_information_user_id.getText().toString() + "_head" + nowTime);
 					AbToastUtil.showToast(context, "修改成功！");
 					AbSharedUtil.putBoolean(context, Constant.ISLOADEDDATE, true);
 					finish();
@@ -397,8 +402,7 @@ public class InfomationActivity extends BaseActivity {
 			AbLogUtil.d(TAG, "onStart");
 			// 显示进度框
 			AbDialogUtil.showProgressDialog(context, 0, "正在操作...");
-
-			if (!UploadUtil.updateUserPhoto(context, myBitmap, userPo.getUserId() + "_head"+nowTime+".jpg")) {
+			if (!UploadUtil.updateUserPhoto(context, myBitmap, userPo.getUserId() + "_head" + nowTime + ".jpg")) {
 				return;
 			}
 
@@ -458,8 +462,8 @@ public class InfomationActivity extends BaseActivity {
 
 	private void initUserHead() {
 		try {
-			photoNameArray=userPo.getUserPhoto().split("/");
-			photoName=photoNameArray[photoNameArray.length-1];			
+			photoNameArray = userPo.getUserPhoto().split("/");
+			photoName = photoNameArray[photoNameArray.length - 1];
 			in = new FileInputStream(FileUtils.SDPATH + "image/" + photoName);
 			myBitmap = BitmapFactory.decodeStream(in);
 			iv_information_user_picture.setImageBitmap(myBitmap);
@@ -468,16 +472,15 @@ public class InfomationActivity extends BaseActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
-			ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_USERPHOTO_URL + photoName, iv_information_user_picture,
-					imageLoadingListener);
-			
-			
+			ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_USERPHOTO_URL + photoName,
+					iv_information_user_picture, imageLoadingListener);
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	ImageLoadingListener imageLoadingListener = new ImageLoadingListener() {
 
 		@Override

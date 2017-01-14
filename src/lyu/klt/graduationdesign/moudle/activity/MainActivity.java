@@ -26,15 +26,11 @@ import android.view.MotionEvent;
 import lyu.klt.frame.ab.util.AbSharedUtil;
 import lyu.klt.frame.ab.util.AbToastUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
-
-import lyu.klt.graduationdesign.module.farment.DynamicFargmentActivity;
-import lyu.klt.graduationdesign.module.farment.FitnessFargmentActivity;
-
-import lyu.klt.graduationdesign.module.farment.RecommendedFargmentActivity;
-
-import lyu.klt.graduationdesign.module.farment.PersonalFargmentActivity;
 import lyu.klt.graduationdesign.module.adapter.MainActivityViewPagerAdapter;
-
+import lyu.klt.graduationdesign.module.fargment.DynamicFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.FitnessFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.PersonalFargmentActivity;
+import lyu.klt.graduationdesign.module.fargment.RecommendedFargmentActivity;
 import lyu.klt.graduationdesign.moudle.client.Constant;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 import lyu.klt.graduationdesign.view.MainSlidingTabLayout;
