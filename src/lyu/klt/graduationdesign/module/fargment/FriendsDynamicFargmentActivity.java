@@ -1,5 +1,10 @@
 package lyu.klt.graduationdesign.module.fargment;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONObject;
+
 import com.lyu.graduationdesign_klt.R;
 
 import android.app.Activity;
@@ -18,9 +23,25 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
+import lyu.klt.frame.ab.util.AbDialogUtil;
+import lyu.klt.frame.ab.util.AbLogUtil;
+import lyu.klt.frame.ab.util.AbSharedUtil;
+import lyu.klt.frame.ab.util.AbToastUtil;
 import lyu.klt.frame.ab.view.pullview.AbPullToRefreshView;
 import lyu.klt.frame.ab.view.pullview.AbPullToRefreshView.OnHeaderRefreshListener;
+import lyu.klt.frame.google.gson.Gson;
+import lyu.klt.frame.google.gson.reflect.TypeToken;
+import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.module.adapter.DynamicFriendsRecyclerAdapter;
+import lyu.klt.graduationdesign.module.adapter.DynamicPersonalRecyclerAdapter;
+import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
+import lyu.klt.graduationdesign.module.bean.DynamicListPo;
+import lyu.klt.graduationdesign.module.bean.DynamicPo;
+import lyu.klt.graduationdesign.moudle.api.ApiHandler;
+import lyu.klt.graduationdesign.moudle.api.UserDynamicAPI;
+import lyu.klt.graduationdesign.moudle.client.Constant;
+import lyu.klt.graduationdesign.util.DataUtils;
 import lyu.klt.graduationdesign.view.MyLinearLayoutManger;
 import lyu.klt.graduationdesign.view.SpacesItemDecoration;
 
@@ -49,8 +70,8 @@ public class FriendsDynamicFargmentActivity extends Fragment {
 	private RecyclerView rv_dynamic_friends;
 	private DynamicFriendsRecyclerAdapter mAdapter;
 	private MyLinearLayoutManger mLayoutManager;
-	private String[] yearArray = { "测试数据1", "测试数据2", "测试数据3", "测试数据4", "测试数据5", "测试数据6", "测试数据7", "测试数据8", "测试数据9",
-			"测试数据10", "测试数据11", "测试数据12" };
+	private List<DynamicPo> DynamicPoList;
+	private List<String> mDatas;
 
 	Handler handler = new Handler() {
 
@@ -113,11 +134,13 @@ public class FriendsDynamicFargmentActivity extends Fragment {
 //		swipe_refresh_widget.setProgressViewOffset(false, 0,
 //				(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
 //		swipe_refresh_widget.setEnabled(false);
+
+		initRVData();
+		MyRecyclerAdapter recycleAdapter;
+		recycleAdapter = new MyRecyclerAdapter(context, mDatas);
+		rv_dynamic_friends.setAdapter(recycleAdapter);
 		mLayoutManager = new MyLinearLayoutManger(context, LinearLayout.VERTICAL, false);
 		rv_dynamic_friends.setLayoutManager(mLayoutManager);
-
-		mAdapter = new DynamicFriendsRecyclerAdapter(context, 2, yearArray);
-		rv_dynamic_friends.setAdapter(mAdapter);
 		rv_dynamic_friends.setItemAnimator(new DefaultItemAnimator());
 		// 每项周围的空隙是5，那么项与项之间的间隔就是5+5=10。
 		SpacesItemDecoration decoration = new SpacesItemDecoration(5);
@@ -134,32 +157,18 @@ public class FriendsDynamicFargmentActivity extends Fragment {
 				// TODO Auto-generated method stub
 				swipe_refresh_widget.setRefreshing(true);
 				// 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
-				handler.sendEmptyMessageDelayed(0, 3000);
-			}
-		});
-
-		rv_dynamic_friends.setOnScrollListener(new RecyclerView.OnScrollListener() {
-
-			@Override
-			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-				super.onScrollStateChanged(recyclerView, newState);
-				if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-					swipe_refresh_widget.setRefreshing(true);
-					// 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
-					handler.sendEmptyMessageDelayed(0, 3000);
-				}
-			}
-
-			@Override
-			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-				super.onScrolled(recyclerView, dx, dy);
-				lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+				//handler.sendEmptyMessageDelayed(0, 3000);
+				UserDynamicAPI.queryUserFocusDynamic(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID), queryUserFocusDynamicStringHttpResponseListener);
+				
 			}
 		});
 
 	}
 
 	public void startGame() {
+		UserDynamicAPI.queryUserFocusDynamic(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID), queryUserFocusDynamicStringHttpResponseListener);
+		
+		
 	}
 
 	private OnClickListener onClickListener = new OnClickListener() {
@@ -175,5 +184,78 @@ public class FriendsDynamicFargmentActivity extends Fragment {
 		}
 
 	};
+	
+	private AbStringHttpResponseListener queryUserFocusDynamicStringHttpResponseListener = new AbStringHttpResponseListener() {
+
+		@Override
+		public void onSuccess(int statusCode, String content) {
+			// TODO Auto-generated method stub
+
+			if (!StringUtil.isEmpty(content)) {
+				try {
+					JSONObject returncode = new JSONObject(content);
+					String data = returncode.getString("data");
+					String type = returncode.getString("type");
+					if (!ApiHandler.isSccuss(context, type, data)) {
+						return;
+					}
+					// 解密数据
+					data = DataUtils.getResponseData(context, data);
+					JSONObject jsonObject = new JSONObject(data);
+
+					if (StringUtil.isEmpty(jsonObject.getString("list"))) {
+						return;
+					}
+					
+					Gson gson=new Gson();
+					DynamicPoList= gson.fromJson(jsonObject.getString("list"),
+							new TypeToken<List<DynamicPo>>() {
+							}.getType());
+					
+					mAdapter = new DynamicFriendsRecyclerAdapter(context, 2, DynamicPoList);
+					rv_dynamic_friends.setAdapter(mAdapter);
+					mAdapter.notifyDataSetChanged();
+					
+					swipe_refresh_widget.setRefreshing(false);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		@Override
+		public void onStart() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onStart");
+			// 显示进度框
+		//	AbDialogUtil.showProgressDialog(context, 0, "正在操作...");
+		}
+
+		@Override
+		public void onFinish() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFinish");
+			// 移除进度框
+			//HideProgressDialog();
+
+			// AbDialogUtil.removeDialog(context);
+		}
+
+		@Override
+		public void onFailure(int statusCode, String content, Throwable error) {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFailure");
+			AbToastUtil.showToast(context, error.getMessage());
+		}
+
+	};
+	
+	private void initRVData() {
+		mDatas = new ArrayList<String>();
+		for (int i = 0; i < 1; i++) {
+			mDatas.add("item" + i);
+		}
+	}
 
 }

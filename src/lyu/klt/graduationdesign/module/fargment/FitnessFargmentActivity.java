@@ -70,7 +70,7 @@ import lyu.klt.graduationdesign.view.SpacesItemDecoration;
  */
 public class FitnessFargmentActivity extends Fragment {
 	private static final String TAG = FitnessFargmentActivity.class.getSimpleName();
-	private Activity context;
+	private static Activity context;
 
 	// 主要用于消除预加载
 	protected boolean isVisible;
@@ -80,7 +80,7 @@ public class FitnessFargmentActivity extends Fragment {
 	private boolean isLoaded;
 
 	public ScrollView sv_fitness;
-	public SwipeRefreshLayout swipe_refresh_widget;
+	public static SwipeRefreshLayout swipe_refresh_widget;
 
 	/**
 	 * titlebar相关组件
@@ -94,37 +94,42 @@ public class FitnessFargmentActivity extends Fragment {
 	
 	
 
-	private RecyclerView rv_userTraining;
-	private UserTrainingRecyclerAdapter mAdapter;
+	private static RecyclerView rv_userTraining;
+	private static UserTrainingRecyclerAdapter mAdapter;
 	private MyLinearLayoutManger mLayoutManager;
 	private List<String> mDatas;
-	private List<TrainingDataListPo> trainingDataListPo;
+	private static List<TrainingDataListPo> trainingDataListPo;
 	
 	
 	private TextView tv_fitness_my_trianing_add;
 	
-	private TextView tv_fitness_total_time;
-	private TextView tv_fitness_total_finish_num;
-	private TextView tv_fitness_cumulative_day_num;
-	private TextView tv_fitness_total_consumption_num;
+	private static TextView tv_fitness_total_time;
+	private static TextView tv_fitness_total_finish_num;
+	private static TextView tv_fitness_cumulative_day_num;
+	private static TextView tv_fitness_total_consumption_num;
 	
 	private View ll_sub_user_training;
 	
 	public static boolean isRefresh=false;
 	
-	private UserTotalTrainingRecordPo userTotalTrainingRecordPo;
+	private static UserTotalTrainingRecordPo userTotalTrainingRecordPo;
 	
 	
 //	private ListView list_userTraining;
 //	private FitnessListAdapter fitnessListAdapter;
 //	
-	Handler handler = new Handler() {
+	public static Handler handler = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
-			swipe_refresh_widget.setRefreshing(false);
+			//swipe_refresh_widget.setRefreshing(false);
+			if(msg.obj=="refresh"){
+				TrainingDataPAI.getUserTrainingData(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID),getUserTrainingStringHttpResponseListener );
+				TrainingDataPAI.getUserTrainingTotalRecord(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID), getUserTrainingTotalRecordStringHttpResponseListener);
+				isRefresh=false;
+			}
 			
 		}
 
@@ -305,7 +310,7 @@ public class FitnessFargmentActivity extends Fragment {
 
 	};
 
-	private AbStringHttpResponseListener getUserTrainingStringHttpResponseListener = new AbStringHttpResponseListener() {
+	private static AbStringHttpResponseListener getUserTrainingStringHttpResponseListener = new AbStringHttpResponseListener() {
 
 		@Override
 		public void onSuccess(int statusCode, String content) {
@@ -377,7 +382,7 @@ public class FitnessFargmentActivity extends Fragment {
 	};
 	
 	
-	private AbStringHttpResponseListener getUserTrainingTotalRecordStringHttpResponseListener = new AbStringHttpResponseListener() {
+	private static AbStringHttpResponseListener getUserTrainingTotalRecordStringHttpResponseListener = new AbStringHttpResponseListener() {
 
 		@Override
 		public void onSuccess(int statusCode, String content) {

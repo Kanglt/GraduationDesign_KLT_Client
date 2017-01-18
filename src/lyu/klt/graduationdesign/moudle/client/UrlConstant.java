@@ -82,4 +82,7 @@ public class UrlConstant {
 	public static String ADDUSERDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?addUserDynamic";
 	// 查询用户个人动态
 	public static String QUERYUSERPERSONALDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryUserPersonalDynamic";
+	// 查询用户关注动态
+		public static String QUERYUSERFOCUSDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryUserFocusDynamic";
+	
 }

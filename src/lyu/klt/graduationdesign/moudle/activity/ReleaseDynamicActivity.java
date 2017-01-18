@@ -172,10 +172,17 @@ public class ReleaseDynamicActivity extends BaseActivity {
 				initExitDialog();
 				break;
 			case R.id.tv_release_dynamic:
-				nowTime = DateUtil.getStringTime(DateUtil.FORMAT_TYPE2);
-				UserDynamicAPI.addUserDynamic(context, userId, DateUtil.getDateEN1(),
-						edi_dynamicText.getText().toString(), userId + "_dynamic" + nowTime + ".jpg",
-						addUserDynamicStringHttpResponseListener);
+				if(iv_photo_is_visibility){
+					nowTime = DateUtil.getStringTime(DateUtil.FORMAT_TYPE2);
+					UserDynamicAPI.addUserDynamic(context, userId, DateUtil.getDateEN1(),
+							edi_dynamicText.getText().toString(), userId + "_dynamic" + nowTime + ".jpg",
+							addUserDynamicStringHttpResponseListener);
+				}else{
+					UserDynamicAPI.addUserDynamic(context, userId, DateUtil.getDateEN1(),
+							edi_dynamicText.getText().toString(), "isEmpty",
+							addUserDynamicStringHttpResponseListener);
+				}
+				
 				break;
 			default:
 				break;

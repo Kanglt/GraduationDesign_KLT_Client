@@ -91,4 +91,26 @@ public class UserDynamicAPI {
 		}
 
 	}
+	
+	public static void queryUserFocusDynamic(Context context, String userId,
+			AbStringHttpResponseListener abStringHttpResponseListener) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			jsonObject.put("userId", userId);
+
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.QUERYUSERFOCUSDYNAMIC_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr", DataUtils.getRequestData(context, jsonObject));
+			// params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+
+	}
 }
