@@ -98,5 +98,7 @@ public class UrlConstant {
 	public static String DELETEUSERFOCUS_URL = URL_BASE + "UserWebServiceMobile.service?deleteUserFocus";
 	// 查询热门动态
 	public static String QUERYHOTDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryHotDynamic";
-			
+	// 查询热门动态
+	public static String QUERYPERSONALINFO_URL = URL_BASE + "UserWebServiceMobile.service?queryPersonalInfo";
+					
 }

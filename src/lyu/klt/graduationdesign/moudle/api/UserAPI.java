@@ -340,4 +340,27 @@ public class UserAPI {
 		}
 		
 	}
+	
+	public static void queryPersonalInfo(Context context,String userId,String focusId,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+	
+		try {
+			jsonObject.put("userId", userId);
+			jsonObject.put("focusId", focusId);
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.QUERYPERSONALINFO_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);	
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
 }

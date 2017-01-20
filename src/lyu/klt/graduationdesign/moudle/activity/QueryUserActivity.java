@@ -183,8 +183,8 @@ public class QueryUserActivity extends BaseActivity {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
 			case R.id.title_bar_right_text:
-				UserAPI.userInformationForMobile(context,edi_focusId.getText().toString(),
-						userInformationStringHttpResponseListener);
+				UserAPI.queryPersonalInfo(context,AbSharedUtil.getString(context, Constant.LAST_LOGINID),edi_focusId.getText().toString(),
+						queryPersonalInfoStringHttpResponseListener);
 				break;
 			default:
 				break;
@@ -193,7 +193,7 @@ public class QueryUserActivity extends BaseActivity {
 
 	};
 	
-	private AbStringHttpResponseListener userInformationStringHttpResponseListener = new AbStringHttpResponseListener() {
+	private AbStringHttpResponseListener queryPersonalInfoStringHttpResponseListener = new AbStringHttpResponseListener() {
 
 		@Override
 		public void onSuccess(int statusCode, String content) {
