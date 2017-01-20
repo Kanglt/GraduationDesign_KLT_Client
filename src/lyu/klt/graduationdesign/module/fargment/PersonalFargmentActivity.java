@@ -59,6 +59,8 @@ import lyu.klt.graduationdesign.moudle.activity.InfomationActivity;
 import lyu.klt.graduationdesign.moudle.activity.LoginActivity;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
 import lyu.klt.graduationdesign.moudle.activity.TestActivity;
+import lyu.klt.graduationdesign.moudle.activity.UserFansListActivity;
+import lyu.klt.graduationdesign.moudle.activity.UserFocusListActivity;
 import lyu.klt.graduationdesign.moudle.activity.UserPersonalDynamicActivity;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
@@ -110,8 +112,8 @@ public class PersonalFargmentActivity extends Fragment {
 
 	private Button btn_personal_exit;
 
-	private TextView tv_user_name,tv_user_password;
-	private View rl_personal_dynamic;
+	private TextView tv_user_name,tv_user_password,tv_personal_dynamic_num,tv_personal_focus_num,tv_personal_fans_num;
+	private View rl_personal_dynamic,rl_personal_fans,rl_personal_focus;
 
 	public View user_information;
 
@@ -145,8 +147,10 @@ public class PersonalFargmentActivity extends Fragment {
 				initUserHead();
 				AbSharedUtil.putBoolean(context, Constant.ISUPDATEUSERPHOTO, false);
 			}
-			UserAPI.userInformationForMobile(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID),
-					userInformationStringHttpResponseListener);
+//			UserAPI.userInformationForMobile(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID),
+//					userInformationStringHttpResponseListener);
+			UserAPI.queryUserHomePageInfo(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID),
+					queryUserHomePageInfoStringHttpResponseListener);
 			AbSharedUtil.putBoolean(context, Constant.ISLOADEDDATE, false);
 		}
 	}
@@ -189,12 +193,18 @@ public class PersonalFargmentActivity extends Fragment {
 		
 		tv_user_password= (TextView) view.findViewById(R.id.tv_user_password);
 		
+		tv_personal_dynamic_num= (TextView) view.findViewById(R.id.tv_personal_dynamic_num);
+		tv_personal_focus_num= (TextView) view.findViewById(R.id.tv_personal_focus_num);
+		tv_personal_fans_num= (TextView) view.findViewById(R.id.tv_personal_fans_num);
+		
 		user_picture=(ImageView) view.findViewById(R.id.user_picture);
 		
 		ll_diet_collection=(LinearLayout)view.findViewById(R.id.ll_diet_collection);
 		ll_healthDetection=(LinearLayout)view.findViewById(R.id.ll_healthDetection);
 		
-		rl_personal_dynamic=(RelativeLayout)view.findViewById(R.id.rl_personal_dynamic);;
+		rl_personal_dynamic=(RelativeLayout)view.findViewById(R.id.rl_personal_dynamic);
+		rl_personal_fans=(RelativeLayout)view.findViewById(R.id.rl_personal_fans);
+		rl_personal_focus=(RelativeLayout)view.findViewById(R.id.rl_personal_focus);
 	}
 
 	public void initViewData() {
@@ -215,11 +225,15 @@ public class PersonalFargmentActivity extends Fragment {
 		ll_diet_collection.setOnClickListener(onClickListener);
 		ll_healthDetection.setOnClickListener(onClickListener);
 		rl_personal_dynamic.setOnClickListener(onClickListener);
+		rl_personal_fans.setOnClickListener(onClickListener);
+		rl_personal_focus.setOnClickListener(onClickListener);
 	}
 
 	public void startGame() {
-		UserAPI.userInformationForMobile(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID),
-				userInformationStringHttpResponseListener);
+//		UserAPI.userInformationForMobile(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID),
+//				userInformationStringHttpResponseListener);
+		UserAPI.queryUserHomePageInfo(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID),
+				queryUserHomePageInfoStringHttpResponseListener);
 
 	}
 
@@ -258,6 +272,16 @@ public class PersonalFargmentActivity extends Fragment {
 				intent.setClass(context, UserPersonalDynamicActivity.class);
 				startActivity(intent);
 				break;
+			case R.id.rl_personal_focus:
+				intent.setClass(context, UserFocusListActivity.class);
+				intent.putExtra("userId", AbSharedUtil.getString(context, Constant.LAST_LOGINID));
+				startActivity(intent);
+				break;
+			case R.id.rl_personal_fans:
+				intent.setClass(context, UserFansListActivity.class);
+				intent.putExtra("userId", AbSharedUtil.getString(context, Constant.LAST_LOGINID));
+				startActivity(intent);
+				break;
 			default:
 				break;
 			}
@@ -287,67 +311,67 @@ public class PersonalFargmentActivity extends Fragment {
 	// return false;
 	// }
 
-	private AbStringHttpResponseListener userInformationStringHttpResponseListener = new AbStringHttpResponseListener() {
-
-		@Override
-		public void onSuccess(int statusCode, String content) {
-			// TODO Auto-generated method stub
-
-			if (!StringUtil.isEmpty(content)) {
-				try {
-					JSONObject returncode = new JSONObject(content);
-					String data = returncode.getString("data");
-					String type = returncode.getString("type");
-					if (!ApiHandler.isSccuss(context, type, data)) {
-						return;
-					}
-					// 解密数据
-					data = DataUtils.getResponseData(context, data);
-					JSONObject jsonObject = new JSONObject(data);
-
-					if (StringUtil.isEmpty(jsonObject.getString("record"))) {
-						return;
-					}
-
-					// UserPo userPo=new UserPo();
-					Gson gson = GsonUtils.getGson();
-					userPo = gson.fromJson(jsonObject.getString("record"), new TypeToken<UserPo>() {
-					}.getType());
-					tv_user_name.setText(userPo.getUserName());
-					initUserHead();
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		@Override
-		public void onStart() {
-			// TODO Auto-generated method stub
-			AbLogUtil.d(TAG, "onStart");
-			// 显示进度框
-			// AbDialogUtil.showProgressDialog(context, 0, "正在更新...");
-		}
-
-		@Override
-		public void onFinish() {
-			// TODO Auto-generated method stub
-			AbLogUtil.d(TAG, "onFinish");
-			// 移除进度框
-			// HideProgressDialog();
-
-			// AbDialogUtil.removeDialog(context);
-		}
-
-		@Override
-		public void onFailure(int statusCode, String content, Throwable error) {
-			// TODO Auto-generated method stub
-			AbLogUtil.d(TAG, "onFailure");
-			AbToastUtil.showToast(context, error.getMessage());
-		}
-
-	};
+//	private AbStringHttpResponseListener userInformationStringHttpResponseListener = new AbStringHttpResponseListener() {
+//
+//		@Override
+//		public void onSuccess(int statusCode, String content) {
+//			// TODO Auto-generated method stub
+//
+//			if (!StringUtil.isEmpty(content)) {
+//				try {
+//					JSONObject returncode = new JSONObject(content);
+//					String data = returncode.getString("data");
+//					String type = returncode.getString("type");
+//					if (!ApiHandler.isSccuss(context, type, data)) {
+//						return;
+//					}
+//					// 解密数据
+//					data = DataUtils.getResponseData(context, data);
+//					JSONObject jsonObject = new JSONObject(data);
+//
+//					if (StringUtil.isEmpty(jsonObject.getString("record"))) {
+//						return;
+//					}
+//
+//					// UserPo userPo=new UserPo();
+//					Gson gson = GsonUtils.getGson();
+//					userPo = gson.fromJson(jsonObject.getString("record"), new TypeToken<UserPo>() {
+//					}.getType());
+//					tv_user_name.setText(userPo.getUserName());
+//					initUserHead();
+//
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//
+//		@Override
+//		public void onStart() {
+//			// TODO Auto-generated method stub
+//			AbLogUtil.d(TAG, "onStart");
+//			// 显示进度框
+//			// AbDialogUtil.showProgressDialog(context, 0, "正在更新...");
+//		}
+//
+//		@Override
+//		public void onFinish() {
+//			// TODO Auto-generated method stub
+//			AbLogUtil.d(TAG, "onFinish");
+//			// 移除进度框
+//			// HideProgressDialog();
+//
+//			// AbDialogUtil.removeDialog(context);
+//		}
+//
+//		@Override
+//		public void onFailure(int statusCode, String content, Throwable error) {
+//			// TODO Auto-generated method stub
+//			AbLogUtil.d(TAG, "onFailure");
+//			AbToastUtil.showToast(context, error.getMessage());
+//		}
+//
+//	};
 	
 	
 	private void initUserHead(){
@@ -405,5 +429,72 @@ public class PersonalFargmentActivity extends Fragment {
 			// TODO Auto-generated method stub
 			Log.e("PersonalFargmentActivity", "onLoadingCancelled");
 		}
+	};
+	
+	private AbStringHttpResponseListener queryUserHomePageInfoStringHttpResponseListener = new AbStringHttpResponseListener() {
+
+		@Override
+		public void onSuccess(int statusCode, String content) {
+			// TODO Auto-generated method stub
+
+			if (!StringUtil.isEmpty(content)) {
+				try {
+					JSONObject returncode = new JSONObject(content);
+					String data = returncode.getString("data");
+					String type = returncode.getString("type");
+					if (!ApiHandler.isSccuss(context, type, data)) {
+						return;
+					}
+					// 解密数据
+					data = DataUtils.getResponseData(context, data);
+					JSONObject jsonObject = new JSONObject(data);
+
+					if (StringUtil.isEmpty(jsonObject.getString("record"))) {
+						return;
+					}
+				
+					
+					Gson gson = GsonUtils.getGson();
+					userPo = gson.fromJson(jsonObject.getString("record"), new TypeToken<UserPo>() {
+					}.getType());
+					tv_user_name.setText(userPo.getUserName());
+					initUserHead();
+					
+					tv_personal_dynamic_num.setText(userPo.getDynamicNum()+"");
+					tv_personal_fans_num.setText(userPo.getFansNum()+"");
+					tv_personal_focus_num.setText(userPo.getFocusNum()+"");
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		@Override
+		public void onStart() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onStart");
+			// 显示进度框
+		//	AbDialogUtil.showProgressDialog(context, 0, "正在操作...");
+		}
+
+		@Override
+		public void onFinish() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFinish");
+			// 移除进度框
+	//		HideProgressDialog();
+
+			// AbDialogUtil.removeDialog(context);
+		}
+
+		@Override
+		public void onFailure(int statusCode, String content, Throwable error) {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFailure");
+			AbToastUtil.showToast(context, error.getMessage());
+		}
+
 	};
 }

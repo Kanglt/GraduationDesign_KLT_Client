@@ -7,6 +7,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -26,6 +27,7 @@ import lyu.klt.graduationdesign.module.bean.DynamicListPo;
 import lyu.klt.graduationdesign.module.bean.DynamicPo;
 import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
+import lyu.klt.graduationdesign.moudle.activity.UserHomePageActivity;
 import lyu.klt.graduationdesign.moudle.client.UrlConstant;
 import lyu.klt.graduationdesign.util.ImageLoaderUtil;
 
@@ -107,6 +109,18 @@ public class DynamicFriendsRecyclerAdapter extends RecyclerView.Adapter<ViewHold
 		ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_USERPHOTO_URL + fileId2,
 				holder.iv_dynamic_user_picture, imageLoadingListener);
 
+		holder.iv_dynamic_user_picture.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(mContext,UserHomePageActivity.class);
+				intent.putExtra("userId", dynamicPoList.get(position).getUserId());
+				mContext.startActivity(intent);
+			}
+		});
+		
+		
 		// 列表项的点击事件需要自己实现
 		holder.ll_item.setOnClickListener(new OnClickListener() {
 			@Override

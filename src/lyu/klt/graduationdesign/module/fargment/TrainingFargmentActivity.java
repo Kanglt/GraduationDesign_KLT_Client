@@ -48,7 +48,7 @@ import lyu.klt.frame.util.GsonUtils;
 import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
-import lyu.klt.graduationdesign.module.adapter.TrainingListAdapter;
+
 import lyu.klt.graduationdesign.module.adapter.TrainingListRecyclerAdapter;
 import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
@@ -104,7 +104,7 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 	// private HorizontalListViewAdapter hListViewAdapter;
 
 	List<TrainingDataListPo> trainingDataListPo;
-	private TrainingListAdapter trainingListAdapter;
+
 	
 	private View rl_trainingMusic,rl_totalTraining,ll_recommendedTraining,rl_training_motion_diagram;
 	

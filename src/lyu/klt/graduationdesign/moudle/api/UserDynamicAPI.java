@@ -92,6 +92,17 @@ public class UserDynamicAPI {
 
 	}
 	
+	/**
+	 * 
+	* @Title: queryUserFocusDynamic 
+	* @author 康良涛 
+	* @Description: TODO(查询用户关注动态) 
+	* @param @param context
+	* @param @param userId
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
 	public static void queryUserFocusDynamic(Context context, String userId,
 			AbStringHttpResponseListener abStringHttpResponseListener) {
 		JSONObject jsonObject = new JSONObject();
@@ -101,6 +112,28 @@ public class UserDynamicAPI {
 
 			AbHttpUtil mAbHttpUtil = null;
 			String url = UrlConstant.QUERYUSERFOCUSDYNAMIC_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr", DataUtils.getRequestData(context, jsonObject));
+			// params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+
+	}
+	
+	public static void queryHotDynamic(Context context,
+			AbStringHttpResponseListener abStringHttpResponseListener) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			
+
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.QUERYHOTDYNAMIC_URL;
 			// 绑定参数
 			AbRequestParams params = new AbRequestParams();
 			params.put("jsonDataStr", DataUtils.getRequestData(context, jsonObject));

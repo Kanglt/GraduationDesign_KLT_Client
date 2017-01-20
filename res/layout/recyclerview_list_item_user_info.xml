@@ -1,0 +1,160 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/user_information"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="20dp" >
+
+        <lyu.klt.graduationdesign.view.CircleImageView
+            android:id="@+id/user_picture"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_head" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/user_picture"
+            android:background="@color/white" >
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:gravity="center|start"
+                android:paddingLeft="5dp"
+                android:text="用户名"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv_user_gender"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="23dp"
+                android:layout_toRightOf="@+id/user_name"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/tv_user_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_user_name"
+                android:layout_below="@+id/tv_user_name"
+                android:layout_marginTop="5dp"
+                android:editable="false"
+                android:gravity="center"
+                android:paddingRight="10dp"
+                android:text="男"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_user_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_user_name"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/tv_user_sex"
+                android:editable="false"
+                android:gravity="center"
+                android:paddingRight="10dp"
+                android:text="19"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_user_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_user_name"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/tv_user_age"
+                android:editable="false"
+                android:gravity="center"
+                android:paddingRight="10dp"
+                android:text="地址"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_Focus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="vertical" 
+            android:visibility="gone">
+            
+             <ImageView
+            android:id="@+id/iv_focus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"        
+            android:gravity="center_vertical"
+            android:scaleType="center" 
+            />
+        
+        <TextView
+            android:id="@+id/tv_focus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/ll_noFocus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="vertical" 
+            android:visibility="gone"
+            >
+            
+             <ImageView
+            android:id="@+id/iv_noFocus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"        
+            android:gravity="center_vertical"
+            android:scaleType="center" 
+            />
+        
+        <TextView
+            android:id="@+id/tv_noFocus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+        </LinearLayout>
+       
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ebebeb" />
+
+</LinearLayout>

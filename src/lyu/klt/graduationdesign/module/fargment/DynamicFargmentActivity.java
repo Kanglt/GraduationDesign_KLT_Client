@@ -25,6 +25,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import lyu.klt.graduationdesign.module.adapter.DynamicFragmentViewPagerAdapter;
+import lyu.klt.graduationdesign.moudle.activity.QueryUserActivity;
 import lyu.klt.graduationdesign.moudle.activity.ReleaseDynamicActivity;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 import lyu.klt.graduationdesign.view.SlidingTabLayout;
@@ -201,6 +202,8 @@ public class DynamicFargmentActivity extends Fragment {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
+					Intent intent=new Intent(context,QueryUserActivity.class);
+					startActivity(intent);
 					popupWindow.dismiss();
 				}
 			});

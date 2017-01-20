@@ -83,6 +83,20 @@ public class UrlConstant {
 	// 查询用户个人动态
 	public static String QUERYUSERPERSONALDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryUserPersonalDynamic";
 	// 查询用户关注动态
-		public static String QUERYUSERFOCUSDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryUserFocusDynamic";
-	
+	public static String QUERYUSERFOCUSDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryUserFocusDynamic";
+	// 查询用户关注动态
+	public static String ADDUSERFOCUS_URL = URL_BASE + "DataWebServiceMobile.service?addUserFocus";
+	// 查询用户主页信息
+	public static String QUERYUSERHOMEPAGEINFO_URL = URL_BASE + "UserWebServiceMobile.service?queryUserHomePageInfo";
+	// 查询用户关注列表
+	public static String QUERYUSERFOCUSINFO_URL = URL_BASE + "UserWebServiceMobile.service?queryUserFocusInfo";	
+	// 查询用户粉丝列表
+	public static String QUERYUSERFANSINFO_URL = URL_BASE + "UserWebServiceMobile.service?queryUserFansInfo";
+	// 查询是否关注了对方
+	public static String QUERYISFOCUS_URL = URL_BASE + "UserWebServiceMobile.service?queryIsFocus";
+	// 取消对对方的关注
+	public static String DELETEUSERFOCUS_URL = URL_BASE + "UserWebServiceMobile.service?deleteUserFocus";
+	// 查询热门动态
+	public static String QUERYHOTDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryHotDynamic";
+			
 }

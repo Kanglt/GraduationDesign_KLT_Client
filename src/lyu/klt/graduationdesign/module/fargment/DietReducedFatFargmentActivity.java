@@ -47,7 +47,6 @@ import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.module.adapter.DietListRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.DietReducedFatRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
-import lyu.klt.graduationdesign.module.adapter.TrainingListAdapter;
 import lyu.klt.graduationdesign.module.adapter.TrainingListRecyclerAdapter;
 import lyu.klt.graduationdesign.module.bean.DietDataListPo;
 import lyu.klt.graduationdesign.module.bean.DietDataPo;

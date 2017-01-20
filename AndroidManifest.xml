@@ -154,6 +154,22 @@
             android:name="lyu.klt.graduationdesign.moudle.activity.UserPersonalDynamicActivity"
             >
         </activity>
+         <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.QueryUserActivity"
+            >
+        </activity>
+          <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.UserHomePageActivity"
+            >
+        </activity>
+                  <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.UserFocusListActivity"
+            >
+        </activity>
+                  <activity
+            android:name="lyu.klt.graduationdesign.moudle.activity.UserFansListActivity"
+            >
+        </activity>
     </application>
 
 </manifest>

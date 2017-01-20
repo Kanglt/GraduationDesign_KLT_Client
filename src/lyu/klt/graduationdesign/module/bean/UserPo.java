@@ -22,9 +22,40 @@ public class UserPo implements Serializable{
 	private String userEmail;
 	private String userPhoto;
 	private String userAge;
+	private int focusNum;
+	private int fansNum;
+	private int dynamicNum;
+	private int isFocus;
+	
+	
+	
 	
 	
 
+	public int getIsFocus() {
+		return isFocus;
+	}
+	public void setIsFocus(int isFocus) {
+		this.isFocus = isFocus;
+	}
+	public int getDynamicNum() {
+		return dynamicNum;
+	}
+	public void setDynamicNum(int dynamicNum) {
+		this.dynamicNum = dynamicNum;
+	}
+	public int getFocusNum() {
+		return focusNum;
+	}
+	public void setFocusNum(int focusNum) {
+		this.focusNum = focusNum;
+	}
+	public int getFansNum() {
+		return fansNum;
+	}
+	public void setFansNum(int fansNum) {
+		this.fansNum = fansNum;
+	}
 	public String getUserAge() {
 		return userAge;
 	}

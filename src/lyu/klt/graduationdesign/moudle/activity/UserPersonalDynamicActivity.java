@@ -19,7 +19,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
 import lyu.klt.frame.ab.util.AbDialogUtil;
 import lyu.klt.frame.ab.util.AbLogUtil;
@@ -66,6 +68,15 @@ public class UserPersonalDynamicActivity extends BaseActivity {
 	private List<DynamicPo> DynamicPoList;
 	private List<String> mDatas;
 	
+	/**
+	 * titlebar相关组件
+	 */
+	private View titlebar_view;// titlebar
+	private View title_bar_left_img_layout;
+	private ImageView title_bar_left_img;
+	private TextView title_bar_text;
+	private LinearLayout titlebar_right;
+	private TextView titlebar_right_text;
 
 	Handler handler = new Handler() {
 
@@ -120,12 +131,23 @@ public class UserPersonalDynamicActivity extends BaseActivity {
 		swipe_refresh_widget = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_widget);
 
 		rv_user_personal_dynamic = (RecyclerView) findViewById(R.id.rv_user_personal_dynamic);
+		
+		titlebar_view = findViewById(R.id.title_bar_layout);
+		title_bar_left_img_layout = findViewById(R.id.title_bar_left_img_layout);
+		title_bar_left_img = (ImageView) findViewById(R.id.title_bar_left_img);
+		title_bar_text = (TextView) findViewById(R.id.title_bar_text);
+		titlebar_right = (LinearLayout) titlebar_view.findViewById(R.id.title_bar_right_layout);
+		titlebar_right_text = (TextView) titlebar_right.findViewById(R.id.title_bar_right_text);
+
 	}
 
 	@Override
 	public void initViewData() {
 		// TODO Auto-generated method stub
 		super.initViewData();
+		
+		title_bar_left_img.setImageDrawable(context.getResources().getDrawable(R.drawable.btn_return2));
+		title_bar_text.setText("我的动态");
 		
 //		// 这句话是为了，第一次进入页面的时候显示加载进度条
 //		swipe_refresh_widget.setProgressViewOffset(false, 0,
@@ -181,6 +203,8 @@ public class UserPersonalDynamicActivity extends BaseActivity {
 				lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
 			}
 		});
+		
+		title_bar_left_img.setOnClickListener(onClickListener);
 
 	}
 
@@ -199,12 +223,14 @@ public class UserPersonalDynamicActivity extends BaseActivity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
+			case R.id.title_bar_left_img:
+				finish();
+				break;
 
 			default:
 				break;
 			}
 		}
-
 	};
 	
 	private AbStringHttpResponseListener queryUserPersonalDynamicStringHttpResponseListener = new AbStringHttpResponseListener() {
