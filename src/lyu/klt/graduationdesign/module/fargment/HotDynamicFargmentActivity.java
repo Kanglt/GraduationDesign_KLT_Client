@@ -49,6 +49,7 @@ import lyu.klt.frame.google.gson.Gson;
 import lyu.klt.frame.google.gson.reflect.TypeToken;
 import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.module.adapter.TrainingRecyclerAdapter;
+import lyu.klt.graduationdesign.module.bean.DynamicPPo;
 import lyu.klt.graduationdesign.module.bean.DynamicPo;
 import lyu.klt.graduationdesign.module.adapter.DynamicFriendsRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.DynamicHotRecyclerAdapter;
@@ -92,7 +93,7 @@ public class HotDynamicFargmentActivity extends Fragment {
 	private RecyclerView rv_dynamic_hot;
 	private DynamicHotRecyclerAdapter mAdapter;
 	private MyLinearLayoutManger mLayoutManager;
-	private List<DynamicPo> DynamicPoList;
+	private List<DynamicPPo> dynamicPPoList;
 	private List<String> mDatas;
 
 	
@@ -176,7 +177,7 @@ public class HotDynamicFargmentActivity extends Fragment {
 				// TODO Auto-generated method stub
 				swipe_refresh_widget.setRefreshing(true);
 				// 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
-				UserDynamicAPI.queryHotDynamic(context, queryHotDynamicStringHttpResponseListener);
+				UserDynamicAPI.queryHotDynamic(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID),queryHotDynamicStringHttpResponseListener);
 			}
 		});
 
@@ -202,7 +203,7 @@ public class HotDynamicFargmentActivity extends Fragment {
 	}
 
 	public void startGame() {
-		UserDynamicAPI.queryHotDynamic(context, queryHotDynamicStringHttpResponseListener);
+		UserDynamicAPI.queryHotDynamic(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID),queryHotDynamicStringHttpResponseListener);
 	}
 
 	private OnClickListener onClickListener = new OnClickListener() {
@@ -243,11 +244,11 @@ public class HotDynamicFargmentActivity extends Fragment {
 					}
 					
 					Gson gson=new Gson();
-					DynamicPoList= gson.fromJson(jsonObject.getString("list"),
-							new TypeToken<List<DynamicPo>>() {
+					dynamicPPoList= gson.fromJson(jsonObject.getString("list"),
+							new TypeToken<List<DynamicPPo>>() {
 							}.getType());
 					
-					mAdapter = new DynamicHotRecyclerAdapter(context, 2, DynamicPoList);
+					mAdapter = new DynamicHotRecyclerAdapter(context, 2, dynamicPPoList);
 					rv_dynamic_hot.setAdapter(mAdapter);
 					mAdapter.notifyDataSetChanged();
 					

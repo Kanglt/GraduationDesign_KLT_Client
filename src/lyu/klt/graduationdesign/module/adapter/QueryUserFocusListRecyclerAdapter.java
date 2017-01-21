@@ -48,6 +48,7 @@ import lyu.klt.graduationdesign.module.adapter.TrainingRecyclerAdapter.TitleHold
 import lyu.klt.graduationdesign.module.bean.DietDataPo;
 import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
+import lyu.klt.graduationdesign.module.bean.UserPPo;
 import lyu.klt.graduationdesign.module.bean.UserPo;
 import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
@@ -76,7 +77,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private int mType;
-	private List<UserPo> userPoList;
+	private List<UserPPo> userPPoList;
 
 	private String[] photoNameArray;
 	private String photoName;
@@ -88,11 +89,11 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 
 	private Dialog dialog;
 
-	public QueryUserFocusListRecyclerAdapter(Context context, int type, List<UserPo> userPoList) {
+	public QueryUserFocusListRecyclerAdapter(Context context, int type, List<UserPPo> userPPoList) {
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mType = type;
-		this.userPoList = userPoList;
+		this.userPPoList = userPPoList;
 		try {
 			isFocusIs = context.getResources().openRawResource(R.drawable.right);
 			FocusBitmap = BitmapFactory.decodeStream(isFocusIs);
@@ -107,7 +108,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 
 	@Override
 	public int getItemCount() {
-		return userPoList.size();
+		return userPPoList.size();
 	}
 
 	@Override
@@ -132,19 +133,19 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 		}
 
 		initUserHead(holder.user_picture, position);
-		holder.tv_user_age.setText(userPoList.get(position).getUserAge());
+		holder.tv_user_age.setText(userPPoList.get(position).getUserPo().getUserAge());
 		holder.tv_user_name
-				.setText(userPoList.get(position).getUserName() + "(" + userPoList.get(position).getUserId() + ")");
-		holder.tv_user_sex.setText(userPoList.get(position).getUserSex());
+				.setText(userPPoList.get(position).getUserPo().getUserName() + "(" + userPPoList.get(position).getUserPo().getUserId() + ")");
+		holder.tv_user_sex.setText(userPPoList.get(position).getUserPo().getUserSex());
 		holder.tv_focus.setText("已关注");
 		holder.iv_focus.setImageBitmap(FocusBitmap);
 		holder.tv_noFocus.setText("未关注");
 		holder.iv_noFocus.setImageBitmap(noFocusBitmap);
 		
-		if(userPoList.get(position).getIsFocus()==0){
+		if(userPPoList.get(position).getUserPo().getIsFocus()==0){
 			holder.ll_noFocus.setVisibility(View.VISIBLE);
 			holder.ll_Focus.setVisibility(View.GONE);
-		}else if(userPoList.get(position).getIsFocus()==1){
+		}else if(userPPoList.get(position).getUserPo().getIsFocus()==1){
 			holder.ll_noFocus.setVisibility(View.GONE);
 			holder.ll_Focus.setVisibility(View.VISIBLE);
 		}
@@ -156,7 +157,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 
 				Intent intent = new Intent();
 				intent.setClass(mContext, UserHomePageActivity.class);
-				intent.putExtra("userId", userPoList.get(position).getUserId());
+				intent.putExtra("userId", userPPoList.get(position).getUserPo().getUserId());
 				mContext.startActivity(intent);
 
 			}
@@ -175,7 +176,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				initFocusDialog(holder.ll_Focus,holder.ll_noFocus,AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),userPoList.get(position).getUserId());
+				initFocusDialog(holder.ll_Focus,holder.ll_noFocus,AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),userPPoList.get(position).getUserPo().getUserId());
 			}
 		});
 		
@@ -185,7 +186,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				initNoFocusDialog(holder.ll_Focus,holder.ll_noFocus,AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),userPoList.get(position).getUserId());
+				initNoFocusDialog(holder.ll_Focus,holder.ll_noFocus,AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),userPPoList.get(position).getUserPo().getUserId());
 			}
 		});
 
@@ -251,7 +252,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 
 	private void initUserHead(ImageView user_photo, int position) {
 		try {
-			photoNameArray = userPoList.get(position).getUserPhoto().split("/");
+			photoNameArray = userPPoList.get(position).getUserPo().getUserPhoto().split("/");
 			photoName = photoNameArray[photoNameArray.length - 1];
 			in = new FileInputStream(FileUtils.SDPATH + "image/" + photoName);
 			myBitmap = BitmapFactory.decodeStream(in);

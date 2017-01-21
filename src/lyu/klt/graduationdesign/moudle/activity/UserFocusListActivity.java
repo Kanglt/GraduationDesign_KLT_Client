@@ -38,6 +38,7 @@ import lyu.klt.graduationdesign.module.adapter.DynamicPersonalListAdapter;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.QueryUserFocusListRecyclerAdapter;
 import lyu.klt.graduationdesign.module.bean.DynamicPo;
+import lyu.klt.graduationdesign.module.bean.UserPPo;
 import lyu.klt.graduationdesign.module.bean.UserPo;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.UserAPI;
@@ -63,7 +64,7 @@ public class UserFocusListActivity extends BaseActivity {
 	private RecyclerView rv_user_focus;
 	private QueryUserFocusListRecyclerAdapter queryUserFocusListRecyclerAdapter;
 	private MyLinearLayoutManger mLayoutManager;
-	private List<UserPo> userPoList;
+	private List<UserPPo> userPPoList;
 	private List<String> mDatas;
 	private MyRecyclerAdapter recycleAdapter;
 	
@@ -219,10 +220,10 @@ public class UserFocusListActivity extends BaseActivity {
 					}
 
 					Gson gson = new Gson();
-					userPoList = gson.fromJson(jsonObject.getString("list"), new TypeToken<List<UserPo>>() {
+					userPPoList = gson.fromJson(jsonObject.getString("list"), new TypeToken<List<UserPPo>>() {
 					}.getType());
 
-					queryUserFocusListRecyclerAdapter = new QueryUserFocusListRecyclerAdapter(context,2, userPoList);
+					queryUserFocusListRecyclerAdapter = new QueryUserFocusListRecyclerAdapter(context,2, userPPoList);
 					rv_user_focus.setAdapter(queryUserFocusListRecyclerAdapter);
 					queryUserFocusListRecyclerAdapter.notifyDataSetChanged();
 					

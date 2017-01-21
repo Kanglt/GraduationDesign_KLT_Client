@@ -37,6 +37,7 @@ import lyu.klt.graduationdesign.module.adapter.DynamicFriendsRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.DynamicPersonalRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
 import lyu.klt.graduationdesign.module.bean.DynamicListPo;
+import lyu.klt.graduationdesign.module.bean.DynamicPPo;
 import lyu.klt.graduationdesign.module.bean.DynamicPo;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.UserDynamicAPI;
@@ -70,7 +71,7 @@ public class FriendsDynamicFargmentActivity extends Fragment {
 	private RecyclerView rv_dynamic_friends;
 	private DynamicFriendsRecyclerAdapter mAdapter;
 	private MyLinearLayoutManger mLayoutManager;
-	private List<DynamicPo> DynamicPoList;
+	private List<DynamicPPo> dynamicPPoList;
 	private List<String> mDatas;
 
 	Handler handler = new Handler() {
@@ -208,11 +209,11 @@ public class FriendsDynamicFargmentActivity extends Fragment {
 					}
 					
 					Gson gson=new Gson();
-					DynamicPoList= gson.fromJson(jsonObject.getString("list"),
-							new TypeToken<List<DynamicPo>>() {
+					dynamicPPoList= gson.fromJson(jsonObject.getString("list"),
+							new TypeToken<List<DynamicPPo>>() {
 							}.getType());
 					
-					mAdapter = new DynamicFriendsRecyclerAdapter(context, 2, DynamicPoList);
+					mAdapter = new DynamicFriendsRecyclerAdapter(context, 2, dynamicPPoList);
 					rv_dynamic_friends.setAdapter(mAdapter);
 					mAdapter.notifyDataSetChanged();
 					

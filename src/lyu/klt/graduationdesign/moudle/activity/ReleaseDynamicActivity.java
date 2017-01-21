@@ -177,10 +177,12 @@ public class ReleaseDynamicActivity extends BaseActivity {
 					UserDynamicAPI.addUserDynamic(context, userId, DateUtil.getDateEN1(),
 							edi_dynamicText.getText().toString(), userId + "_dynamic" + nowTime + ".jpg",
 							addUserDynamicStringHttpResponseListener);
+					AbSharedUtil.putBoolean(context, Constant.ISLOADEDDATE, true);
 				}else{
 					UserDynamicAPI.addUserDynamic(context, userId, DateUtil.getDateEN1(),
 							edi_dynamicText.getText().toString(), "isEmpty",
 							addUserDynamicStringHttpResponseListener);
+					AbSharedUtil.putBoolean(context, Constant.ISLOADEDDATE, true);
 				}
 				
 				break;

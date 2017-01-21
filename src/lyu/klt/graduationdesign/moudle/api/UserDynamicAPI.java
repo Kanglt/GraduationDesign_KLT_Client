@@ -125,12 +125,12 @@ public class UserDynamicAPI {
 
 	}
 	
-	public static void queryHotDynamic(Context context,
+	public static void queryHotDynamic(Context context,String userId,
 			AbStringHttpResponseListener abStringHttpResponseListener) {
 		JSONObject jsonObject = new JSONObject();
 		try {
 
-			
+			jsonObject.put("userId", userId);
 
 			AbHttpUtil mAbHttpUtil = null;
 			String url = UrlConstant.QUERYHOTDYNAMIC_URL;

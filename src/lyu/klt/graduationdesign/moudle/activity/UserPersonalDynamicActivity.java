@@ -34,6 +34,7 @@ import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.adapter.DynamicFriendsRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.DynamicPersonalRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
+import lyu.klt.graduationdesign.module.bean.DynamicPPo;
 import lyu.klt.graduationdesign.module.bean.DynamicPo;
 import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
@@ -65,7 +66,7 @@ public class UserPersonalDynamicActivity extends BaseActivity {
 	private RecyclerView rv_user_personal_dynamic;
 	private DynamicPersonalRecyclerAdapter mAdapter;
 	private MyLinearLayoutManger mLayoutManager;
-	private List<DynamicPo> DynamicPoList;
+	private List<DynamicPPo> dynamicPPoList;
 	private List<String> mDatas;
 	
 	/**
@@ -78,17 +79,7 @@ public class UserPersonalDynamicActivity extends BaseActivity {
 	private LinearLayout titlebar_right;
 	private TextView titlebar_right_text;
 
-	Handler handler = new Handler() {
 
-		@Override
-		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
-			super.handleMessage(msg);
-			swipe_refresh_widget.setRefreshing(false);
-			
-		}
-
-	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -181,28 +172,12 @@ public class UserPersonalDynamicActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				swipe_refresh_widget.setRefreshing(true);
 				// 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
-				handler.sendEmptyMessageDelayed(0, 3000);
+				UserDynamicAPI.queryUserPersonalDynamic(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID), queryUserPersonalDynamicStringHttpResponseListener);
+				
 			}
 		});
 
-		rv_user_personal_dynamic.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
-			@Override
-			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-				super.onScrollStateChanged(recyclerView, newState);
-				if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-					swipe_refresh_widget.setRefreshing(true);
-					// 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
-					handler.sendEmptyMessageDelayed(0, 3000);
-				}
-			}
-
-			@Override
-			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-				super.onScrolled(recyclerView, dx, dy);
-				lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
-			}
-		});
 		
 		title_bar_left_img.setOnClickListener(onClickListener);
 
@@ -256,13 +231,15 @@ public class UserPersonalDynamicActivity extends BaseActivity {
 					}
 					
 					Gson gson=new Gson();
-					DynamicPoList= gson.fromJson(jsonObject.getString("list"),
-							new TypeToken<List<DynamicPo>>() {
+					dynamicPPoList= gson.fromJson(jsonObject.getString("list"),
+							new TypeToken<List<DynamicPPo>>() {
 							}.getType());
 					
-					mAdapter = new DynamicPersonalRecyclerAdapter(context, 2, DynamicPoList);
+					mAdapter = new DynamicPersonalRecyclerAdapter(context, 2, dynamicPPoList);
 					rv_user_personal_dynamic.setAdapter(mAdapter);
 					mAdapter.notifyDataSetChanged();
+					
+					swipe_refresh_widget.setRefreshing(false);
 					
 				} catch (Exception e) {
 					e.printStackTrace();

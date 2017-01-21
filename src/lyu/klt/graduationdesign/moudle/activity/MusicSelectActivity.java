@@ -106,7 +106,7 @@ public class MusicSelectActivity extends BaseActivity {
 		title_bar_left_img.setImageDrawable(context.getResources().getDrawable(R.drawable.btn_return3));
 		title_bar_text.setText("音乐");
 //		title_bar_text.setTextColor(android.graphics.Color.parseColor("#FFFFFFFF"));
-		titlebar_view.setBackgroundColor(android.graphics.Color.parseColor("#7c7c7c"));
+	//	titlebar_view.setBackgroundColor(android.graphics.Color.parseColor("#7c7c7c"));
 	//	titlebar_right_text.setVisibility(View.VISIBLE);
 	}
 

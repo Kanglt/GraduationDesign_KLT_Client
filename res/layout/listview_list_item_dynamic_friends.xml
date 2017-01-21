@@ -81,9 +81,11 @@
         android:orientation="horizontal" >
 
         <RelativeLayout
+            android:id="@+id/rl_dynamic_forwarding"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:visibility="gone"
             android:gravity="center" >
 
             <TextView
@@ -97,7 +99,7 @@
                 android:textColor="@color/gray" />
 
             <TextView
-                android:id="@+id/tv_personal_dynamic_text"
+                android:id="@+id/tv_dynamic_forwarding_num_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -110,11 +112,12 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_dynamic_comments"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/view_right_devider"
             android:gravity="center" >
+      <!--  android:background="@drawable/view_right_devider"-->
 
             <TextView
                 android:id="@+id/tv_dynamic_comments_num"
@@ -127,7 +130,7 @@
                 android:textColor="@color/gray" />
 
             <TextView
-                android:id="@+id/tv_personal_focus_text"
+                android:id="@+id/tv_dynamic_comments_num_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -140,6 +143,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_dynamic_thumb_up"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -157,7 +161,7 @@
                 android:textColor="@color/gray" />
 
             <TextView
-                android:id="@+id/tv_personal_fans_text"
+                android:id="@+id/tv_dynamic_thumb_up_num_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

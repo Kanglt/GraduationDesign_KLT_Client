@@ -20,8 +20,10 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import lyu.klt.graduationdesign.module.bean.DynamicPPo;
 import lyu.klt.graduationdesign.module.bean.DynamicPo;
 import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
@@ -43,18 +45,18 @@ public class DynamicPersonalRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private int mType;
-	private List<DynamicPo> dynamicPoList;
+	private List<DynamicPPo> dynamicPPoList;
 
-	public DynamicPersonalRecyclerAdapter(Context context, int type, List<DynamicPo> dynamicPoList) {
+	public DynamicPersonalRecyclerAdapter(Context context, int type, List<DynamicPPo> dynamicPPoList) {
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mType = type;
-		this.dynamicPoList = dynamicPoList;
+		this.dynamicPPoList = dynamicPPoList;
 	}
 
 	@Override
 	public int getItemCount() {
-		return dynamicPoList.size();
+		return dynamicPPoList.size();
 	}
 
 	@Override
@@ -68,7 +70,7 @@ public class DynamicPersonalRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 
 	@Override
 	public void onBindViewHolder(ViewHolder vh, final int position) {
-		TitleHolder holder = (TitleHolder) vh;
+		final TitleHolder holder = (TitleHolder) vh;
 		LayoutParams params = holder.ll_item.getLayoutParams();
 
 		if (mType == 1) { // 表示是线性布局
@@ -86,15 +88,20 @@ public class DynamicPersonalRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 			holder.tv_title.setHeight(params.height);
 		}
 
-		holder.tv_dynamic_user_name.setText(dynamicPoList.get(position).getUserName());
-		holder.tv_dynamic_time.setText(dynamicPoList.get(position).getDynamicDate());
-		holder.tv_dynamic_content.setText(dynamicPoList.get(position).getDynamicText());
-		holder.tv_dynamic_forwarding_num.setText(dynamicPoList.get(position).getDynamicForwardingNum() + "");
-		holder.tv_dynamic_comments_num.setText(dynamicPoList.get(position).getDynamicCommentsNum() + "");
-		holder.tv_dynamic_thumb_up_num.setText(dynamicPoList.get(position).getDynamicThumbUpNum() + "");
+		holder.tv_dynamic_user_name.setText(dynamicPPoList.get(position).getDynamicPo().getUserName());
+		holder.tv_dynamic_time.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicDate());
+		holder.tv_dynamic_content.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicText());
+		holder.tv_dynamic_forwarding_num.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicForwardingNum() + "");
+		holder.tv_dynamic_comments_num.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicCommentsNum() + "");
+		holder.tv_dynamic_thumb_up_num.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicThumbUpNum() + "");
 
-		if (!dynamicPoList.get(position).getDynamicImage().equals("isEmpty")) {
-			String strArr1[] = dynamicPoList.get(position).getDynamicImage().split("/");
+		if(dynamicPPoList.get(position).getDynamicPo().getIsThumbUp()==1){
+			holder.tv_dynamic_thumb_up_num.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+			holder.tv_dynamic_thumb_up_num_text.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+		}
+		
+		if (!dynamicPPoList.get(position).getDynamicPo().getDynamicImage().equals("isEmpty")) {
+			String strArr1[] = dynamicPPoList.get(position).getDynamicPo().getDynamicImage().split("/");
 			String fileId = strArr1[strArr1.length - 1];
 			ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_DYNAMICIMAGE_URL + fileId,
 					holder.iv_dynamic_picture, imageLoadingListener);
@@ -102,7 +109,7 @@ public class DynamicPersonalRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 			holder.iv_dynamic_picture.setVisibility(View.GONE);
 		}
 
-		String strArr2[] = dynamicPoList.get(position).getUserPhoto().split("/");
+		String strArr2[] = dynamicPPoList.get(position).getDynamicPo().getUserPhoto().split("/");
 		String fileId2 = strArr2[strArr2.length - 1];
 		ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_USERPHOTO_URL + fileId2,
 				holder.iv_dynamic_user_picture, imageLoadingListener);
@@ -114,10 +121,32 @@ public class DynamicPersonalRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent=new Intent(mContext,UserHomePageActivity.class);
-				intent.putExtra("userId", dynamicPoList.get(position).getUserId());
+				intent.putExtra("userId", dynamicPPoList.get(position).getDynamicPo().getUserId());
 				mContext.startActivity(intent);
 			}
 		});
+		
+		holder.rl_dynamic_thumb_up.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(dynamicPPoList.get(position).getDynamicPo().getIsThumbUp()==0){
+					int thumb_up_num=Integer.parseInt(holder.tv_dynamic_thumb_up_num.getText().toString());
+					holder.tv_dynamic_thumb_up_num.setText((thumb_up_num+1)+"");
+					holder.tv_dynamic_thumb_up_num.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+					holder.tv_dynamic_thumb_up_num_text.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+					dynamicPPoList.get(position).getDynamicPo().setIsThumUp(1);
+				}else if(dynamicPPoList.get(position).getDynamicPo().getIsThumbUp()==1){
+					int thumb_up_num=Integer.parseInt(holder.tv_dynamic_thumb_up_num.getText().toString());
+					holder.tv_dynamic_thumb_up_num.setText((thumb_up_num-1)+"");
+					holder.tv_dynamic_thumb_up_num.setTextColor(android.graphics.Color.parseColor("#000000"));
+					holder.tv_dynamic_thumb_up_num_text.setTextColor(android.graphics.Color.parseColor("#000000"));
+					dynamicPPoList.get(position).getDynamicPo().setIsThumUp(0);
+				}
+			}
+		});
+		
 		// 列表项的点击事件需要自己实现
 		holder.ll_item.setOnClickListener(new OnClickListener() {
 			@Override
@@ -136,6 +165,8 @@ public class DynamicPersonalRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 				return true;
 			}
 		});
+		
+		
 	}
 
 	@Override
@@ -161,6 +192,11 @@ public class DynamicPersonalRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 		public TextView tv_dynamic_forwarding_num;
 		public TextView tv_dynamic_comments_num;
 		public TextView tv_dynamic_thumb_up_num;
+		
+		public RelativeLayout rl_dynamic_forwarding;
+		public RelativeLayout rl_dynamic_comments;
+		public RelativeLayout rl_dynamic_thumb_up;
+		public TextView tv_dynamic_thumb_up_num_text;
 
 		public TitleHolder(View v) {
 			super(v);
@@ -173,6 +209,11 @@ public class DynamicPersonalRecyclerAdapter extends RecyclerView.Adapter<ViewHol
 			tv_dynamic_thumb_up_num = (TextView) v.findViewById(R.id.tv_dynamic_thumb_up_num);
 			iv_dynamic_user_picture = (ImageView) v.findViewById(R.id.iv_dynamic_user_picture);
 			iv_dynamic_picture = (ImageView) v.findViewById(R.id.iv_dynamic_picture);
+			
+			rl_dynamic_forwarding=(RelativeLayout) v.findViewById(R.id.rl_dynamic_forwarding);
+			rl_dynamic_comments=(RelativeLayout) v.findViewById(R.id.rl_dynamic_comments);
+			rl_dynamic_thumb_up=(RelativeLayout) v.findViewById(R.id.rl_dynamic_thumb_up);
+			tv_dynamic_thumb_up_num_text = (TextView) v.findViewById(R.id.tv_dynamic_thumb_up_num_text);
 		}
 
 	}
