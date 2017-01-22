@@ -64,5 +64,9 @@
     <string name="str_focusId">输入对方ID</string>
     <string name="str_release_dynamic">发布动态</string>
 	<string name="str_find_user">搜索用户</string>
+	<string name="str_reply">回复</string>
+	<string name="str_replyText">回复内容...</string>
+	<string name="str_commentsDefult">评论0</string>
+	<string name="str_thumbUpDefult">赞0</string>
     
 </resources>

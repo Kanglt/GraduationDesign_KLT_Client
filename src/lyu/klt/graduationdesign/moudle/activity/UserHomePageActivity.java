@@ -43,6 +43,7 @@ import lyu.klt.graduationdesign.module.adapter.DynamicPersonalHaveHeadRecyclerAd
 import lyu.klt.graduationdesign.module.adapter.DynamicPersonalListAdapter;
 import lyu.klt.graduationdesign.module.adapter.DynamicPersonalRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
+import lyu.klt.graduationdesign.module.bean.DynamicPPo;
 import lyu.klt.graduationdesign.module.bean.DynamicPo;
 import lyu.klt.graduationdesign.module.bean.UserPo;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
@@ -72,10 +73,9 @@ public class UserHomePageActivity extends BaseActivity {
 	public int lastVisibleItem;
 
 	private ListView rv_user_personal_dynamic;
-	private DynamicPersonalHaveHeadRecyclerAdapter mAdapter;
 	private DynamicPersonalListAdapter dynamicPersonalListAdapter;
 	private MyLinearLayoutManger mLayoutManager;
-	private List<DynamicPo> dynamicPoList;
+	private List<DynamicPPo> dynamicPPoList;
 	private List<String> mDatas;
 	private UserPo userPo;
 	
@@ -277,11 +277,11 @@ public class UserHomePageActivity extends BaseActivity {
 					}
 					
 					Gson gson=new Gson();
-					dynamicPoList= gson.fromJson(jsonObject.getString("list"),
-							new TypeToken<List<DynamicPo>>() {
+					dynamicPPoList= gson.fromJson(jsonObject.getString("list"),
+							new TypeToken<List<DynamicPPo>>() {
 							}.getType());
 					
-					dynamicPersonalListAdapter = new DynamicPersonalListAdapter(context, dynamicPoList);
+					dynamicPersonalListAdapter = new DynamicPersonalListAdapter(context, dynamicPPoList);
 					rv_user_personal_dynamic.setAdapter(dynamicPersonalListAdapter);
 					dynamicPersonalListAdapter.notifyDataSetChanged();
 					

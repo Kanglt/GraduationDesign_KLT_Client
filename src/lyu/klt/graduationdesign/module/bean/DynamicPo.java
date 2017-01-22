@@ -2,6 +2,8 @@
 */
 package lyu.klt.graduationdesign.module.bean;
 
+import java.io.Serializable;
+
 /**
  * @ClassName: DynamicPo
  * @Description: TODO(动态的Po)
@@ -9,7 +11,7 @@ package lyu.klt.graduationdesign.module.bean;
  * @date 2017年1月14日 下午8:17:32
  * 
  */
-public class DynamicPo {
+public class DynamicPo implements Serializable{
 
 	private String userId;
 	private String dynamicDate;

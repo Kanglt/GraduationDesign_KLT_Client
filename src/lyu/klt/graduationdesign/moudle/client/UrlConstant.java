@@ -24,7 +24,7 @@ public class UrlConstant {
 	public final static String FILE_SERVICE_DOWNLOAD_MUSIC_URL = URL_BASE + "musics/";
 	public final static String FILE_SERVICE_DOWNLOAD_TRAININGIMAGE_URL = URL_BASE + "image/trainingImage/";
 	public final static String FILE_SERVICE_DOWNLOAD_DYNAMICIMAGE_URL = URL_BASE + "image/user_dynamic_image/";
-	
+
 	public static Uri PHOTOURI;
 
 	public static String TESTURL = URL_BASE + "TestMobile.service?getTestListForMobile";
@@ -77,11 +77,12 @@ public class UrlConstant {
 	public static String GETUSERBODYDATA_URL = URL_BASE + "DataWebServiceMobile.service?getUserBodyData";
 	// 添加用户身体数据
 	public static String ADDUSERBODYDATA_URL = URL_BASE + "DataWebServiceMobile.service?addUserBodyData";
-	
+
 	// 用户发布动态
 	public static String ADDUSERDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?addUserDynamic";
 	// 查询用户个人动态
-	public static String QUERYUSERPERSONALDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryUserPersonalDynamic";
+	public static String QUERYUSERPERSONALDYNAMIC_URL = URL_BASE
+			+ "DataWebServiceMobile.service?queryUserPersonalDynamic";
 	// 查询用户关注动态
 	public static String QUERYUSERFOCUSDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryUserFocusDynamic";
 	// 查询用户关注动态
@@ -89,7 +90,7 @@ public class UrlConstant {
 	// 查询用户主页信息
 	public static String QUERYUSERHOMEPAGEINFO_URL = URL_BASE + "UserWebServiceMobile.service?queryUserHomePageInfo";
 	// 查询用户关注列表
-	public static String QUERYUSERFOCUSINFO_URL = URL_BASE + "UserWebServiceMobile.service?queryUserFocusInfo";	
+	public static String QUERYUSERFOCUSINFO_URL = URL_BASE + "UserWebServiceMobile.service?queryUserFocusInfo";
 	// 查询用户粉丝列表
 	public static String QUERYUSERFANSINFO_URL = URL_BASE + "UserWebServiceMobile.service?queryUserFansInfo";
 	// 查询是否关注了对方
@@ -100,5 +101,13 @@ public class UrlConstant {
 	public static String QUERYHOTDYNAMIC_URL = URL_BASE + "DataWebServiceMobile.service?queryHotDynamic";
 	// 查询热门动态
 	public static String QUERYPERSONALINFO_URL = URL_BASE + "UserWebServiceMobile.service?queryPersonalInfo";
-					
+	// 查询热门动态
+	public static String UPDATEUSERDYNAMICTHUMBUPNUM_URL = URL_BASE
+			+ "UserWebServiceMobile.service?updateUserDynamicThumbUpNum";
+	// 查询动态评论
+	public static String QUERYDYNAMICCOMMENTS_URL = URL_BASE + "DataWebServiceMobile.service?queryDynamicComments";
+	// 添加动态评论
+	public static String ADDDYNAMICCOMMENTS_URL = URL_BASE + "DataWebServiceMobile.service?addDynamicComments";
+	// 删除评论
+	public static String DELETEDYNAMICCOMMENTS_URL = URL_BASE + "DataWebServiceMobile.service?deleteDynamicComments";
 }

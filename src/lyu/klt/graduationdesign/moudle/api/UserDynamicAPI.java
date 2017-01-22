@@ -125,6 +125,17 @@ public class UserDynamicAPI {
 
 	}
 	
+	/**
+	 * 
+	* @Title: queryHotDynamic 
+	* @author 康良涛 
+	* @Description: TODO(查询热门动态) 
+	* @param @param context
+	* @param @param userId
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
 	public static void queryHotDynamic(Context context,String userId,
 			AbStringHttpResponseListener abStringHttpResponseListener) {
 		JSONObject jsonObject = new JSONObject();
@@ -134,6 +145,155 @@ public class UserDynamicAPI {
 
 			AbHttpUtil mAbHttpUtil = null;
 			String url = UrlConstant.QUERYHOTDYNAMIC_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr", DataUtils.getRequestData(context, jsonObject));
+			// params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+
+	}
+	
+	/**
+	 * 
+	* @Title: updateUserDynamicThumbUpNum 
+	* @author 康良涛 
+	* @Description: TODO(更新点赞数) 
+	* @param @param context
+	* @param @param userId
+	* @param @param dynamicId
+	* @param @param type（0表示加 1表示减）
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void updateUserDynamicThumbUpNum(Context context,String userId,String dynamicId,String type,
+			AbStringHttpResponseListener abStringHttpResponseListener) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			jsonObject.put("userId", userId);
+			jsonObject.put("dynamicId", dynamicId);
+			jsonObject.put("type", type);
+
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.UPDATEUSERDYNAMICTHUMBUPNUM_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr", DataUtils.getRequestData(context, jsonObject));
+			// params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+
+	}
+	
+	/**
+	 * 
+	* @Title: deleteDynamicComments 
+	* @author 康良涛 
+	* @Description: TODO(删除动态评论) 
+	* @param @param context
+	* @param @param userId
+	* @param @param dynamicId
+	* @param @param type
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void deleteDynamicComments(Context context,String dynamicId,
+			AbStringHttpResponseListener abStringHttpResponseListener) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			jsonObject.put("dynamicId", dynamicId);
+
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.DELETEDYNAMICCOMMENTS_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr", DataUtils.getRequestData(context, jsonObject));
+			// params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+
+	}
+	
+	/**
+	 * 
+	* @Title: queryDynamicComments 
+	* @author 康良涛 
+	* @Description: TODO(查询动态评论) 
+	* @param @param context
+	* @param @param userId
+	* @param @param dynamicId
+	* @param @param type
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void queryDynamicComments(Context context,String dynamicId,
+			AbStringHttpResponseListener abStringHttpResponseListener) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			jsonObject.put("dynamicId", dynamicId);
+
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.QUERYDYNAMICCOMMENTS_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr", DataUtils.getRequestData(context, jsonObject));
+			// params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+
+	}
+	
+
+	/**
+	 * 
+	* @Title: addDynamicComments 
+	* @author 康良涛 
+	* @Description: TODO(添加动态评论) 
+	* @param @param context
+	* @param @param dynamicId
+	* @param @param commentsUserId
+	* @param @param commentsText
+	* @param @param replyId
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void addDynamicComments(Context context,String dynamicId,String commentsUserId,String commentsText,String replyId,String replyName,String commentsUserName,
+			AbStringHttpResponseListener abStringHttpResponseListener) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			jsonObject.put("dynamicId", dynamicId);
+			jsonObject.put("commentsUserId", commentsUserId);
+			jsonObject.put("commentsText", commentsText);
+			jsonObject.put("replyId", replyId);
+			jsonObject.put("replyName", replyName);
+			jsonObject.put("commentsUserName", commentsUserName);
+
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.ADDDYNAMICCOMMENTS_URL;
 			// 绑定参数
 			AbRequestParams params = new AbRequestParams();
 			params.put("jsonDataStr", DataUtils.getRequestData(context, jsonObject));

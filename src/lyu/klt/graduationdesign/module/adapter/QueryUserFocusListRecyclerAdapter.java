@@ -137,17 +137,15 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 		holder.tv_user_name
 				.setText(userPPoList.get(position).getUserPo().getUserName() + "(" + userPPoList.get(position).getUserPo().getUserId() + ")");
 		holder.tv_user_sex.setText(userPPoList.get(position).getUserPo().getUserSex());
-		holder.tv_focus.setText("已关注");
-		holder.iv_focus.setImageBitmap(FocusBitmap);
-		holder.tv_noFocus.setText("未关注");
-		holder.iv_noFocus.setImageBitmap(noFocusBitmap);
 		
-		if(userPPoList.get(position).getUserPo().getIsFocus()==0){
-			holder.ll_noFocus.setVisibility(View.VISIBLE);
-			holder.ll_Focus.setVisibility(View.GONE);
-		}else if(userPPoList.get(position).getUserPo().getIsFocus()==1){
-			holder.ll_noFocus.setVisibility(View.GONE);
-			holder.ll_Focus.setVisibility(View.VISIBLE);
+		
+		
+		if(userPPoList.get(position).getUserPo().getIsFocus()==1){
+			holder.tv_focus.setText("已关注");
+			holder.iv_focus.setImageBitmap(FocusBitmap);
+		}else if(userPPoList.get(position).getUserPo().getIsFocus()==0){
+			holder.tv_focus.setText("未关注");
+			holder.iv_focus.setImageBitmap(noFocusBitmap);
 		}
 		
 		// 列表项的点击事件需要自己实现
@@ -176,19 +174,17 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				initFocusDialog(holder.ll_Focus,holder.ll_noFocus,AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),userPPoList.get(position).getUserPo().getUserId());
-			}
+				if( userPPoList.get(position).getUserPo().getIsFocus()==1){
+					initFocusDialog(position,holder.iv_focus,holder.tv_focus,AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),userPPoList.get(position).getUserPo().getUserId());
+					
+					
+				}else if(userPPoList.get(position).getUserPo().getIsFocus()==0){
+					initNoFocusDialog(position,holder.iv_focus,holder.tv_focus,AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),userPPoList.get(position).getUserPo().getUserId());
+					
+				}
+				}
 		});
 		
-		holder.ll_noFocus.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				initNoFocusDialog(holder.ll_Focus,holder.ll_noFocus,AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),userPPoList.get(position).getUserPo().getUserId());
-			}
-		});
 
 	}
 
@@ -207,7 +203,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 	public class TitleHolder extends RecyclerView.ViewHolder {
 		public View ll_item;
 		public View ll_Focus;
-		public View ll_noFocus;
+		
 		public ImageView user_picture;
 		public TextView tv_user_name;
 		public TextView tv_user_sex;
@@ -215,8 +211,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 		public TextView tv_user_address;
 		public ImageView iv_focus;
 		public TextView tv_focus;
-		public ImageView iv_noFocus;
-		public TextView tv_noFocus;
+		
 
 		public TitleHolder(View v) {
 			super(v);
@@ -230,9 +225,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 			tv_focus = (TextView) v.findViewById(R.id.tv_focus);
 			iv_focus = (ImageView) v.findViewById(R.id.iv_focus);
 
-			ll_noFocus = (LinearLayout) v.findViewById(R.id.ll_noFocus);
-			tv_noFocus = (TextView) v.findViewById(R.id.tv_noFocus);
-			iv_noFocus = (ImageView) v.findViewById(R.id.iv_noFocus);
+			
 
 		}
 
@@ -299,7 +292,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 		}
 	};
 
-	private void initFocusDialog(final View ll_Focus,final View ll_noFocus,final String userId,final String focusId) {
+	private void initFocusDialog(final int position,final ImageView iv_focus,final TextView tv_focus,final String userId,final String focusId) {
 		final View viewDia = LayoutInflater.from(mContext).inflate(R.layout.message_prompt_dialog, null);
 		final EditText log_text = (EditText) viewDia.findViewById(R.id.log_text);
 		log_text.setEnabled(false);
@@ -319,8 +312,9 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 
 			@Override
 			public void onClick(View v) {
-				ll_Focus.setVisibility(View.GONE);
-				ll_noFocus.setVisibility(View.VISIBLE);
+				tv_focus.setText("未关注");
+				iv_focus.setImageBitmap(noFocusBitmap);
+				userPPoList.get(position).getUserPo().setIsFocus(0);
 				UserAPI.deleteUserFocus(mContext, userId, focusId, deleteUserFocusStringHttpResponseListener);
 				DialogUtils.hideDialog(dialog);
 			}
@@ -331,7 +325,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 		dialog.setCanceledOnTouchOutside(true);
 	}
 	
-	private void initNoFocusDialog(final View ll_Focus,final View ll_noFocus,final String userId,final String focusId) {
+	private void initNoFocusDialog(final int position,final ImageView iv_focus,final TextView tv_focus,final String userId,final String focusId) {
 		final View viewDia = LayoutInflater.from(mContext).inflate(R.layout.message_prompt_dialog, null);
 		final EditText log_text = (EditText) viewDia.findViewById(R.id.log_text);
 		log_text.setEnabled(false);
@@ -351,8 +345,9 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 
 			@Override
 			public void onClick(View v) {
-				ll_noFocus.setVisibility(View.GONE);
-				ll_Focus.setVisibility(View.VISIBLE);
+				iv_focus.setImageBitmap(FocusBitmap);
+				tv_focus.setText("已关注");
+				userPPoList.get(position).getUserPo().setIsFocus(1);
 				UserAPI.addUserFocusForMobile(mContext, userId, focusId, addUserFocusStringHttpResponseListener);
 				DialogUtils.hideDialog(dialog);
 			}

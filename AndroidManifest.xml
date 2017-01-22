@@ -95,80 +95,47 @@
         </activity>
         <activity
             android:name="lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity"
-            android:configChanges="orientation|screenSize"
-             >
+            android:configChanges="orientation|screenSize" >
         </activity>
-        <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.DietInfomation"
-          >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.DietInfomation" >
         </activity>
-        <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.DinneTimeActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.DinneTimeActivity" >
         </activity>
-        <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.MusicSelectActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.MusicSelectActivity" >
         </activity>
-        <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.MusicListActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.MusicListActivity" >
         </activity>
-        <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.AddTrainingActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.AddTrainingActivity" >
         </activity>
-        <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.DeleteUserTrainingActivity"
-             >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.DeleteUserTrainingActivity" >
         </activity>
-        <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.TotalTrainingActivity"
-             >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.TotalTrainingActivity" >
         </activity>
-        <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.RecommendedTrainingActivity"
-             >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.RecommendedTrainingActivity" >
         </activity>
-        <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.HeartRateDetectionActivity"
-             >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.HeartRateDetectionActivity" >
         </activity>
-          <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.HealthDetectionActivity"
-             >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.HealthDetectionActivity" >
         </activity>
-         <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.BMIActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.BMIActivity" >
         </activity>
-         <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.BodyFatRateActivity"
-             >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.BodyFatRateActivity" >
         </activity>
-        <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.ReleaseDynamicActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.ReleaseDynamicActivity" >
         </activity>
-         <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.UserPersonalDynamicActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.UserPersonalDynamicActivity" >
         </activity>
-         <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.QueryUserActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.QueryUserActivity" >
         </activity>
-          <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.UserHomePageActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.UserHomePageActivity" >
         </activity>
-                  <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.UserFocusListActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.UserFocusListActivity" >
         </activity>
-                  <activity
-            android:name="lyu.klt.graduationdesign.moudle.activity.UserFansListActivity"
-            >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.UserFansListActivity" >
+        </activity>
+         <activity android:name="lyu.klt.graduationdesign.moudle.activity.DynamicHomePageActivity" >
+        </activity>
+         <activity android:name="lyu.klt.graduationdesign.moudle.activity.ReplyCommentsActivity" >
         </activity>
     </application>
 

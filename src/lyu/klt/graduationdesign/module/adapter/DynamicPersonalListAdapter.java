@@ -34,6 +34,7 @@ import lyu.klt.graduationdesign.util.ImageLoaderUtil;
 import lyu.klt.graduationdesign.view.MyLinearLayoutManger;
 import lyu.klt.graduationdesign.view.SpacesItemDecoration;
 import lyu.klt.frame.ab.util.AbToastUtil;
+import lyu.klt.graduationdesign.module.bean.DynamicPPo;
 import lyu.klt.graduationdesign.module.bean.DynamicPo;
 import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
@@ -41,11 +42,12 @@ import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
 
 /**
- * @ClassName: TrainingListAdapter
- * @Description: TODO(推荐模块下的子模块（训练）饮食模块下的listView的Adapter)
- * @author 康良涛
- * @date 2016年12月16日 下午1:54:38
  * 
+* @ClassName: DynamicPersonalListAdapter 
+* @Description: TODO(这里用一句话描述这个类的作用) 
+* @author 康良涛 
+* @date 2017年1月22日 下午9:53:38 
+*
  */
 public class DynamicPersonalListAdapter extends BaseAdapter {
 
@@ -53,11 +55,11 @@ public class DynamicPersonalListAdapter extends BaseAdapter {
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private int mType;
-	private List<DynamicPo> dynamicPoList;
+	private List<DynamicPPo> dynamicPPoList;
 
-	public DynamicPersonalListAdapter(Context context, List<DynamicPo> dynamicPoList) {
+	public DynamicPersonalListAdapter(Context context, List<DynamicPPo> dynamicPPoList) {
 		this.mContext = context;
-		this.dynamicPoList = dynamicPoList;
+		this.dynamicPPoList = dynamicPPoList;
 
 	}
 
@@ -88,7 +90,7 @@ public class DynamicPersonalListAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return dynamicPoList.size();
+		return dynamicPPoList.size();
 	}
 
 	/*
@@ -99,7 +101,7 @@ public class DynamicPersonalListAdapter extends BaseAdapter {
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return dynamicPoList.get(position);
+		return dynamicPPoList.get(position);
 	}
 
 	/*
@@ -123,7 +125,7 @@ public class DynamicPersonalListAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		ViewHolder holder;
-		DynamicPo dynamicPo = dynamicPoList.get(position);
+		DynamicPo dynamicPo = dynamicPPoList.get(position).getDynamicPo();
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.listview_list_item_dynamic_friends, parent, false);
@@ -146,15 +148,15 @@ public class DynamicPersonalListAdapter extends BaseAdapter {
 		}
 
 		
-		holder.tv_dynamic_user_name.setText(dynamicPoList.get(position).getUserName());
-		holder.tv_dynamic_time.setText(dynamicPoList.get(position).getDynamicDate());
-		holder.tv_dynamic_content.setText(dynamicPoList.get(position).getDynamicText());
-		holder.tv_dynamic_forwarding_num.setText(dynamicPoList.get(position).getDynamicForwardingNum() + "");
-		holder.tv_dynamic_comments_num.setText(dynamicPoList.get(position).getDynamicCommentsNum() + "");
-		holder.tv_dynamic_thumb_up_num.setText(dynamicPoList.get(position).getDynamicThumbUpNum() + "");
+		holder.tv_dynamic_user_name.setText(dynamicPPoList.get(position).getDynamicPo().getUserName());
+		holder.tv_dynamic_time.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicDate());
+		holder.tv_dynamic_content.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicText());
+		holder.tv_dynamic_forwarding_num.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicForwardingNum() + "");
+		holder.tv_dynamic_comments_num.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicCommentsNum() + "");
+		holder.tv_dynamic_thumb_up_num.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicThumbUpNum() + "");
 
-		if (!dynamicPoList.get(position).getDynamicImage().equals("isEmpty")) {
-			String strArr1[] = dynamicPoList.get(position).getDynamicImage().split("/");
+		if (!dynamicPPoList.get(position).getDynamicPo().getDynamicImage().equals("isEmpty")) {
+			String strArr1[] = dynamicPPoList.get(position).getDynamicPo().getDynamicImage().split("/");
 			String fileId = strArr1[strArr1.length - 1];
 			ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_DYNAMICIMAGE_URL + fileId,
 					holder.iv_dynamic_picture, imageLoadingListener);
@@ -162,7 +164,7 @@ public class DynamicPersonalListAdapter extends BaseAdapter {
 			holder.iv_dynamic_picture.setVisibility(View.GONE);
 		}
 
-		String strArr2[] = dynamicPoList.get(position).getUserPhoto().split("/");
+		String strArr2[] = dynamicPPoList.get(position).getDynamicPo().getUserPhoto().split("/");
 		String fileId2 = strArr2[strArr2.length - 1];
 		ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_USERPHOTO_URL + fileId2,
 				holder.iv_dynamic_user_picture, imageLoadingListener);
@@ -173,7 +175,7 @@ public class DynamicPersonalListAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent=new Intent(mContext,UserHomePageActivity.class);
-				intent.putExtra("userId", dynamicPoList.get(position).getUserId());
+				intent.putExtra("userId", dynamicPPoList.get(position).getDynamicPo().getUserId());
 				mContext.startActivity(intent);
 			}
 		});

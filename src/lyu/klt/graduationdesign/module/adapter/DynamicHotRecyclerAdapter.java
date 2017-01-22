@@ -1,13 +1,14 @@
 package lyu.klt.graduationdesign.module.adapter;
 
-
-
 import java.util.List;
+
+import org.json.JSONObject;
 
 import com.lyu.graduationdesign_klt.R;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,23 +26,33 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
+import lyu.klt.frame.ab.util.AbLogUtil;
+import lyu.klt.frame.ab.util.AbSharedUtil;
+import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.module.adapter.DynamicFriendsRecyclerAdapter.TitleHolder;
 import lyu.klt.graduationdesign.module.bean.DynamicPPo;
 import lyu.klt.graduationdesign.module.bean.DynamicPo;
 import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
+import lyu.klt.graduationdesign.moudle.activity.DynamicHomePageActivity;
 import lyu.klt.graduationdesign.moudle.activity.UserHomePageActivity;
+import lyu.klt.graduationdesign.moudle.api.ApiHandler;
+import lyu.klt.graduationdesign.moudle.api.UserDynamicAPI;
+import lyu.klt.graduationdesign.moudle.client.Constant;
 import lyu.klt.graduationdesign.moudle.client.UrlConstant;
+import lyu.klt.graduationdesign.util.DataUtils;
 import lyu.klt.graduationdesign.util.ImageLoaderUtil;
+
 /**
  * 
-* @ClassName: DynamicFriendsRecyclerAdapter 
-* @Description: TODO(动态模块下的子模块（热门）模块下的RecyclerView的Adapter) 
-* @author 康良涛 
-* @date 2016年12月16日 下午10:01:10 
-*
+ * @ClassName: DynamicFriendsRecyclerAdapter
+ * @Description: TODO(动态模块下的子模块（热门）模块下的RecyclerView的Adapter)
+ * @author 康良涛
+ * @date 2016年12月16日 下午10:01:10
+ *
  */
-public class DynamicHotRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> 
+public class DynamicHotRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 		implements OnItemClickListener, OnItemLongClickListener {
 	private final static String TAG = "DynamicHotRecyclerAdapter";
 	private Context mContext;
@@ -72,7 +83,7 @@ public class DynamicHotRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 
 	@Override
 	public void onBindViewHolder(ViewHolder vh, final int position) {
-		TitleHolder holder = (TitleHolder) vh;
+		final TitleHolder holder = (TitleHolder) vh;
 		LayoutParams params = holder.ll_item.getLayoutParams();
 
 		if (mType == 1) { // 表示是线性布局
@@ -93,16 +104,23 @@ public class DynamicHotRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 		holder.tv_dynamic_user_name.setText(dynamicPPoList.get(position).getDynamicPo().getUserName());
 		holder.tv_dynamic_time.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicDate());
 		holder.tv_dynamic_content.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicText());
-		holder.tv_dynamic_forwarding_num.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicForwardingNum() + "");
-		holder.tv_dynamic_comments_num.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicCommentsNum() + "");
+		holder.tv_dynamic_forwarding_num
+				.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicForwardingNum() + "");
+		holder.tv_dynamic_comments_num
+				.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicCommentsNum() + "");
 		holder.tv_dynamic_thumb_up_num.setText(dynamicPPoList.get(position).getDynamicPo().getDynamicThumbUpNum() + "");
 
+		if(dynamicPPoList.get(position).getDynamicPo().getIsThumbUp()==1){
+			holder.tv_dynamic_thumb_up_num.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+			holder.tv_dynamic_thumb_up_num_text.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+		}
+		
 		if (!dynamicPPoList.get(position).getDynamicPo().getDynamicImage().equals("isEmpty")) {
 			String strArr1[] = dynamicPPoList.get(position).getDynamicPo().getDynamicImage().split("/");
 			String fileId = strArr1[strArr1.length - 1];
 			ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_DYNAMICIMAGE_URL + fileId,
 					holder.iv_dynamic_picture, imageLoadingListener);
-		}else{
+		} else {
 			holder.iv_dynamic_picture.setVisibility(View.GONE);
 		}
 
@@ -112,24 +130,54 @@ public class DynamicHotRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 				holder.iv_dynamic_user_picture, imageLoadingListener);
 
 		holder.iv_dynamic_user_picture.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(mContext,UserHomePageActivity.class);
+				Intent intent = new Intent(mContext, UserHomePageActivity.class);
 				intent.putExtra("userId", dynamicPPoList.get(position).getDynamicPo().getUserId());
 				mContext.startActivity(intent);
 			}
 		});
-		
-		
+
+		holder.rl_dynamic_thumb_up.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (dynamicPPoList.get(position).getDynamicPo().getIsThumbUp() == 0) {
+					int thumb_up_num = Integer.parseInt(holder.tv_dynamic_thumb_up_num.getText().toString());
+					holder.tv_dynamic_thumb_up_num.setText((thumb_up_num + 1) + "");
+					holder.tv_dynamic_thumb_up_num.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+					holder.tv_dynamic_thumb_up_num_text.setTextColor(android.graphics.Color.parseColor("#FF0000"));
+					dynamicPPoList.get(position).getDynamicPo().setIsThumUp(1);
+					UserDynamicAPI.updateUserDynamicThumbUpNum(mContext,
+							AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),
+							dynamicPPoList.get(position).getDynamicPo().getId() + "", "0",
+							updateUserDynamicThumbUpNumStringHttpResponseListener);
+				} else if (dynamicPPoList.get(position).getDynamicPo().getIsThumbUp() == 1) {
+					int thumb_up_num = Integer.parseInt(holder.tv_dynamic_thumb_up_num.getText().toString());
+					holder.tv_dynamic_thumb_up_num.setText((thumb_up_num - 1) + "");
+					holder.tv_dynamic_thumb_up_num.setTextColor(android.graphics.Color.parseColor("#000000"));
+					holder.tv_dynamic_thumb_up_num_text.setTextColor(android.graphics.Color.parseColor("#000000"));
+					dynamicPPoList.get(position).getDynamicPo().setIsThumUp(0);
+					UserDynamicAPI.updateUserDynamicThumbUpNum(mContext,
+							AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),
+							dynamicPPoList.get(position).getDynamicPo().getId() + "", "1",
+							updateUserDynamicThumbUpNumStringHttpResponseListener);
+				}
+			}
+		});
 		// 列表项的点击事件需要自己实现
 		holder.ll_item.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (mOnItemClickListener != null) {
-					mOnItemClickListener.onItemClick(v, position);
-				}
+//				if (mOnItemClickListener != null) {
+//				mOnItemClickListener.onItemClick(v, position);
+//			}
+			Intent intent=new Intent(mContext,DynamicHomePageActivity.class);
+			intent.putExtra("dynamicPo", dynamicPPoList.get(position).getDynamicPo());
+			mContext.startActivity(intent);
 			}
 		});
 		holder.ll_item.setOnLongClickListener(new OnLongClickListener() {
@@ -166,10 +214,11 @@ public class DynamicHotRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 		public TextView tv_dynamic_forwarding_num;
 		public TextView tv_dynamic_comments_num;
 		public TextView tv_dynamic_thumb_up_num;
-		
+
 		public RelativeLayout rl_dynamic_forwarding;
 		public RelativeLayout rl_dynamic_comments;
 		public RelativeLayout rl_dynamic_thumb_up;
+		public TextView tv_dynamic_thumb_up_num_text;
 
 		public TitleHolder(View v) {
 			super(v);
@@ -182,11 +231,12 @@ public class DynamicHotRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 			tv_dynamic_thumb_up_num = (TextView) v.findViewById(R.id.tv_dynamic_thumb_up_num);
 			iv_dynamic_user_picture = (ImageView) v.findViewById(R.id.iv_dynamic_user_picture);
 			iv_dynamic_picture = (ImageView) v.findViewById(R.id.iv_dynamic_picture);
-			
 
-			rl_dynamic_forwarding=(RelativeLayout) v.findViewById(R.id.rl_dynamic_forwarding);
-			rl_dynamic_comments=(RelativeLayout) v.findViewById(R.id.rl_dynamic_comments);
-			rl_dynamic_thumb_up=(RelativeLayout) v.findViewById(R.id.rl_dynamic_thumb_up);
+			rl_dynamic_forwarding = (RelativeLayout) v.findViewById(R.id.rl_dynamic_forwarding);
+			rl_dynamic_comments = (RelativeLayout) v.findViewById(R.id.rl_dynamic_comments);
+			rl_dynamic_thumb_up = (RelativeLayout) v.findViewById(R.id.rl_dynamic_thumb_up);
+			tv_dynamic_thumb_up_num_text = (TextView) v.findViewById(R.id.tv_dynamic_thumb_up_num_text);
+			
 		}
 
 	}
@@ -239,6 +289,66 @@ public class DynamicHotRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 			// TODO Auto-generated method stub
 			Log.e("DynamicHotRecyclerAdapter", "onLoadingCancelled");
 		}
+	};
+	
+	private AbStringHttpResponseListener updateUserDynamicThumbUpNumStringHttpResponseListener = new AbStringHttpResponseListener() {
+
+		@Override
+		public void onSuccess(int statusCode, String content) {
+			// TODO Auto-generated method stub
+
+			if (!StringUtil.isEmpty(content)) {
+				try {
+					JSONObject returncode = new JSONObject(content);
+					String data = returncode.getString("data");
+					String type = returncode.getString("type");
+					if (!ApiHandler.isSccuss((Activity) mContext, type, data)) {
+						return;
+					}
+					// 解密数据
+					data = DataUtils.getResponseData(mContext, data);
+					JSONObject jsonObject = new JSONObject(data);
+
+					if (StringUtil.isEmpty(jsonObject.getString("record"))) {
+						return;
+					}
+
+				
+				
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		@Override
+		public void onStart() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onStart");
+			// 显示进度框
+			//AbDialogUtil.showProgressDialog(context, 0, "正在操作...");
+			
+
+		}
+
+		@Override
+		public void onFinish() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFinish");
+			// 移除进度框
+			//HideProgressDialog();
+
+			// AbDialogUtil.removeDialog(context);
+		}
+
+		@Override
+		public void onFailure(int statusCode, String content, Throwable error) {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFailure");
+			//AbToastUtil.showToast(context, error.getMessage());
+		}
+
 	};
 
 }

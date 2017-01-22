@@ -104,7 +104,7 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:orientation="vertical" 
-            android:visibility="gone">
+           >
             
              <ImageView
             android:id="@+id/iv_focus"
@@ -123,33 +123,7 @@
             android:textSize="12sp" />
         </LinearLayout>
         
-        <LinearLayout
-            android:id="@+id/ll_noFocus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:orientation="vertical" 
-            android:visibility="gone"
-            >
-            
-             <ImageView
-            android:id="@+id/iv_noFocus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"        
-            android:gravity="center_vertical"
-            android:scaleType="center" 
-            />
-        
-        <TextView
-            android:id="@+id/tv_noFocus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textColor="@color/gray"
-            android:textSize="12sp" />
-        </LinearLayout>
+       
        
     </RelativeLayout>
 

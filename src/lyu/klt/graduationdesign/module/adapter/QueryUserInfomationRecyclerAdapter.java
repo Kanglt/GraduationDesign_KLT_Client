@@ -132,17 +132,12 @@ public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<Vie
 		holder.tv_user_name.setText(userPo.getUserName() + "(" + userPo.getUserId() + ")");
 		holder.tv_user_sex.setText(userPo.getUserSex());
 
-		holder.tv_focus.setText("已关注");
-		holder.iv_focus.setImageBitmap(FocusBitmap);
-		holder.tv_noFocus.setText("未关注");
-		holder.iv_noFocus.setImageBitmap(noFocusBitmap);
-
-		if (userPo.getIsFocus() == 0) {
-			holder.ll_noFocus.setVisibility(View.VISIBLE);
-			holder.ll_Focus.setVisibility(View.GONE);
-		} else if (userPo.getIsFocus() == 1) {
-			holder.ll_noFocus.setVisibility(View.GONE);
-			holder.ll_Focus.setVisibility(View.VISIBLE);
+		if(userPo.getIsFocus()==1){
+			holder.tv_focus.setText("已关注");
+			holder.iv_focus.setImageBitmap(FocusBitmap);
+		}else if(userPo.getIsFocus()==0){
+			holder.tv_focus.setText("未关注");
+			holder.iv_focus.setImageBitmap(noFocusBitmap);
 		}
 
 		// 列表项的点击事件需要自己实现
@@ -171,20 +166,15 @@ public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<Vie
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				initFocusDialog(holder.ll_Focus, holder.ll_noFocus,
-						AbSharedUtil.getString(mContext, Constant.LAST_LOGINID), userPo.getUserId());
-			}
-		});
-
-		holder.ll_noFocus.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				initNoFocusDialog(holder.ll_Focus, holder.ll_noFocus,
-						AbSharedUtil.getString(mContext, Constant.LAST_LOGINID), userPo.getUserId());
-			}
+				if( userPo.getIsFocus()==1){
+					initFocusDialog(holder.iv_focus,holder.tv_focus,AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),userPo.getUserId());
+					
+					
+				}else if(userPo.getIsFocus()==0){
+					initNoFocusDialog(holder.iv_focus,holder.tv_focus,AbSharedUtil.getString(mContext, Constant.LAST_LOGINID),userPo.getUserId());
+					
+				}
+				}
 		});
 
 	}
@@ -204,7 +194,7 @@ public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<Vie
 	public class TitleHolder extends RecyclerView.ViewHolder {
 		public View ll_item;
 		public View ll_Focus;
-		public View ll_noFocus;
+	
 		public ImageView user_picture;
 		public TextView tv_user_name;
 		public TextView tv_user_sex;
@@ -212,8 +202,7 @@ public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<Vie
 		public TextView tv_user_address;
 		public ImageView iv_focus;
 		public TextView tv_focus;
-		public ImageView iv_noFocus;
-		public TextView tv_noFocus;
+	
 
 		public TitleHolder(View v) {
 			super(v);
@@ -227,9 +216,7 @@ public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<Vie
 			tv_focus = (TextView) v.findViewById(R.id.tv_focus);
 			iv_focus = (ImageView) v.findViewById(R.id.iv_focus);
 
-			ll_noFocus = (LinearLayout) v.findViewById(R.id.ll_noFocus);
-			tv_noFocus = (TextView) v.findViewById(R.id.tv_noFocus);
-			iv_noFocus = (ImageView) v.findViewById(R.id.iv_noFocus);
+			
 
 		}
 
@@ -296,8 +283,7 @@ public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<Vie
 		}
 	};
 
-	private void initFocusDialog(final View ll_Focus, final View ll_noFocus, final String userId,
-			final String focusId) {
+	private void initFocusDialog(final ImageView iv_focus,final TextView tv_focus,final String userId,final String focusId) {
 		final View viewDia = LayoutInflater.from(mContext).inflate(R.layout.message_prompt_dialog, null);
 		final EditText log_text = (EditText) viewDia.findViewById(R.id.log_text);
 		log_text.setEnabled(false);
@@ -317,8 +303,9 @@ public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<Vie
 
 			@Override
 			public void onClick(View v) {
-				ll_Focus.setVisibility(View.GONE);
-				ll_noFocus.setVisibility(View.VISIBLE);
+				tv_focus.setText("未关注");
+				iv_focus.setImageBitmap(noFocusBitmap);
+				userPo.setIsFocus(0);
 				UserAPI.deleteUserFocus(mContext, userId, focusId, deleteUserFocusStringHttpResponseListener);
 				DialogUtils.hideDialog(dialog);
 			}
@@ -328,9 +315,8 @@ public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<Vie
 		dialog.setContentView(viewDia);
 		dialog.setCanceledOnTouchOutside(true);
 	}
-
-	private void initNoFocusDialog(final View ll_Focus, final View ll_noFocus, final String userId,
-			final String focusId) {
+	
+	private void initNoFocusDialog(final ImageView iv_focus,final TextView tv_focus,final String userId,final String focusId) {
 		final View viewDia = LayoutInflater.from(mContext).inflate(R.layout.message_prompt_dialog, null);
 		final EditText log_text = (EditText) viewDia.findViewById(R.id.log_text);
 		log_text.setEnabled(false);
@@ -350,8 +336,9 @@ public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<Vie
 
 			@Override
 			public void onClick(View v) {
-				ll_noFocus.setVisibility(View.GONE);
-				ll_Focus.setVisibility(View.VISIBLE);
+				iv_focus.setImageBitmap(FocusBitmap);
+				tv_focus.setText("已关注");
+				userPo.setIsFocus(1);
 				UserAPI.addUserFocusForMobile(mContext, userId, focusId, addUserFocusStringHttpResponseListener);
 				DialogUtils.hideDialog(dialog);
 			}
