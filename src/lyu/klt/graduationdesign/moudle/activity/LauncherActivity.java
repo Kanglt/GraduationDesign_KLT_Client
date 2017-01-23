@@ -155,6 +155,9 @@ public class LauncherActivity extends Activity {
 			if(!FileUtils.fileIsExists(FileUtils.SDPATH+"musics")){
 				FileUtils.createSDDir("musics");
 			}
+			if(!FileUtils.fileIsExists(FileUtils.SDPATH+"apk")){
+				FileUtils.createSDDir("apk");
+			}
 						
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

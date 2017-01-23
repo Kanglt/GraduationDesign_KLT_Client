@@ -57,7 +57,7 @@
             android:orientation="vertical" >
 
             <EditText
-                android:id="@+id/edi_dynamicText"
+                android:id="@+id/edi_commentsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/str_replyText"

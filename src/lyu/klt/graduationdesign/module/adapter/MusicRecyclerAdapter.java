@@ -35,7 +35,7 @@ import lyu.klt.graduationdesign.module.bean.DietStepPo;
 import lyu.klt.graduationdesign.module.bean.MusicDataPo;
 import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.moudle.activity.MusicListActivity;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
 import lyu.klt.graduationdesign.moudle.client.UrlConstant;
@@ -138,7 +138,7 @@ public class MusicRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 
 				Intent intent = new Intent();
 				if (!FileUtils.isFileExist("musics/" + fileName[fileName.length - 1])) {
-					VideoDownLoadDialog.showMusicDownLoadDialog(mContext, fileName[fileName.length - 1],
+					DownLoadDialog.showMusicDownLoadDialog(mContext, fileName[fileName.length - 1],
 							holder.iv_isDownMusic);
 				} else {
 					if (!holder.beforeisPlalMusic) {

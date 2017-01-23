@@ -67,7 +67,7 @@ public class ReplyCommentsActivity extends BaseActivity {
 	private ImageView iv_photo;
 	private TextView tv_exit;
 	private TextView tv_reply_comments;
-	private EditText edi_dynamicText;
+	private EditText edi_commentsText;
 
 	private Bitmap myBitmap;
 
@@ -122,7 +122,7 @@ public class ReplyCommentsActivity extends BaseActivity {
 		iv_photo = (ImageView) findViewById(R.id.iv_photo);
 		tv_exit = (TextView) findViewById(R.id.tv_exit);
 		tv_reply_comments = (TextView) findViewById(R.id.tv_reply_comments);
-		edi_dynamicText = (EditText) findViewById(R.id.edi_dynamicText);
+		edi_commentsText = (EditText) findViewById(R.id.edi_commentsText);
 	}
 
 	@Override
@@ -154,6 +154,7 @@ public class ReplyCommentsActivity extends BaseActivity {
 		super.startGame();
 	}
 
+
 	private OnClickListener onClickListener = new OnClickListener() {
 
 		@Override
@@ -174,7 +175,7 @@ public class ReplyCommentsActivity extends BaseActivity {
 			case R.id.tv_exit:
 				initExitDialog();
 				break;
-			case R.id.tv_release_dynamic:
+			case R.id.tv_reply_comments:
 //				if(iv_photo_is_visibility){
 //					nowTime = DateUtil.getStringTime(DateUtil.FORMAT_TYPE2);
 //					UserDynamicAPI.addUserDynamic(context, userId, DateUtil.getDateEN1(),
@@ -187,6 +188,8 @@ public class ReplyCommentsActivity extends BaseActivity {
 //							addUserDynamicStringHttpResponseListener);
 //					AbSharedUtil.putBoolean(context, Constant.ISLOADEDDATE, true);
 //				}
+				
+				UserDynamicAPI.addDynamicComments(context, dynamicCommentsPo.getDynamicId()+"", AbSharedUtil.getString(context, Constant.LAST_LOGINID), edi_commentsText.getText().toString(), dynamicCommentsPo.getCommentsUserId(),dynamicCommentsPo.getCommentsUserName(), AbSharedUtil.getString(context, Constant.LAST_LOGINUSERNAME), addUserCommentsStringHttpResponseListener);
 				
 				break;
 			default:
@@ -312,6 +315,7 @@ public class ReplyCommentsActivity extends BaseActivity {
 						return;
 					}
 					AbToastUtil.showToast(context, "发布成功！");
+					AbSharedUtil.putBoolean(context, Constant.ISLOADEDDATE, true);
 					finish();
 				} catch (Exception e) {
 					e.printStackTrace();

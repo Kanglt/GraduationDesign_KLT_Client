@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
 import android.widget.Toast;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.module.fargment.FitnessFargmentActivity;
 
 /** 
@@ -31,7 +31,7 @@ public class VideoDownLoadCompleteReceiver extends BroadcastReceiver {
 		if(intent.getAction().equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)){
 			long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
 			Toast.makeText(context, "任务下载完成！", Toast.LENGTH_SHORT).show();
-			VideoDownLoadDialog.videoDownLoadDialog.dismiss();
+			DownLoadDialog.dialog.dismiss();
 			FitnessFargmentActivity.isRefresh=true;
 			Message msg=new Message();
 			msg.obj="refresh";

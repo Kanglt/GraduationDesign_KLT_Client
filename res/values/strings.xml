@@ -63,10 +63,27 @@
     <string name="str_release_dynamic_prompt">分享你的健身心得和经验吧</string>
     <string name="str_focusId">输入对方ID</string>
     <string name="str_release_dynamic">发布动态</string>
-	<string name="str_find_user">搜索用户</string>
-	<string name="str_reply">回复</string>
-	<string name="str_replyText">回复内容...</string>
-	<string name="str_commentsDefult">评论0</string>
-	<string name="str_thumbUpDefult">赞0</string>
+    <string name="str_find_user">搜索用户</string>
+    <string name="str_reply">回复</string>
+    <string name="str_replyText">回复内容...</string>
+    <string name="str_commentsDefult">评论0</string>
+    <string name="str_thumbUpDefult">赞0</string>
+
+    <!-- 设置 -->
+    <string name="setting_text">设置</string>
+    <string name="setting_message_remind_text">自动检测新版本</string>
+    <string name="setting_wifi_no_text">仅wifi下显示图片</string>
+    <string name="setting_clear_cache_text">清空缓存</string>
+    <string name="setting_version_update_text">版本更新</string>
+    <string name="setting_about_text">关于</string>
     
+   <string name="str_newVersion_prompt">新版本提示</string>
+   <string name="str_isUpdateNewVersion">确认更新新版本？</string>
+ 	<string name="str_ItIsNewVersion">已是最新版本</string>
+   
+    <string name="str_prompt">提示</string>
+    <string name="str_clear_cache_prompt">确定清除缓存（缓存包含图片，不包含视频、音乐）？</string>
+    
+     <string name="can_not_find_version_name">找不到版本名称</string>
+     <string name="version_name">Focus</string>
 </resources>

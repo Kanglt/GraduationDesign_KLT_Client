@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.widget.Toast;
 import lyu.klt.frame.util.FileUtils;
 import lyu.klt.graduationdesign.module.adapter.MusicRecyclerAdapter;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 
 /** 
 * @ClassName: DownLoadCompleteReceiver 
@@ -31,7 +31,7 @@ public class MusicDownLoadCompleteReceiver extends BroadcastReceiver {
 		if(intent.getAction().equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)){
 			long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
 			Toast.makeText(context, "任务下载完成！", Toast.LENGTH_SHORT).show();
-			VideoDownLoadDialog.videoDownLoadDialog.dismiss();
+			DownLoadDialog.dialog.dismiss();
 			FileUtils.imageview.setImageBitmap(MusicRecyclerAdapter.rightBitmap);
 		}else if(intent.getAction().equals(DownloadManager.ACTION_NOTIFICATION_CLICKED)){
 			Toast.makeText(context, "这里不能点哦~", Toast.LENGTH_SHORT).show();

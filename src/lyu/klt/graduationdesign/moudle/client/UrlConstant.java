@@ -22,6 +22,7 @@ public class UrlConstant {
 	public final static String FILE_SERVICE_DOWNLOAD_DIETIMAGE_URL = URL_BASE + "image/dietImage/";
 	public final static String FILE_SERVICE_DOWNLOAD_VIDEO_URL = URL_BASE + "videos/";
 	public final static String FILE_SERVICE_DOWNLOAD_MUSIC_URL = URL_BASE + "musics/";
+	public final static String FILE_SERVICE_DOWNLOAD_APK_URL = URL_BASE + "androidApk/";
 	public final static String FILE_SERVICE_DOWNLOAD_TRAININGIMAGE_URL = URL_BASE + "image/trainingImage/";
 	public final static String FILE_SERVICE_DOWNLOAD_DYNAMICIMAGE_URL = URL_BASE + "image/user_dynamic_image/";
 
@@ -110,4 +111,6 @@ public class UrlConstant {
 	public static String ADDDYNAMICCOMMENTS_URL = URL_BASE + "DataWebServiceMobile.service?addDynamicComments";
 	// 删除评论
 	public static String DELETEDYNAMICCOMMENTS_URL = URL_BASE + "DataWebServiceMobile.service?deleteDynamicComments";
+	// 查询系统版本信息
+	public static String QUERYSYSTEMVERSIONINFOMATION_URL = URL_BASE + "DataWebServiceMobile.service?querySystemVersionInfomation";
 }

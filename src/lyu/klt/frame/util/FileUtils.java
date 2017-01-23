@@ -31,7 +31,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import lyu.klt.graduationdesign.module.Receiver.VideoDownLoadCompleteReceiver;
 import lyu.klt.graduationdesign.module.Receiver.MusicDownLoadCompleteReceiver;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.Receiver.SystemApkDownLoadCompleteReceiver;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 
 public class FileUtils {
@@ -39,6 +40,7 @@ public class FileUtils {
 	public static String SDPATH = Environment.getExternalStorageDirectory() + "/focus/";// formats
 	public static String VIDEOSSAVEPATH = "focus/videos";
 	public static String MUSICSSAVEPATH = "focus/musics";
+	public static String APKSAVEPATH = "focus/apk";
 
 	private final static String[][] MIME_MapTable = {
 			// {后缀名， MIME类型}
@@ -173,6 +175,20 @@ public class FileUtils {
 				deleteDir(); // 递规的方式删除文件夹
 		}
 		dir.delete();// 删除目录本身
+	}
+
+	public static void deleteDir(String filePath) {
+		File dir = new File(filePath);
+		if (dir == null || !dir.exists() || !dir.isDirectory())
+			return;
+
+		for (File file : dir.listFiles()) {
+			if (file.isFile())
+				file.delete(); // 删除所有文件
+			else if (file.isDirectory())
+				deleteDir(); // 递规的方式删除文件夹
+		}
+		// dir.delete();// 删除目录本身
 	}
 
 	public static boolean fileIsExists(String path) {
@@ -328,7 +344,7 @@ public class FileUtils {
 	/**
 	 * 
 	 * @Title: downloadVideo @author 康良涛 @Description: TODO(下载视频) @param @param
-	 * url @param @param savePath @return void @throws
+	 *         url @param @param savePath @return void @throws
 	 */
 	private static DownloadManager downManager;
 	private static long idPro;
@@ -355,7 +371,7 @@ public class FileUtils {
 		request.setDescription("文件正在下载");
 		request.setAllowedOverRoaming(false);
 		/**
-		 * setDestinationInExternalPublicDir方法 
+		 * setDestinationInExternalPublicDir方法
 		 * 这个方法也是用来“制定”一个路径的，这个路径的特性类似于getExternalStoragePublicDirectory(String))
 		 * getExternalStoragePublicDirectory(String)) 这个方法的返回值
 		 * 是一个文件夹，这个文件夹是被创建在你的SD卡根目录的（mnt/sdcard/） 这个文件夹中的内容其他程序都是可以访问的（没有访问控制）
@@ -383,27 +399,27 @@ public class FileUtils {
 				cursor.close();
 				FileUtils.progressBar.setMax(Integer.valueOf(sizeTotal));
 				FileUtils.progressBar.setProgress(Integer.valueOf(size));
-				//ses.shutdown();
-				if(Integer.valueOf(size)>=Integer.valueOf(sizeTotal)){
-					//VideoDownLoadDialog.videoDownLoadDialog.dismiss();
+				// ses.shutdown();
+				if (Integer.valueOf(size) >= Integer.valueOf(sizeTotal)) {
+					// VideoDownLoadDialog.videoDownLoadDialog.dismiss();
 				}
 			}
 		}, 0, 1, TimeUnit.SECONDS);
 
 	}
-	
-	
+
 	/**
 	 * 
 	 * @Title: downloadVideo @author 康良涛 @Description: TODO(下载视频) @param @param
-	 * url @param @param savePath @return void @throws
+	 *         url @param @param savePath @return void @throws
 	 */
 
 	public static ImageView imageview;
+
 	public static void downloadVideo(Context context, String url, String savePath, String videoName,
-			ProgressBar progressBar,ImageView imageview) {
+			ProgressBar progressBar, ImageView imageview) {
 		FileUtils.progressBar = progressBar;
-		FileUtils.imageview=imageview;
+		FileUtils.imageview = imageview;
 		MusicDownLoadCompleteReceiver receiver;
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
@@ -422,7 +438,7 @@ public class FileUtils {
 		request.setDescription("文件正在下载");
 		request.setAllowedOverRoaming(false);
 		/**
-		 * setDestinationInExternalPublicDir方法 
+		 * setDestinationInExternalPublicDir方法
 		 * 这个方法也是用来“制定”一个路径的，这个路径的特性类似于getExternalStoragePublicDirectory(String))
 		 * getExternalStoragePublicDirectory(String)) 这个方法的返回值
 		 * 是一个文件夹，这个文件夹是被创建在你的SD卡根目录的（mnt/sdcard/） 这个文件夹中的内容其他程序都是可以访问的（没有访问控制）
@@ -450,9 +466,9 @@ public class FileUtils {
 				cursor.close();
 				FileUtils.progressBar.setMax(Integer.valueOf(sizeTotal));
 				FileUtils.progressBar.setProgress(Integer.valueOf(size));
-				//ses.shutdown();
-				if(Integer.valueOf(size)>=Integer.valueOf(sizeTotal)){
-					//VideoDownLoadDialog.videoDownLoadDialog.dismiss();
+				// ses.shutdown();
+				if (Integer.valueOf(size) >= Integer.valueOf(sizeTotal)) {
+					// VideoDownLoadDialog.videoDownLoadDialog.dismiss();
 				}
 			}
 		}, 0, 1, TimeUnit.SECONDS);
@@ -476,5 +492,78 @@ public class FileUtils {
 	// progressBar.setProgress(Integer.valueOf(size));
 	//
 	// }
+
+	/**
+	 * 
+	 * @Title: downloadAPK @author 康良涛 @Description:
+	 * TODO(新版本APK下载) @param @param context @param @param url @param @param
+	 * savePath @param @param videoName @param @param progressBar @return
+	 * void @throws
+	 */
+	public static void downloadAPK(Context context, String url, String savePath, String videoName,
+			ProgressBar progressBar) {
+		FileUtils.progressBar = progressBar;
+		SystemApkDownLoadCompleteReceiver receiver;
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+		filter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED);
+		filter.addAction(SystemApkDownLoadCompleteReceiver.ACTION);
+		receiver = new SystemApkDownLoadCompleteReceiver();
+		context.registerReceiver(receiver, filter);
+
+		downManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+		DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+		// 设置在什么网络情况下进行下载
+		request.setAllowedNetworkTypes(Request.NETWORK_WIFI);
+		// 设置通知栏标题
+		request.setNotificationVisibility(Request.VISIBILITY_VISIBLE);
+		request.setTitle("下载");
+		request.setDescription("文件正在下载");
+		request.setAllowedOverRoaming(false);
+		/**
+		 * setDestinationInExternalPublicDir方法
+		 * 这个方法也是用来“制定”一个路径的，这个路径的特性类似于getExternalStoragePublicDirectory(String))
+		 * getExternalStoragePublicDirectory(String)) 这个方法的返回值
+		 * 是一个文件夹，这个文件夹是被创建在你的SD卡根目录的（mnt/sdcard/） 这个文件夹中的内容其他程序都是可以访问的（没有访问控制）
+		 * 当你的应用程序卸载的时候，这个文件夹中的内容将不会丢失。
+		 */
+		// 设置文件存放目录
+		request.setDestinationInExternalPublicDir(savePath, videoName);
+		// 开启下载任务
+		idPro = downManager.enqueue(request);
+
+		ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+		ses.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				// queryTaskByIdandUpdateView(idPro);
+				DownloadManager.Query query = new DownloadManager.Query();
+				query.setFilterById(idPro);
+				Cursor cursor = downManager.query(query);
+				String size = "0";
+				String sizeTotal = "0";
+				if (cursor.moveToNext()) {
+					size = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+					sizeTotal = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+				}
+				cursor.close();
+				FileUtils.progressBar.setMax(Integer.valueOf(sizeTotal));
+				FileUtils.progressBar.setProgress(Integer.valueOf(size));
+				// ses.shutdown();
+
+			}
+		}, 0, 1, TimeUnit.SECONDS);
+
+	}
+
+	public static void openAPK(Context context, File file) {
+		// TODO Auto-generated method stub
+		Log.e("OpenFile", file.getName());
+		Intent intent = new Intent();
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.setAction(android.content.Intent.ACTION_VIEW);
+		intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+		context.startActivity(intent);
+	}
 
 }

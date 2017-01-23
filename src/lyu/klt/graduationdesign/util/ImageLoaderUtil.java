@@ -36,11 +36,11 @@ public class ImageLoaderUtil {
 	private final  String diskCacheDir = Environment
 			.getExternalStorageDirectory().getPath()
 			+ "/focus"
-			+ "/imgageLoader";
+			+ "/imageLoader";
 	private final  String localPictureDir = Environment
 			.getExternalStorageDirectory().getPath()
 			+ "/focus"
-			+ "/localImgageLoader";
+			+ "/localImageLoader";
 	private final  String localUrl = "file://"
 			+ localPictureDir + File.separator;
 	// String imageUri = "http://site.com/image.png"; // from Web

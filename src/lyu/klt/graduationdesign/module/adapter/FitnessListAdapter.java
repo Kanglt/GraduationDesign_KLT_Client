@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import lyu.klt.frame.util.FileUtils;
 import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 import lyu.klt.graduationdesign.moudle.client.UrlConstant;
@@ -131,7 +131,7 @@ public class FitnessListAdapter extends BaseAdapter {
 					String[] fileName=trainingDataPoList.get(position).getTrianingList().get(0).getTrainingVideo().split("/");
 					Intent intent=new Intent();
 					if(!FileUtils.isFileExist("videos/"+fileName[fileName.length-1])){
-						VideoDownLoadDialog.showVideoDownLoadDialog(mContext, fileName[fileName.length-1]);
+						DownLoadDialog.showVideoDownLoadDialog(mContext, fileName[fileName.length-1]);
 					}else{
 						intent.setClass(mContext, VideoDisplayActivity.class);
 						intent.putExtra("trainingDataPo", trainingDataPoList.get(position).getTrianingList().get(0));

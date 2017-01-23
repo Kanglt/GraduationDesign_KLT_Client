@@ -8,7 +8,8 @@ package lyu.klt.graduationdesign.moudle.client;
 *  
 */
 public class Constant {
-
+	
+	public static String versionId="2017-1-23-22-33";
 	
 	public static String VIEWFILPPER_TRAINING_FILEID="VIEWFILPPER_TRAINING_FILEID";
 	public static String VIEWFILPPER_DIET_FILEID="VIEWFILPPER_DIET_FILEID";
@@ -20,9 +21,15 @@ public class Constant {
 	
 	public static String LAST_LOGINID="LAST_LOGINID";
 	public static String LAST_LOGINID_PASSWORD="LAST_LOGINID_PASSWORD";
+	public static String LAST_LOGINUSERNAME="LAST_LOGINUSERNAME";
 	
 	public static String ISLOADEDDATE="ISLOADEDDATE";
 	public static String ISUPDATEUSERPHOTO="ISUPDATEUSERPHOTO";
+	
+	public static String DETECTIONNEWVERSION="DETECTIONNEWVERSION";
+	
+	public static String SYSTEMVERSIONID="SYSTEMVERSIONID";
+	public static String ISVERSIONIDNODATA="ISVERSIONIDNODATA";
 	
 	
 }

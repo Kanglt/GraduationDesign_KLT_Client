@@ -29,7 +29,7 @@ import lyu.klt.frame.ab.util.AbToastUtil;
 import lyu.klt.frame.util.FileUtils;
 import lyu.klt.graduationdesign.module.bean.DynamicCommentsPo;
 import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.moudle.activity.ReplyCommentsActivity;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
@@ -64,6 +64,7 @@ public class DynamicHomgPageListAdapter extends BaseAdapter {
 		public TextView tv_commentsUserName;
 		public TextView tv_replyName;
 		public TextView tv_commentsText;
+		public TextView tv_reply_text;
 	}
 
 	/*
@@ -117,6 +118,7 @@ public class DynamicHomgPageListAdapter extends BaseAdapter {
 			holder.tv_commentsUserName = (TextView) convertView.findViewById(R.id.tv_commentsUserName);
 			holder.tv_replyName = (TextView) convertView.findViewById(R.id.tv_replyName);
 			holder.tv_commentsText = (TextView) convertView.findViewById(R.id.tv_commentsText);
+			holder.tv_reply_text = (TextView) convertView.findViewById(R.id.tv_reply_text);
 			
 			// 列表项的点击事件需要自己实现
 			holder.ll_item.setOnClickListener(new OnClickListener() {
@@ -146,6 +148,10 @@ public class DynamicHomgPageListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
+		if(dynamicCommentsPo.getReplyName().equals("@FIRSTCOMMENTS@")){
+			holder.tv_reply_text.setVisibility(View.GONE);
+			holder.tv_replyName.setVisibility(View.GONE);
+		}
 		holder.tv_commentsUserName.setText(dynamicCommentsPo.getCommentsUserName());
 		holder.tv_replyName.setText(dynamicCommentsPo.getReplyName());
 		holder.tv_commentsText.setText(dynamicCommentsPo.getCommentsText());

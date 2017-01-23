@@ -17,21 +17,22 @@ import android.widget.ProgressBar;
 
 import lyu.klt.frame.util.FileUtils;
 import lyu.klt.graduationdesign.module.Receiver.MusicDownLoadCompleteReceiver;
+import lyu.klt.graduationdesign.module.Receiver.SystemApkDownLoadCompleteReceiver;
 import lyu.klt.graduationdesign.module.Receiver.VideoDownLoadCompleteReceiver;
 import lyu.klt.graduationdesign.module.fargment.VideoDisplayFargmentActivity;
 import lyu.klt.graduationdesign.moudle.client.UrlConstant;
 
 /**
- * @ClassName: VideoDownLoadDialog
+ * @ClassName: DownLoadDialog
  * @Description: TODO(下载文件)
  * @author 康良涛
  * @date 2016年12月22日 下午7:50:27
  * 
  */
-public class VideoDownLoadDialog {
+public class DownLoadDialog {
 	
 	
-	public static Dialog videoDownLoadDialog;
+	public static Dialog dialog;
 	/**
 	 * 
 	* @Title: showVideoDownLoadDialog 
@@ -63,7 +64,7 @@ public class VideoDownLoadDialog {
 				intent.putExtra("isUnRegisterReceiver", true);
 				context.sendBroadcast(intent);
 				//关闭dialog
-				videoDownLoadDialog.dismiss();
+				dialog.dismiss();
 //				//播放下载好的视频
 //				Message msg=new Message();
 //				msg.obj="startVideo";
@@ -72,10 +73,10 @@ public class VideoDownLoadDialog {
 			}
 		});
 		
-		videoDownLoadDialog = new Dialog(context, R.style.MyDialogStyle);
-		videoDownLoadDialog.show();
-		videoDownLoadDialog.setContentView(viewDia);
-		videoDownLoadDialog.setCancelable(false);// dialog弹出后会点击屏幕或物理返回键，dialog不消失
+		dialog = new Dialog(context, R.style.MyDialogStyle);
+		dialog.show();
+		dialog.setContentView(viewDia);
+		dialog.setCancelable(false);// dialog弹出后会点击屏幕或物理返回键，dialog不消失
 		//videoDownLoadDialog.setCanceledOnTouchOutside(false);//dialog弹出后会点击屏幕，dialog不消失；点击物理返回键dialog消失
 	}
 	
@@ -111,7 +112,7 @@ public class VideoDownLoadDialog {
 				intent.putExtra("isUnRegisterReceiver", true);
 				context.sendBroadcast(intent);
 				//关闭dialog
-				videoDownLoadDialog.dismiss();
+				dialog.dismiss();
 //				//播放下载好的视频
 //				Message msg=new Message();
 //				msg.obj="startVideo";
@@ -120,10 +121,49 @@ public class VideoDownLoadDialog {
 			}
 		});
 		
-		videoDownLoadDialog = new Dialog(context, R.style.MyDialogStyle);
-		videoDownLoadDialog.show();
-		videoDownLoadDialog.setContentView(viewDia);
-		videoDownLoadDialog.setCancelable(false);// dialog弹出后会点击屏幕或物理返回键，dialog不消失
+		dialog = new Dialog(context, R.style.MyDialogStyle);
+		dialog.show();
+		dialog.setContentView(viewDia);
+		dialog.setCancelable(false);// dialog弹出后会点击屏幕或物理返回键，dialog不消失
+		//videoDownLoadDialog.setCanceledOnTouchOutside(false);//dialog弹出后会点击屏幕，dialog不消失；点击物理返回键dialog消失
+	}
+	
+	public static String apkName="";
+	public static void showNewVersionDownLoadDialog(final Context context,String apkName) {
+		DownLoadDialog.apkName=apkName;
+		final View viewDia = LayoutInflater.from(context).inflate(R.layout.activity_video_down_load, null);
+		Button btn_exitDownload=(Button) viewDia.findViewById(R.id.btn_exitDownload);
+		
+		ProgressBar progressBar=(ProgressBar) viewDia.findViewById(R.id.downProgress);
+		
+		FileUtils.downloadAPK(context, UrlConstant.FILE_SERVICE_DOWNLOAD_APK_URL+apkName,FileUtils.APKSAVEPATH, apkName,progressBar);
+		
+		
+		btn_exitDownload.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				/**
+				 * 注销下载线程中的Receiver
+				 */
+				Intent intent=new Intent(SystemApkDownLoadCompleteReceiver.ACTION);
+				intent.putExtra("isUnRegisterReceiver", true);
+				context.sendBroadcast(intent);
+				//关闭dialog
+				dialog.dismiss();
+//				//播放下载好的视频
+//				Message msg=new Message();
+//				msg.obj="startVideo";
+//				VideoDisplayFargmentActivity.handler.sendMessage(msg);
+				
+			}
+		});
+		
+		dialog = new Dialog(context, R.style.MyDialogStyle);
+		dialog.show();
+		dialog.setContentView(viewDia);
+		dialog.setCancelable(false);// dialog弹出后会点击屏幕或物理返回键，dialog不消失
 		//videoDownLoadDialog.setCanceledOnTouchOutside(false);//dialog弹出后会点击屏幕，dialog不消失；点击物理返回键dialog消失
 	}
 

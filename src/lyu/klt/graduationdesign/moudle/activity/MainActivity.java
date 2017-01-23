@@ -6,9 +6,12 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.lyu.graduationdesign_klt.R;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,21 +21,40 @@ import android.os.Handler;
 import android.os.Message;
 
 import android.support.v4.view.ViewPager;
-
+import android.util.Log;
 import android.view.KeyEvent;
-
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
-
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
+import lyu.klt.frame.ab.util.AbLogUtil;
 import lyu.klt.frame.ab.util.AbSharedUtil;
 import lyu.klt.frame.ab.util.AbToastUtil;
+import lyu.klt.frame.google.gson.Gson;
+import lyu.klt.frame.google.gson.reflect.TypeToken;
+import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.adapter.MainActivityViewPagerAdapter;
+import lyu.klt.graduationdesign.module.bean.SystemVersionPo;
+import lyu.klt.graduationdesign.module.bean.UserPo;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.module.fargment.DynamicFargmentActivity;
 import lyu.klt.graduationdesign.module.fargment.FitnessFargmentActivity;
 import lyu.klt.graduationdesign.module.fargment.PersonalFargmentActivity;
 import lyu.klt.graduationdesign.module.fargment.RecommendedFargmentActivity;
+import lyu.klt.graduationdesign.moudle.api.ApiHandler;
+import lyu.klt.graduationdesign.moudle.api.SystemAPI;
 import lyu.klt.graduationdesign.moudle.client.Constant;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
+import lyu.klt.graduationdesign.moudle.client.UrlConstant;
+import lyu.klt.graduationdesign.util.DataUtils;
+import lyu.klt.graduationdesign.util.DialogUtils;
+import lyu.klt.graduationdesign.util.ImageLoaderUtil;
+import lyu.klt.graduationdesign.util.SystemInfoUtils;
 import lyu.klt.graduationdesign.view.MainSlidingTabLayout;
 
 public class MainActivity extends BaseActivity {
@@ -47,6 +69,9 @@ public class MainActivity extends BaseActivity {
 	public MainSlidingTabLayout slidingTabLayout;
 	
 	public MainActivityViewPagerAdapter adapter;
+	
+	private SystemVersionPo systemVersionPo;
+	private Dialog dialog;
 
 	Handler mHandler = new Handler() {
 
@@ -194,6 +219,10 @@ public class MainActivity extends BaseActivity {
 	public void startGame() {
 		// TODO Auto-generated method stub
 		super.startGame();
+		if(AbSharedUtil.getBoolean(context, Constant.DETECTIONNEWVERSION, true)){
+			SystemAPI.querySystemVersionInfomation(context, querySystemVersionInfomationStringHttpResponseListener);
+		}
+		
 	}
 
 	public interface MyTouchListener {
@@ -241,6 +270,10 @@ public class MainActivity extends BaseActivity {
 				"viewfilpper_diet_img1.jpg,viewfilpper_diet_img2.jpg,viewfilpper_diet_img3.jpg");
 		AbSharedUtil.putBoolean(context, Constant.ISLOGIN, true);
 		AbSharedUtil.putBoolean(context, Constant.ISLOADEDDATE, false);
+		AbSharedUtil.putString(context, Constant.LAST_LOGINUSERNAME, "游客");
+		//AbSharedUtil.putBoolean(context, Constant.DETECTIONNEWVERSION, true);
+
+		
 	}
 
 	@Override
@@ -273,6 +306,104 @@ public class MainActivity extends BaseActivity {
 			MyApplication.getInstance().exit();
 			System.exit(0);
 		}
+	}
+	
+	private AbStringHttpResponseListener querySystemVersionInfomationStringHttpResponseListener = new AbStringHttpResponseListener() {
+
+		@Override
+		public void onSuccess(int statusCode, String content) {
+			// TODO Auto-generated method stub
+
+			if (!StringUtil.isEmpty(content)) {
+				try {
+					JSONObject returncode = new JSONObject(content);
+					String data = returncode.getString("data");
+					String type = returncode.getString("type");
+					if (!ApiHandler.isSccuss(context, type, data)) {
+						return;
+					}
+					// 解密数据
+					data = DataUtils.getResponseData(context, data);
+					JSONObject jsonObject = new JSONObject(data);
+
+					if (StringUtil.isEmpty(jsonObject.getString("record"))) {
+						return;
+					}
+					
+					Gson gson=new Gson();
+					systemVersionPo= gson.fromJson(jsonObject.getString("record"),
+							new TypeToken<SystemVersionPo>() {
+							}.getType());
+					
+					if(!SystemInfoUtils.getVersion(context).equals(systemVersionPo.getSystemVersionId())){
+						initUpdateVersionDialog(systemVersionPo.getSystemApkURL());
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		@Override
+		public void onStart() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onStart");
+			// 显示进度框
+		//	AbDialogUtil.showProgressDialog(context, 0, "正在操作...");
+		}
+
+		@Override
+		public void onFinish() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFinish");
+			// 移除进度框
+	//		HideProgressDialog();
+
+			// AbDialogUtil.removeDialog(context);
+		}
+
+		@Override
+		public void onFailure(int statusCode, String content, Throwable error) {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFailure");
+			AbToastUtil.showToast(context, error.getMessage());
+		}
+
+	};
+	
+	private void initUpdateVersionDialog(String systemApkURL) {
+		final View viewDia = LayoutInflater.from(context).inflate(R.layout.message_prompt_dialog, null);
+		final EditText log_text = (EditText) viewDia.findViewById(R.id.log_text);
+		final TextView message_prompt = (TextView) viewDia.findViewById(R.id.message_prompt);
+		message_prompt.setText(R.string.str_newVersion_prompt);
+		log_text.setText(R.string.str_isUpdateNewVersion);
+		log_text.setEnabled(false);
+		Button btn_cancel = (Button) viewDia.findViewById(R.id.btn_cancel);
+		Button btn_ok = (Button) viewDia.findViewById(R.id.btn_ok);
+		btn_cancel.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				DialogUtils.hideDialog(dialog);
+			}
+		});
+		btn_ok.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				String apkNameArr[] = systemVersionPo.getSystemApkURL().split("/");
+				String apkName = apkNameArr[apkNameArr.length - 1];
+				DownLoadDialog.showNewVersionDownLoadDialog(context, apkName);
+				DialogUtils.hideDialog(dialog);
+			}
+		});
+		dialog = new Dialog(context, R.style.dialog1);
+		dialog.show();
+		dialog.setContentView(viewDia);
+		//dialog.setCanceledOnTouchOutside(true);
+		dialog.setCancelable(false);
 	}
 
 }

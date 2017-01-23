@@ -291,7 +291,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp" >
+                android:layout_margin="10dp"
+                android:visibility="gone" >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -324,6 +325,7 @@
                 android:background="#ebebeb" />
 
             <LinearLayout
+                android:id="@+id/ll_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp" >
@@ -361,12 +363,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp" >
+                android:layout_margin="10dp"
+                android:visibility="gone" >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1" >
+                    android:layout_weight="1" 
+                    >
 
                     <TextView
                         android:layout_width="match_parent"

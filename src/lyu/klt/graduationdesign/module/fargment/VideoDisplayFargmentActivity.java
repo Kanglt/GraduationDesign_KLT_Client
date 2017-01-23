@@ -56,7 +56,7 @@ import lyu.klt.frame.util.GsonUtils;
 import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.module.adapter.AddTrainingRecyclerAdapter;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.TrainingDataPAI;

@@ -26,7 +26,7 @@ import lyu.klt.frame.util.FileUtils;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
 import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
 import lyu.klt.graduationdesign.moudle.client.UrlConstant;
 import lyu.klt.graduationdesign.util.ImageLoaderUtil;
@@ -96,7 +96,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
 				String[] fileName=trainingDataList.get(position).getTrainingVideo().split("/");
 				Intent intent=new Intent();
 				if(!FileUtils.isFileExist("videos/"+fileName[fileName.length-1])){
-					VideoDownLoadDialog.showVideoDownLoadDialog(mContext, fileName[fileName.length-1]);
+					DownLoadDialog.showVideoDownLoadDialog(mContext, fileName[fileName.length-1]);
 				}else{
 					intent.setClass(mContext, VideoDisplayActivity.class);
 					intent.putExtra("trainingDataPo", trainingDataList.get(position));

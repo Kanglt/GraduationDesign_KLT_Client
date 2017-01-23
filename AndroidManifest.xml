@@ -133,9 +133,17 @@
         </activity>
         <activity android:name="lyu.klt.graduationdesign.moudle.activity.UserFansListActivity" >
         </activity>
-         <activity android:name="lyu.klt.graduationdesign.moudle.activity.DynamicHomePageActivity" >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.DynamicHomePageActivity" >
         </activity>
-         <activity android:name="lyu.klt.graduationdesign.moudle.activity.ReplyCommentsActivity" >
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.ReplyCommentsActivity" >
+        </activity>
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.SettingActivity" >
+        </activity>
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.AboutActivity" >
+        </activity>
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.TrainingMotionDiagramActivity" >
+        </activity>
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.TrainingMotionDiagramListActivity" >
         </activity>
     </application>
 

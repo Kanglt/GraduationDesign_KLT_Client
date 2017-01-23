@@ -39,7 +39,7 @@ import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
 import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.module.fargment.FitnessFargmentActivity;
 import lyu.klt.graduationdesign.module.fargment.TrainingFargmentActivity;
 import lyu.klt.graduationdesign.moudle.activity.DeleteUserTrainingActivity;

@@ -24,7 +24,7 @@ import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
 import lyu.klt.graduationdesign.module.bean.TrainingDataPo;
 import lyu.klt.graduationdesign.module.clickListener.OnItemClickListener;
 import lyu.klt.graduationdesign.module.clickListener.OnItemLongClickListener;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.moudle.activity.VideoDisplayActivity;
 import lyu.klt.graduationdesign.moudle.client.MyApplication;
 import lyu.klt.graduationdesign.view.MyLinearLayoutManger;

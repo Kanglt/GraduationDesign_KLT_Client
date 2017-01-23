@@ -50,7 +50,7 @@ import lyu.klt.frame.util.GsonUtils;
 import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.module.adapter.FitnessListAdapter;
 import lyu.klt.graduationdesign.module.bean.UserPo;
-import lyu.klt.graduationdesign.module.dialog.VideoDownLoadDialog;
+import lyu.klt.graduationdesign.module.dialog.DownLoadDialog;
 import lyu.klt.graduationdesign.moudle.activity.DietInfomation;
 import lyu.klt.graduationdesign.moudle.activity.EditPasswordActivity;
 import lyu.klt.graduationdesign.moudle.activity.HealthDetectionActivity;
@@ -58,6 +58,7 @@ import lyu.klt.graduationdesign.moudle.activity.HeartRateDetectionActivity;
 import lyu.klt.graduationdesign.moudle.activity.InfomationActivity;
 import lyu.klt.graduationdesign.moudle.activity.LoginActivity;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
+import lyu.klt.graduationdesign.moudle.activity.SettingActivity;
 import lyu.klt.graduationdesign.moudle.activity.TestActivity;
 import lyu.klt.graduationdesign.moudle.activity.UserFansListActivity;
 import lyu.klt.graduationdesign.moudle.activity.UserFocusListActivity;
@@ -116,6 +117,7 @@ public class PersonalFargmentActivity extends Fragment {
 	private View rl_personal_dynamic,rl_personal_fans,rl_personal_focus;
 
 	public View user_information;
+	public View ll_setting;
 
 	public UserPo userPo;
 	
@@ -205,6 +207,8 @@ public class PersonalFargmentActivity extends Fragment {
 		rl_personal_dynamic=(RelativeLayout)view.findViewById(R.id.rl_personal_dynamic);
 		rl_personal_fans=(RelativeLayout)view.findViewById(R.id.rl_personal_fans);
 		rl_personal_focus=(RelativeLayout)view.findViewById(R.id.rl_personal_focus);
+		
+		ll_setting=(LinearLayout)view.findViewById(R.id.ll_setting);
 	}
 
 	public void initViewData() {
@@ -227,6 +231,7 @@ public class PersonalFargmentActivity extends Fragment {
 		rl_personal_dynamic.setOnClickListener(onClickListener);
 		rl_personal_fans.setOnClickListener(onClickListener);
 		rl_personal_focus.setOnClickListener(onClickListener);
+		ll_setting.setOnClickListener(onClickListener);
 	}
 
 	public void startGame() {
@@ -280,6 +285,11 @@ public class PersonalFargmentActivity extends Fragment {
 			case R.id.rl_personal_fans:
 				intent.setClass(context, UserFansListActivity.class);
 				intent.putExtra("userId", AbSharedUtil.getString(context, Constant.LAST_LOGINID));
+				startActivity(intent);
+				break;
+				
+			case R.id.ll_setting:
+				intent.setClass(context, SettingActivity.class);
 				startActivity(intent);
 				break;
 			default:
@@ -463,6 +473,8 @@ public class PersonalFargmentActivity extends Fragment {
 					tv_personal_dynamic_num.setText(userPo.getDynamicNum()+"");
 					tv_personal_fans_num.setText(userPo.getFansNum()+"");
 					tv_personal_focus_num.setText(userPo.getFocusNum()+"");
+					
+					AbSharedUtil.putString(context, Constant.LAST_LOGINUSERNAME, userPo.getUserName());
 					
 					
 				} catch (Exception e) {

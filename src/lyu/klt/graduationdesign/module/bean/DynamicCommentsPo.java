@@ -20,12 +20,19 @@ public class DynamicCommentsPo implements Serializable{
 	private String replyId;
 	private String replyName;
 	private String commentsUserName;
+	private String releaseUserId;
 	private int dynamicForwardingNum;
 	private int dynamicCommentsNum;
 	private int dynamicThumbUpNum;
 	
 	
 	
+	public String getReleaseUserId() {
+		return releaseUserId;
+	}
+	public void setReleaseUserId(String releaseUserId) {
+		this.releaseUserId = releaseUserId;
+	}
 	public int getDynamicForwardingNum() {
 		return dynamicForwardingNum;
 	}

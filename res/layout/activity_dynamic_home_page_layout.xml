@@ -90,6 +90,82 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:src="@drawable/bag7" />
+                
+                 <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ebebeb" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal" >
+
+       
+
+       <RelativeLayout
+            android:id="@+id/rl_dynamic_comments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" >
+ 
+
+            <TextView
+                android:id="@+id/tv_dynamic_comments_num2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/gray" />
+
+            <TextView
+                android:id="@+id/tv_dynamic_comments_num_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_dynamic_comments_num2"
+                android:gravity="center"
+                android:text="评论"
+                android:textColor="@color/gray"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_dynamic_thumb_up"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/view_right_devider"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv_dynamic_thumb_up_num2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/gray" />
+
+            <TextView
+                android:id="@+id/tv_dynamic_thumb_up_num_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_dynamic_thumb_up_num2"
+                android:gravity="center"
+                android:text="点赞"
+                android:textColor="@color/gray"
+                android:textSize="10sp" />
+        </RelativeLayout>
+    </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
