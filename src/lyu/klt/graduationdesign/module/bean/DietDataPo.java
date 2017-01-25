@@ -26,7 +26,15 @@ public class DietDataPo implements Serializable{
 	private String dietType;
 	private int dietId;
 	
+	private String userId;
 	
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public int getDietId() {
 		return dietId;
 	}

@@ -177,6 +177,10 @@ public class LoginActivity extends BaseActivity {
 				intent.setClass(context, RegisteredActivity.class);
 				startActivity(intent);
 				break;
+			case R.id.tv_changePassword:
+				
+				AbToastUtil.showToast(context, "功能尚未开放！");
+				break;
 			default:
 				break;
 			}

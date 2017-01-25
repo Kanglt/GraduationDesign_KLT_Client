@@ -60,6 +60,7 @@ import lyu.klt.graduationdesign.moudle.activity.LoginActivity;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
 import lyu.klt.graduationdesign.moudle.activity.SettingActivity;
 import lyu.klt.graduationdesign.moudle.activity.TestActivity;
+import lyu.klt.graduationdesign.moudle.activity.UserDietActivity;
 import lyu.klt.graduationdesign.moudle.activity.UserFansListActivity;
 import lyu.klt.graduationdesign.moudle.activity.UserFocusListActivity;
 import lyu.klt.graduationdesign.moudle.activity.UserPersonalDynamicActivity;
@@ -266,7 +267,8 @@ public class PersonalFargmentActivity extends Fragment {
 				startActivity(intent);
 				break;
 			case R.id.ll_diet_collection:
-					
+				intent.setClass(context, UserDietActivity.class);
+				startActivity(intent);
 				
 				break;
 			case R.id.ll_healthDetection:

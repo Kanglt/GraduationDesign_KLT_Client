@@ -15,10 +15,10 @@
     <string name="str_tab3">tab3</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_registered">RegisteredActivity</string>
-    <string name="str_login">LOGIN IN</string>
+    <string name="str_login">登入</string>
     <string name="str_registered">Registered</string>
-    <string name="str_forgotPassword">Forgot password?</string>
-    <string name="str_newAnAccount">New an account?</string>
+    <string name="str_forgotPassword">忘记密码</string>
+    <string name="str_newAnAccount">注册</string>
     <string name="str_registeredAccount">账号 :</string>
     <string name="str_rememberPassword">记住密码</string>
     <string name="str_registeredPassword">密码 :</string>
@@ -63,6 +63,8 @@
     <string name="str_release_dynamic_prompt">分享你的健身心得和经验吧</string>
     <string name="str_focusId">输入对方ID</string>
     <string name="str_release_dynamic">发布动态</string>
+    <string name="str_add_user_diet">收藏饮食</string>
+    <string name="str_delete_user_diet">取消收藏</string>
     <string name="str_find_user">搜索用户</string>
     <string name="str_reply">回复</string>
     <string name="str_replyText">回复内容...</string>

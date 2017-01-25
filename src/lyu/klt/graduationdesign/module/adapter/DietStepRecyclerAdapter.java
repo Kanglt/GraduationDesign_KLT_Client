@@ -35,7 +35,7 @@ import lyu.klt.graduationdesign.view.MyLinearLayoutManger;
  * @date 2016年12月16日 下午10:01:51
  *
  */
-public class StepRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
+public class DietStepRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 		implements OnItemClickListener, OnItemLongClickListener {
 	private final static String TAG = "StepRecyclerAdapter";
 	private Context mContext;
@@ -45,7 +45,7 @@ public class StepRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>
 
 	private MyLinearLayoutManger mLayoutManager;
 
-	public StepRecyclerAdapter(Context context, int type,List<DietStepPo> dietStepPoListPo) {
+	public DietStepRecyclerAdapter(Context context, int type,List<DietStepPo> dietStepPoListPo) {
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mType = type;

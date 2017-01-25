@@ -47,9 +47,12 @@ import lyu.klt.frame.util.GsonUtils;
 import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.module.adapter.DietListRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
+import lyu.klt.graduationdesign.module.bean.ActivityPo;
 import lyu.klt.graduationdesign.module.bean.DietDataListPo;
 import lyu.klt.graduationdesign.moudle.activity.DinneTimeActivity;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
+import lyu.klt.graduationdesign.moudle.activity.WebActivity;
+import lyu.klt.graduationdesign.moudle.api.ActivityAPI;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.DietDataPAI;
 import lyu.klt.graduationdesign.moudle.client.Constant;
@@ -97,6 +100,7 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 	private Animation rightInAnimation;
 	private Animation rightOutAnimation;
 
+	List<ActivityPo> activityPoList;
 	// private HorizontalListView hListView;
 	// private HorizontalListViewAdapter hListViewAdapter;
 
@@ -168,7 +172,7 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 		// mPulltorefreshview.getFooterView()
 		// .setFooterProgressBarDrawable(this.getResources().getDrawable(R.drawable.progress_circular));
 
-		doLoadCarouse();// 加载 轮播图
+		
 
 		dietDataListPo = new ArrayList<DietDataListPo>();
 		initRVData();
@@ -212,6 +216,8 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 	public void startGame() {
 
 		DietDataPAI.getDietData(context, dietDataStringHttpResponseListener);
+		ActivityAPI.queryActivity(context, "diet", queryActivityStringHttpResponseListener);
+		
 	}
 
 	private OnClickListener onClickListener = new OnClickListener() {
@@ -261,19 +267,30 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 	 *         strs @return: void @throws
 	 */
 	private void doLoadCarouse() {
-		String localStr = AbSharedUtil.getString(context, Constant.VIEWFILPPER_DIET_FILEID);
-		if (localStr == null) {
-			return;
-		}
+		
 		viewfilpper_diet_top.removeAllViews();
 		viewfilpper_diet_top.setAutoStart(false);
 		viewfilpper_diet_top.stopFlipping();
-		String strArr[] = localStr.split(",");
-		for (String fileId : strArr) {
+		for (int i = 0; i < activityPoList.size(); i++) {
+			String activityImage = activityPoList.get(i).getActivityImage();
+			String activitiImageFileNameArry[] = activityImage.split("/");
 			ImageView imageView1 = new ImageView(context);
 			imageView1.setScaleType(ImageView.ScaleType.FIT_XY);
-			ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_VIEWFILPPERIMAGE_URL + fileId, imageView1,
-					imageLoadingListener);
+			ImageLoaderUtil.displayImage(
+					UrlConstant.FILE_SERVICE_DOWNLOAD_VIEWFILPPERIMAGE_URL
+							+ activitiImageFileNameArry[activitiImageFileNameArry.length - 1],
+					imageView1, imageLoadingListener);
+			final String activityURL=activityPoList.get(i).getActivityURL();
+			imageView1.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent=new Intent(context,WebActivity.class);
+					intent.putExtra("activityURL", activityURL);
+					startActivity(intent);
+				}
+			});
 			viewfilpper_diet_top.addView(imageView1);
 		}
 
@@ -490,6 +507,69 @@ public class DietFargmentActivity extends Fragment implements OnGestureListener,
 			AbLogUtil.d(TAG, "onFinish");
 			// 移除进度框
 			// HideProgressDialog();
+
+			// AbDialogUtil.removeDialog(context);
+		}
+
+		@Override
+		public void onFailure(int statusCode, String content, Throwable error) {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFailure");
+			AbToastUtil.showToast(context, error.getMessage());
+		}
+
+	};
+	
+	private AbStringHttpResponseListener queryActivityStringHttpResponseListener = new AbStringHttpResponseListener() {
+
+		@Override
+		public void onSuccess(int statusCode, String content) {
+			// TODO Auto-generated method stub
+
+			if (!StringUtil.isEmpty(content)) {
+				try {
+					JSONObject returncode = new JSONObject(content);
+					String data = returncode.getString("data");
+					String type = returncode.getString("type");
+					if (!ApiHandler.isSccuss(context, type, data)) {
+						return;
+					}
+					// 解密数据
+					data = DataUtils.getResponseData(context, data);
+					JSONObject jsonObject = new JSONObject(data);
+
+					if (StringUtil.isEmpty(jsonObject.getString("list"))) {
+						return;
+					}
+
+					// UserPo userPo=new UserPo();
+					Gson gson = GsonUtils.getGson();
+
+					activityPoList = gson.fromJson(jsonObject.getString("list"), new TypeToken<List<ActivityPo>>() {
+					}.getType());
+
+					doLoadCarouse();// 加载 轮播图
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		@Override
+		public void onStart() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onStart");
+			// 显示进度框
+			// AbDialogUtil.showProgressDialog(context, 0, "正在更新...");
+		}
+
+		@Override
+		public void onFinish() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFinish");
+			// 移除进度框
+			// ((BaseActivity) context).HideProgressDialog();
 
 			// AbDialogUtil.removeDialog(context);
 		}

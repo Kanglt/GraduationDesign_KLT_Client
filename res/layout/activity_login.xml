@@ -130,6 +130,7 @@
 	        android:layout_alignLeft="@+id/btn_login"
 	        android:layout_below="@+id/btn_login"
 	        android:layout_marginTop="15dp"
+	        android:textSize="12sp"
 	        android:text="@string/str_forgotPassword" />
 
 	    <TextView
@@ -138,6 +139,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_alignBottom="@+id/tv_changePassword"
 	        android:layout_alignRight="@+id/btn_login"
+	        android:textSize="12sp"
 	        android:text="@string/str_newAnAccount" />
 
 	    <CheckBox

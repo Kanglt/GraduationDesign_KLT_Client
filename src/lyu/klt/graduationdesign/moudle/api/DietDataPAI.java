@@ -152,5 +152,111 @@ public class DietDataPAI {
 		}
 		
 	}
+	
+
+	/**
+	 * 
+	* @Title: queryUserDiet 
+	* @author 康良涛 
+	* @Description: TODO(查询用户饮食收藏列表) 
+	* @param @param context
+	* @param @param userId
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void queryUserDiet(Context context,String userId,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			jsonObject.put("userId", userId);
+
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.QUERYUSERDIET_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
+	
+	/**
+	 * 
+	* @Title: deleteUserDiet 
+	* @author 康良涛 
+	* @Description: TODO(删除用户饮食收藏) 
+	* @param @param context
+	* @param @param userId
+	* @param @param dietName
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void deleteUserDiet(Context context,String userId,String dietName,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			jsonObject.put("userId", userId);
+			jsonObject.put("dietName", dietName);
+
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.DELETEUSERDIET_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
+	
+	/**
+	 * 
+	* @Title: addUserDiet 
+	* @author 康良涛 
+	* @Description: TODO(添加用户饮食收藏) 
+	* @param @param context
+	* @param @param userId
+	* @param @param dietName
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void addUserDiet(Context context,String userId,String dietName,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			jsonObject.put("userId", userId);
+			jsonObject.put("dietName", dietName);
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.ADDUSERDIET_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
 
 }

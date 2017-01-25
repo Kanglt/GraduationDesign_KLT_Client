@@ -296,4 +296,72 @@ public class TrainingDataPAI {
 		}
 		
 	}
+	
+	
+	/**
+	 * 
+	* @Title: queryAction 
+	* @author 康良涛 
+	* @Description: TODO(查询动作列表) 
+	* @param @param context
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	public static void queryAction(Context context,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.QUERYACTION_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
+	
+
+	/**
+	 * 
+	* @Title: queryActionStep 
+	* @author 康良涛 
+	* @Description: TODO(查询动作步骤) 
+	* @param @param context
+	* @param @param actionId
+	* @param @param abStringHttpResponseListener
+	* @return void
+	* @throws
+	 */
+	
+	public static void queryActionStep(Context context,String actionId,
+			AbStringHttpResponseListener abStringHttpResponseListener){
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			jsonObject.put("actionId", actionId);
+			
+			AbHttpUtil mAbHttpUtil = null;
+			String url = UrlConstant.QUERYACTIONSTEP_URL;
+			// 绑定参数
+			AbRequestParams params = new AbRequestParams();
+			params.put("jsonDataStr",DataUtils.getRequestData(context, jsonObject));
+			//params.put("jsonDataStr",jsonObject.toString());
+			mAbHttpUtil = AbHttpUtil.getInstance(context);
+			mAbHttpUtil.setTimeout(10000);
+			mAbHttpUtil.post(url, params, abStringHttpResponseListener);
+		} catch (Exception e) {
+			AbLogUtil.e(context, e.getMessage());
+		}
+		
+	}
 }

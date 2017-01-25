@@ -20,6 +20,7 @@ public class UrlConstant {
 	public final static String FILE_SERVICE_DOWNLOAD_VIEWFILPPERIMAGE_URL = URL_BASE + "image/viewFilpper_img/";
 	public final static String FILE_SERVICE_DOWNLOAD_USERPHOTO_URL = URL_BASE + "image/user_photo/";
 	public final static String FILE_SERVICE_DOWNLOAD_DIETIMAGE_URL = URL_BASE + "image/dietImage/";
+	public final static String FILE_SERVICE_DOWNLOAD_ACTIONIMAGE_URL = URL_BASE + "image/actionImage/";
 	public final static String FILE_SERVICE_DOWNLOAD_VIDEO_URL = URL_BASE + "videos/";
 	public final static String FILE_SERVICE_DOWNLOAD_MUSIC_URL = URL_BASE + "musics/";
 	public final static String FILE_SERVICE_DOWNLOAD_APK_URL = URL_BASE + "androidApk/";
@@ -112,5 +113,19 @@ public class UrlConstant {
 	// 删除评论
 	public static String DELETEDYNAMICCOMMENTS_URL = URL_BASE + "DataWebServiceMobile.service?deleteDynamicComments";
 	// 查询系统版本信息
-	public static String QUERYSYSTEMVERSIONINFOMATION_URL = URL_BASE + "DataWebServiceMobile.service?querySystemVersionInfomation";
+	public static String QUERYSYSTEMVERSIONINFOMATION_URL = URL_BASE
+			+ "DataWebServiceMobile.service?querySystemVersionInfomation";
+	// 查询动作列表
+	public static String QUERYACTION_URL = URL_BASE + "DataWebServiceMobile.service?queryAction";
+	// 查询动作步骤
+	public static String QUERYACTIONSTEP_URL = URL_BASE + "DataWebServiceMobile.service?queryActionStep";
+	// 查询用户饮食收藏
+	public static String QUERYUSERDIET_URL = URL_BASE + "UserWebServiceMobile.service?queryUserDiet";
+	// 添加用户饮食收藏
+	public static String ADDUSERDIET_URL = URL_BASE + "UserWebServiceMobile.service?addUserDiet";
+	// 取消用户饮食收藏
+	public static String DELETEUSERDIET_URL = URL_BASE + "UserWebServiceMobile.service?deleteUserDiet";
+	// 查询活动
+	public static String QUERYACTIVITY_URL = URL_BASE + "DataWebServiceMobile.service?queryActivity";
+
 }

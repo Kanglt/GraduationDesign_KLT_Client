@@ -72,7 +72,7 @@ import lyu.klt.graduationdesign.util.ImageLoaderUtil;
  * @date 2016年12月16日 下午10:01:10
  *
  */
-public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class UserFocusListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 	private final static String TAG = "QueryUserInfomationRecyclerAdapter";
 	private Context mContext;
 	private LayoutInflater mInflater;
@@ -89,7 +89,7 @@ public class QueryUserFocusListRecyclerAdapter extends RecyclerView.Adapter<View
 
 	private Dialog dialog;
 
-	public QueryUserFocusListRecyclerAdapter(Context context, int type, List<UserPPo> userPPoList) {
+	public UserFocusListRecyclerAdapter(Context context, int type, List<UserPPo> userPPoList) {
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mType = type;

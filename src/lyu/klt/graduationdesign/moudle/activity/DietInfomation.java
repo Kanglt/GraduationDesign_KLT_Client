@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -20,13 +21,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import lyu.klt.frame.ab.http.AbStringHttpResponseListener;
+import lyu.klt.frame.ab.util.AbDialogUtil;
 import lyu.klt.frame.ab.util.AbLogUtil;
 import lyu.klt.frame.ab.util.AbSharedUtil;
 import lyu.klt.frame.ab.util.AbToastUtil;
@@ -38,7 +45,7 @@ import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.adapter.DietListRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.FoodMateriaListAdapter;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
-import lyu.klt.graduationdesign.module.adapter.StepRecyclerAdapter;
+import lyu.klt.graduationdesign.module.adapter.DietStepRecyclerAdapter;
 import lyu.klt.graduationdesign.module.bean.DietDataListPo;
 import lyu.klt.graduationdesign.module.bean.DietDataPo;
 import lyu.klt.graduationdesign.module.bean.DietStepPo;
@@ -51,6 +58,7 @@ import lyu.klt.graduationdesign.moudle.client.MyApplication;
 import lyu.klt.graduationdesign.moudle.client.UrlConstant;
 import lyu.klt.graduationdesign.util.DataUtils;
 import lyu.klt.graduationdesign.util.ImageLoaderUtil;
+import lyu.klt.graduationdesign.util.UploadUtil;
 import lyu.klt.graduationdesign.util.ViewUtil;
 import lyu.klt.graduationdesign.view.MyLinearLayoutManger;
 import lyu.klt.graduationdesign.view.SpacesItemDecoration;
@@ -76,7 +84,7 @@ public class DietInfomation extends BaseActivity {
 	private List<FoodMateriaPo> foodMateriaPoList;
 	private FoodMateriaListAdapter foodMateriaListAdapter;
 
-	private StepRecyclerAdapter mAdapter;
+	private DietStepRecyclerAdapter mAdapter;
 	private MyLinearLayoutManger mLayoutManager;
 	private List<String> mDatas;
 	private List<DietStepPo> dietStepPoListPo;
@@ -204,6 +212,7 @@ public class DietInfomation extends BaseActivity {
 
 		title_bar_left_img.setOnClickListener(onClickListener);
 		titlebar_right_text.setOnClickListener(onClickListener);
+		titlebar_right_text.setOnClickListener(onClickListener);
 	}
 
 	@Override
@@ -318,7 +327,7 @@ public class DietInfomation extends BaseActivity {
 					dietStepPoListPo = gson.fromJson(jsonObject.getString("list"), new TypeToken<List<DietStepPo>>() {
 					}.getType());
 
-					mAdapter = new StepRecyclerAdapter(context, 1, dietStepPoListPo);
+					mAdapter = new DietStepRecyclerAdapter(context, 1, dietStepPoListPo);
 
 					rv_step.setAdapter(mAdapter);
 					mAdapter.notifyDataSetChanged();
@@ -393,7 +402,7 @@ public class DietInfomation extends BaseActivity {
 				finish();
 				break;
 			case R.id.title_bar_right_text:
-				
+				showPopupWindow(v);
 				break;
 
 			default:
@@ -401,4 +410,178 @@ public class DietInfomation extends BaseActivity {
 			}
 		}
 	};
+	
+	 private void showPopupWindow(View view) {
+
+	        // 一个自定义的布局，作为显示的内容
+	        View contentView = LayoutInflater.from(context).inflate(
+	                R.layout.diet_infomation_add_layout, null);
+	        final PopupWindow popupWindow = new PopupWindow(contentView,
+	                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+	        
+	        TextView tv_add_user_diet=(TextView) contentView.findViewById(R.id.tv_add_user_diet);
+	        TextView tv_delete_user_diet=(TextView) contentView.findViewById(R.id.tv_delete_user_diet);
+	        
+	        tv_add_user_diet.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					DietDataPAI.addUserDiet(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID), dietDataPo.getDietName(), userDietAddStringHttpResponseListener);
+					popupWindow.dismiss();
+						
+				}
+			});
+	        
+	        tv_delete_user_diet.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					DietDataPAI.deleteUserDiet(context, AbSharedUtil.getString(context, Constant.LAST_LOGINID), dietDataPo.getDietName(), userDietDeleteStringHttpResponseListener);
+					
+					popupWindow.dismiss();
+				}
+			});
+	        
+	        
+	      
+
+	        popupWindow.setTouchable(true);
+
+	        popupWindow.setTouchInterceptor(new OnTouchListener() {
+
+	            @Override
+	            public boolean onTouch(View v, MotionEvent event) {
+
+	                Log.i("mengdd", "onTouch : ");
+
+	                return false;
+	                // 这里如果返回true的话，touch事件将被拦截
+	                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
+	            }
+	        });
+
+	        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+	        // 我觉得这里是API的一个bug
+//	        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+//	                R.drawable.selectmenu_bg_downward));
+
+	        // 设置好参数之后再show
+	        popupWindow.showAsDropDown(view);
+
+	    }
+	 
+	 
+	 private AbStringHttpResponseListener userDietAddStringHttpResponseListener = new AbStringHttpResponseListener() {
+
+			@Override
+			public void onSuccess(int statusCode, String content) {
+				// TODO Auto-generated method stub
+
+				if (!StringUtil.isEmpty(content)) {
+					try {
+						JSONObject returncode = new JSONObject(content);
+						String data = returncode.getString("data");
+						String type = returncode.getString("type");
+						if (!ApiHandler.isSccuss(context, type, data)) {
+							return;
+						}
+						// 解密数据
+						data = DataUtils.getResponseData(context, data);
+						JSONObject jsonObject = new JSONObject(data);
+
+						if (StringUtil.isEmpty(jsonObject.getString("record"))) {
+							return;
+						}
+						AbToastUtil.showToast(context, "收藏成功！");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				AbLogUtil.d(TAG, "onStart");
+				// 显示进度框
+				AbDialogUtil.showProgressDialog(context, 0, "正在操作...");
+			}
+
+
+			@Override
+			public void onFinish() {
+				// TODO Auto-generated method stub
+				AbLogUtil.d(TAG, "onFinish");
+				// 移除进度框
+				HideProgressDialog();
+
+				// AbDialogUtil.removeDialog(context);
+			}
+
+			@Override
+			public void onFailure(int statusCode, String content, Throwable error) {
+				// TODO Auto-generated method stub
+				AbLogUtil.d(TAG, "onFailure");
+				AbToastUtil.showToast(context, error.getMessage());
+			}
+
+		};
+	 
+		 private AbStringHttpResponseListener userDietDeleteStringHttpResponseListener = new AbStringHttpResponseListener() {
+
+				@Override
+				public void onSuccess(int statusCode, String content) {
+					// TODO Auto-generated method stub
+
+					if (!StringUtil.isEmpty(content)) {
+						try {
+							JSONObject returncode = new JSONObject(content);
+							String data = returncode.getString("data");
+							String type = returncode.getString("type");
+							if (!ApiHandler.isSccuss(context, type, data)) {
+								return;
+							}
+							// 解密数据
+							data = DataUtils.getResponseData(context, data);
+							JSONObject jsonObject = new JSONObject(data);
+
+							if (StringUtil.isEmpty(jsonObject.getString("record"))) {
+								return;
+							}
+							AbToastUtil.showToast(context, "取消成功！");
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+				@Override
+				public void onStart() {
+					// TODO Auto-generated method stub
+					AbLogUtil.d(TAG, "onStart");
+					// 显示进度框
+					AbDialogUtil.showProgressDialog(context, 0, "正在操作...");
+				}
+
+
+				@Override
+				public void onFinish() {
+					// TODO Auto-generated method stub
+					AbLogUtil.d(TAG, "onFinish");
+					// 移除进度框
+					HideProgressDialog();
+
+					// AbDialogUtil.removeDialog(context);
+				}
+
+				@Override
+				public void onFailure(int statusCode, String content, Throwable error) {
+					// TODO Auto-generated method stub
+					AbLogUtil.d(TAG, "onFailure");
+					AbToastUtil.showToast(context, error.getMessage());
+				}
+
+			};
 }

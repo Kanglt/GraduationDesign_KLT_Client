@@ -33,7 +33,7 @@ import lyu.klt.frame.util.StringUtil;
 import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.adapter.DynamicFriendsRecyclerAdapter;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
-import lyu.klt.graduationdesign.module.adapter.QueryUserInfomationRecyclerAdapter;
+import lyu.klt.graduationdesign.module.adapter.UserInfomationRecyclerAdapter;
 import lyu.klt.graduationdesign.module.bean.DynamicPo;
 import lyu.klt.graduationdesign.module.bean.UserPo;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
@@ -68,7 +68,7 @@ public class QueryUserActivity extends BaseActivity {
 	private TextView titlebar_right_text;
 	
 	private RecyclerView rv_user_info;
-	private QueryUserInfomationRecyclerAdapter mAdapter;
+	private UserInfomationRecyclerAdapter mAdapter;
 	private MyLinearLayoutManger mLayoutManager;
 	private UserPo userPo;
 	private List<String> mDatas;
@@ -219,7 +219,7 @@ public class QueryUserActivity extends BaseActivity {
 					userPo = gson.fromJson(jsonObject.getString("record"), new TypeToken<UserPo>() {
 					}.getType());
 					
-					mAdapter = new QueryUserInfomationRecyclerAdapter(context, 2, userPo);
+					mAdapter = new UserInfomationRecyclerAdapter(context, 2, userPo);
 					rv_user_info.setAdapter(mAdapter);
 					mAdapter.notifyDataSetChanged();
 					

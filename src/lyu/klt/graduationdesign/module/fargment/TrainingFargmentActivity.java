@@ -50,11 +50,15 @@ import lyu.klt.graduationdesign.base.BaseActivity;
 import lyu.klt.graduationdesign.module.adapter.MyRecyclerAdapter;
 
 import lyu.klt.graduationdesign.module.adapter.TrainingListRecyclerAdapter;
+import lyu.klt.graduationdesign.module.bean.ActivityPo;
 import lyu.klt.graduationdesign.module.bean.TrainingDataListPo;
 import lyu.klt.graduationdesign.moudle.activity.MainActivity;
 import lyu.klt.graduationdesign.moudle.activity.MusicSelectActivity;
 import lyu.klt.graduationdesign.moudle.activity.RecommendedTrainingActivity;
 import lyu.klt.graduationdesign.moudle.activity.TotalTrainingActivity;
+import lyu.klt.graduationdesign.moudle.activity.TrainingMotionDiagramListActivity;
+import lyu.klt.graduationdesign.moudle.activity.WebActivity;
+import lyu.klt.graduationdesign.moudle.api.ActivityAPI;
 import lyu.klt.graduationdesign.moudle.api.ApiHandler;
 import lyu.klt.graduationdesign.moudle.api.TrainingDataPAI;
 import lyu.klt.graduationdesign.moudle.client.Constant;
@@ -104,11 +108,11 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 	// private HorizontalListViewAdapter hListViewAdapter;
 
 	List<TrainingDataListPo> trainingDataListPo;
+	List<ActivityPo> activityPoList;
 
-	
-	private View rl_trainingMusic,rl_totalTraining,ll_recommendedTraining,rl_training_motion_diagram;
-	
-	public static boolean isRefresh=false;
+	private View rl_trainingMusic, rl_totalTraining, ll_recommendedTraining, rl_training_motion_diagram;
+
+	public static boolean isRefresh = false;
 
 	Handler handler = new Handler() {
 
@@ -137,18 +141,15 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 		this.context = (Activity) context;
 	}
 
-	
-	
-	
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		if(isRefresh){
+		if (isRefresh) {
 			TrainingDataPAI.getTrainingData(context, trainingDataStringHttpResponseListener);
-			isRefresh=false;
+			isRefresh = false;
 		}
-		
+
 	}
 
 	public void init(View view) {
@@ -174,18 +175,16 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 		swipe_refresh_widget = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_widget);
 		viewfilpper_training_top = (ViewFlipper) view.findViewById(R.id.viewfilpper_training_top);
 		rv_training = (RecyclerView) view.findViewById(R.id.rv_training);
-		
-		rl_trainingMusic=(RelativeLayout)view.findViewById(R.id.rl_trainingMusic);
-		rl_totalTraining=(RelativeLayout)view.findViewById(R.id.rl_totalTraining);
-		ll_recommendedTraining=(RelativeLayout)view.findViewById(R.id.ll_recommendedTraining);
-		rl_training_motion_diagram=(RelativeLayout)view.findViewById(R.id.rl_training_motion_diagram);
+
+		rl_trainingMusic = (RelativeLayout) view.findViewById(R.id.rl_trainingMusic);
+		rl_totalTraining = (RelativeLayout) view.findViewById(R.id.rl_totalTraining);
+		ll_recommendedTraining = (RelativeLayout) view.findViewById(R.id.ll_recommendedTraining);
+		rl_training_motion_diagram = (RelativeLayout) view.findViewById(R.id.rl_training_motion_diagram);
 
 	}
 
 	public void initViewData() {
 		isPrepared = true;
-
-		doLoadCarouse();// 加载 轮播图
 
 		trainingDataListPo = new ArrayList<TrainingDataListPo>();
 		initRVData();
@@ -218,8 +217,7 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 				handler.sendEmptyMessageDelayed(0, 3000);
 			}
 		});
-		
-		
+
 		rl_trainingMusic.setOnClickListener(onClickListener);
 		rl_totalTraining.setOnClickListener(onClickListener);
 		ll_recommendedTraining.setOnClickListener(onClickListener);
@@ -229,6 +227,7 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 	public void startGame() {
 
 		TrainingDataPAI.getTrainingData(context, trainingDataStringHttpResponseListener);
+		ActivityAPI.queryActivity(context, "training", queryActivityStringHttpResponseListener);
 	}
 
 	private OnClickListener onClickListener = new OnClickListener() {
@@ -236,7 +235,7 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Intent intent=new Intent();
+			Intent intent = new Intent();
 			switch (v.getId()) {
 			case R.id.rl_trainingMusic:
 				intent.setClass(context, MusicSelectActivity.class);
@@ -251,7 +250,8 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 				startActivity(intent);
 				break;
 			case R.id.rl_training_motion_diagram:
-				AbToastUtil.showToast(context, "功能还未开放！");
+				intent.setClass(context, TrainingMotionDiagramListActivity.class);
+				startActivity(intent);
 				break;
 			default:
 				break;
@@ -266,19 +266,31 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 	 *         strs @return: void @throws
 	 */
 	private void doLoadCarouse() {
-		String localStr = AbSharedUtil.getString(context, Constant.VIEWFILPPER_TRAINING_FILEID);
-		if (localStr == null) {
-			return;
-		}
+
 		viewfilpper_training_top.removeAllViews();
 		viewfilpper_training_top.setAutoStart(false);
 		viewfilpper_training_top.stopFlipping();
-		String strArr[] = localStr.split(",");
-		for (String fileId : strArr) {
+
+		for (int i = 0; i < activityPoList.size(); i++) {
+			String activityImage = activityPoList.get(i).getActivityImage();
+			String activitiImageFileNameArry[] = activityImage.split("/");
 			ImageView imageView1 = new ImageView(context);
 			imageView1.setScaleType(ImageView.ScaleType.FIT_XY);
-			ImageLoaderUtil.displayImage(UrlConstant.FILE_SERVICE_DOWNLOAD_VIEWFILPPERIMAGE_URL + fileId, imageView1,
-					imageLoadingListener);
+			ImageLoaderUtil.displayImage(
+					UrlConstant.FILE_SERVICE_DOWNLOAD_VIEWFILPPERIMAGE_URL
+							+ activitiImageFileNameArry[activitiImageFileNameArry.length - 1],
+					imageView1, imageLoadingListener);
+			final String activityURL=activityPoList.get(i).getActivityURL();
+			imageView1.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent=new Intent(context,WebActivity.class);
+					intent.putExtra("activityURL", activityURL);
+					startActivity(intent);
+				}
+			});
 			viewfilpper_training_top.addView(imageView1);
 		}
 
@@ -441,14 +453,13 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 		AbSharedUtil.putString(context, Constant.RESIDEMENU_TOUCHEVENT_TYPE, "false");
 		return false;
 	}
-	
-	private void initRVData() {
-        mDatas = new ArrayList<String>();
-        for ( int i=0; i < 1; i++) {
-             mDatas.add( "item"+i);
-       }
-	}
 
+	private void initRVData() {
+		mDatas = new ArrayList<String>();
+		for (int i = 0; i < 1; i++) {
+			mDatas.add("item" + i);
+		}
+	}
 
 	private AbStringHttpResponseListener trainingDataStringHttpResponseListener = new AbStringHttpResponseListener() {
 
@@ -480,8 +491,8 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 							}.getType());
 					mLayoutManager = new MyLinearLayoutManger(context, LinearLayout.VERTICAL, false);
 					rv_training.setLayoutManager(mLayoutManager);
-					mAdapter = new TrainingListRecyclerAdapter(context, 2,trainingDataListPo);
-					
+					mAdapter = new TrainingListRecyclerAdapter(context, 2, trainingDataListPo);
+
 					rv_training.setAdapter(mAdapter);
 					mAdapter.notifyDataSetChanged();
 				} catch (Exception e) {
@@ -517,4 +528,66 @@ public class TrainingFargmentActivity extends Fragment implements OnGestureListe
 
 	};
 
+	private AbStringHttpResponseListener queryActivityStringHttpResponseListener = new AbStringHttpResponseListener() {
+
+		@Override
+		public void onSuccess(int statusCode, String content) {
+			// TODO Auto-generated method stub
+
+			if (!StringUtil.isEmpty(content)) {
+				try {
+					JSONObject returncode = new JSONObject(content);
+					String data = returncode.getString("data");
+					String type = returncode.getString("type");
+					if (!ApiHandler.isSccuss(context, type, data)) {
+						return;
+					}
+					// 解密数据
+					data = DataUtils.getResponseData(context, data);
+					JSONObject jsonObject = new JSONObject(data);
+
+					if (StringUtil.isEmpty(jsonObject.getString("list"))) {
+						return;
+					}
+
+					// UserPo userPo=new UserPo();
+					Gson gson = GsonUtils.getGson();
+
+					activityPoList = gson.fromJson(jsonObject.getString("list"), new TypeToken<List<ActivityPo>>() {
+					}.getType());
+
+					doLoadCarouse();// 加载 轮播图
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		@Override
+		public void onStart() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onStart");
+			// 显示进度框
+			// AbDialogUtil.showProgressDialog(context, 0, "正在更新...");
+		}
+
+		@Override
+		public void onFinish() {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFinish");
+			// 移除进度框
+			// ((BaseActivity) context).HideProgressDialog();
+
+			// AbDialogUtil.removeDialog(context);
+		}
+
+		@Override
+		public void onFailure(int statusCode, String content, Throwable error) {
+			// TODO Auto-generated method stub
+			AbLogUtil.d(TAG, "onFailure");
+			AbToastUtil.showToast(context, error.getMessage());
+		}
+
+	};
 }

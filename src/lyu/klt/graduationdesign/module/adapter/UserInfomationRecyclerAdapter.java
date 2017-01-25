@@ -67,7 +67,7 @@ import lyu.klt.graduationdesign.util.ImageLoaderUtil;
 * @date 2017年1月20日 下午10:56:41 
 *
  */
-public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class UserInfomationRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 	private final static String TAG = "QueryUserInfomationRecyclerAdapter";
 	private Context mContext;
 	private LayoutInflater mInflater;
@@ -83,7 +83,7 @@ public class QueryUserInfomationRecyclerAdapter extends RecyclerView.Adapter<Vie
 	private Bitmap noFocusBitmap;
 	private Dialog dialog;
 
-	public QueryUserInfomationRecyclerAdapter(Context context, int type, UserPo userPo) {
+	public UserInfomationRecyclerAdapter(Context context, int type, UserPo userPo) {
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mType = type;

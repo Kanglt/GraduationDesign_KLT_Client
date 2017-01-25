@@ -145,6 +145,10 @@
         </activity>
         <activity android:name="lyu.klt.graduationdesign.moudle.activity.TrainingMotionDiagramListActivity" >
         </activity>
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.UserDietActivity" >
+        </activity>
+        <activity android:name="lyu.klt.graduationdesign.moudle.activity.WebActivity" >
+        </activity>
     </application>
 
 </manifest>
